@@ -4,6 +4,9 @@ namespace Spatie\EmailCampaigns;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
+use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
+use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
@@ -33,7 +36,9 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/email-campaigns.php', 'email-campaigns');
 
-        $this->registerRoutes();
+        $this
+            ->registerRoutes()
+            ->registerActions();
     }
 
     protected function registerRoutes()
@@ -41,6 +46,25 @@ class EmailCampaignsServiceProvider extends ServiceProvider
         Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}',TrackClicksController::class);
 
         return $this;
+    }
+
+    protected function registerActions()
+    {
+        if (! is_a(config('email-campaigns.actions.prepare_email_html'), PrepareEmailHtmlAction::class, true)) {
+            throw InvalidConfig::invalidPrepareEmailAction();
+        }
+
+        $this->app->bind(PrepareEmailHtmlAction::class, function() {
+            return app(config('email-campaigns.actions.prepare_email_html'));
+        });
+
+        if (! is_a(config('email-campaigns.actions.prepare_email_html'), PersonalizeHtmlAction::class, true)) {
+            throw InvalidConfig::invalidPersonalizeHtmlAction();
+        }
+
+        $this->app->bind(PersonalizeHtmlAction::class, function() {
+            return app(config('email-campaigns.actions.personalize_html'));
+        });
     }
 
 }
