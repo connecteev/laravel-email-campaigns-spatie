@@ -4,6 +4,7 @@ namespace Spatie\EmailCampaigns\Actions;
 
 use DOMDocument;
 use DOMElement;
+use Spatie\EmailCampaigns\Contracts\PrepareEmailHtmlContract;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 
 class PrepareEmailHtmlAction

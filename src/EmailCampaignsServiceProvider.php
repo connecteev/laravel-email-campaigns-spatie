@@ -50,20 +50,24 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
     protected function registerActions()
     {
-        if (! is_a(config('email-campaigns.actions.prepare_email_html'), PrepareEmailHtmlAction::class, true)) {
-            throw InvalidConfig::invalidPrepareEmailAction();
+        $prepareEmailHtmlActionClass = config('email-campaigns.actions.prepare_email_html');
+
+        if (! is_a($prepareEmailHtmlActionClass, PrepareEmailHtmlAction::class, true)) {
+            throw InvalidConfig::invalidPrepareEmailAction($prepareEmailHtmlActionClass);
         }
 
-        $this->app->bind(PrepareEmailHtmlAction::class, function() {
-            return app(config('email-campaigns.actions.prepare_email_html'));
+        $this->app->bind(PrepareEmailHtmlAction::class, function() use ($prepareEmailHtmlActionClass) {
+            return new $prepareEmailHtmlActionClass;
         });
 
-        if (! is_a(config('email-campaigns.actions.prepare_email_html'), PersonalizeHtmlAction::class, true)) {
-            throw InvalidConfig::invalidPersonalizeHtmlAction();
+        $personalizeHtmlActionClass = config('email-campaigns.actions.personalize_html');
+
+        if (! is_a($personalizeHtmlActionClass, PersonalizeHtmlAction::class, true)) {
+            throw InvalidConfig::invalidPersonalizeHtmlAction($personalizeHtmlActionClass);
         }
 
-        $this->app->bind(PersonalizeHtmlAction::class, function() {
-            return app(config('email-campaigns.actions.personalize_html'));
+        $this->app->bind(PersonalizeHtmlAction::class, function() use ($personalizeHtmlActionClass) {
+            return new $personalizeHtmlActionClass;
         });
     }
 
