@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\EmailCampaignStatus;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 
 class EmailCampaign extends Model
@@ -46,6 +48,8 @@ class EmailCampaign extends Model
 
     public function trackOpens()
     {
+        $this->ensureUpdatable();
+
         $this->update(['track_opens' => true]);
 
         return $this;
@@ -53,6 +57,8 @@ class EmailCampaign extends Model
 
     public function trackClicks()
     {
+        $this->ensureUpdatable();
+
         $this->update(['track_clicks' => true]);
 
         return $this;
@@ -60,6 +66,8 @@ class EmailCampaign extends Model
 
     public function to(EmailList $emailList)
     {
+        $this->ensureUpdatable();
+
         $this->email_list_id = $emailList->id;
 
         return $this;
@@ -67,7 +75,7 @@ class EmailCampaign extends Model
 
     public function send(): void
     {
-        $this->ensureReadyForSending();
+        $this->ensureSendable();
 
         dispatch(new SendCampaignJob($this, $this->emai));
 
@@ -78,9 +86,30 @@ class EmailCampaign extends Model
         $this->to($emailList)->send();
     }
 
-    private function ensureReadyForSending()
+    protected function ensureSendable()
     {
+        if ($this->status === EmailCampaignStatus::SENDING) {
+            throw CampaignCouldNotBeSent::beingSent($this);
+        }
 
+        if ($this->status === EmailCampaignStatus::SENT) {
+            throw CampaignCouldNotBeSent::alreadySent($this);
+        }
+
+        if (is_null($this->emailList)) {
+            throw CampaignCouldNotBeSent::noListSet($this);
+        }
+    }
+
+    protected function ensureUpdatable(): void
+    {
+        if ($this->status === EmailCampaignStatus::SENDING) {
+            throw CampaignCouldNotBeUpdated::beingSent($this);
+        }
+
+        if ($this->status === EmailCampaignStatus::SENT) {
+            throw CampaignCouldNotBeSent::alreadySent($this);
+        }
     }
 }
 

@@ -14,9 +14,9 @@ trait HasUuid
         });
     }
 
-    public static function findOrFailByUuid(string $uuid)
+    public static function findByUuid(string $uuid): ?Model
     {
-        static::where('uuid', $uuid)->firstOrFail();
+        return static::where('uuid', $uuid)->first();
     }
 }
 

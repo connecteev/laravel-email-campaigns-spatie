@@ -33,27 +33,12 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../config/email-campaigns.php', 'email-campaigns');
 
-        $this
-            ->registerRouteBindings()
-            ->registerRoutes();
-    }
-
-    protected function registerRouteBindings()
-    {
-        Route::bind('linkUuid', function(string $uuid) {
-            CampaignLink::findOrFailByUuid($uuid);
-        });
-
-        Route::bind('subscriberUuid', function(string $uuid) {
-            EmailListSubscriber::findOrFailByUuid($uuid);
-        });
-
-        return $this;
+        $this->registerRoutes();
     }
 
     protected function registerRoutes()
     {
-        Route::get('/track-clicks/{linkUuid}/{subscriberUuid?}',TrackClicksController::class);
+        Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}',TrackClicksController::class);
 
         return $this;
     }
