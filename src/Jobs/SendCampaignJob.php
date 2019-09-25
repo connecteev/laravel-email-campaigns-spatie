@@ -9,9 +9,10 @@ use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
-use Spatie\EmailCampaigns\EmailList;
+use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
-use Spatie\EmailCampaigns\Models\EmailSubscriber;
+use Spatie\EmailCampaigns\Models\EmailList;
+use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 use Symfony\Component\DomCrawler\Crawler;
 
 class SendCampaignJob
@@ -50,36 +51,24 @@ class SendCampaignJob
 
     private function prepareWebviewHtml()
     {
+        $this->campaign->webview_html = $this->html;
+        $this->campaign->save();
+
         return $this;
     }
 
     protected function send()
     {
-        $this->emailList->emails()->each(function (EmailSubscriber $emailSubscriber) {
-            $queueItem = $this->campaign->queue()->create([
+        $this->emailList->subscribers->each(function (EmailListSubscriber $emailSubscriber) {
+            $pendingSend = $this->campaign->sends()->create([
                 'email_subscriber_id' => $emailSubscriber->id,
             ]);
 
-            $personalisedHtml = (new PersonalizeHtmlAction())->handle(
-                $this->campaign->email_html,
-                $emailSubscriber,
-                $this->campaign,
-            );
-
-            try {
-                Mail::raw($personalisedHtml, function(Message $message) use ($emailSubscriber) {
-                    $message
-                        ->to($emailSubscriber->email)
-                        ->subject($this->campaign->subject);
-                });
-
-                $queueItem->markAsSent();
-            } catch (Exception $exception)
-            {
-                //TODO add error to queue item;
-            }
-
+            dispatch(new SendMailJob($pendingSend));
         });
+
+        event(new EmailCampaignSent($this->campaign));
+
     }
 }
 

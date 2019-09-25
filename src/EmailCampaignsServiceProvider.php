@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Models\CampaignLink;
-use Spatie\EmailCampaigns\Models\EmailSubscriber;
+use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 use Spatie\MediaLibrary\Commands\CleanCommand;
 use Spatie\MediaLibrary\Commands\ClearCommand;
 use Spatie\MediaLibrary\Filesystem\Filesystem;
@@ -45,7 +45,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
         });
 
         Route::bind('subscriberUuid', function(string $uuid) {
-            EmailSubscriber::findOrFailByUuid($uuid);
+            EmailListSubscriber::findOrFailByUuid($uuid);
         });
 
         return $this;

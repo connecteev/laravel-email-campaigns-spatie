@@ -3,12 +3,14 @@
 namespace Spatie\EmailCampaigns\Actions;
 
 use Spatie\EmailCampaigns\Models\EmailCampaign;
-use Spatie\EmailCampaigns\Models\EmailSubscriber;
+use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 
 class PersonalizeHtmlAction
 {
-    public function handle($html, EmailSubscriber $emailSubscriber, EmailCampaign $emailCampaign) {
-        // TODO personalize
+    public function handle($html, EmailListSubscriber $emailSubscriber, EmailCampaign $emailCampaign) {
+        $html = str_replace('[[subscriberUuid]]', $emailSubscriber->uuid, $html);
+
+
 
         return $html;
     }

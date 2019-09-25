@@ -25,7 +25,7 @@ class CampaignLink extends Model
         return $this->hasMany(CampaignClick::class);
     }
 
-    public function registerClick(EmailSubscriber $subscriber)
+    public function registerClick(EmailListSubscriber $subscriber)
     {
         $this->clicks()->create([
             'email_subscriber_id' => $subscriber->id,
@@ -34,7 +34,7 @@ class CampaignLink extends Model
 
     public function getUrlAttribute()
     {
-        return url(action(TrackClicksController::class, $this->uuid)) . '[[subscriberUuid]]';
+        return url(action(TrackClicksController::class, $this->uuid)) . '[[subscriberUuid]]?redirect=' . urlencode($this->original_link);
     }
 }
 

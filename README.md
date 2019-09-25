@@ -18,6 +18,7 @@ $campaign = EmailCampaign::create([
 
 EmailCampaign::create()
     ->subject('My newsletter #1')
+    ->content($html)
     ->trackOpens()
     ->trackClicks()
     ->sendTo($list)

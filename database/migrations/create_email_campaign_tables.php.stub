@@ -8,10 +8,46 @@ class CreateEmailCampaignTables extends Migration
 {
     public function up()
     {
+        Schema::create('email_lists', function(Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+        });
+
+        Schema::create('email_list_subscriptions', function(Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('email_list_id');
+            $table->unsignedBigInteger('email_list_subscriber_id');
+
+            $table
+                ->foreign('email_list_id')
+                ->references('id')->on('email_lists')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('email_list_subscriber_id')
+                ->references('id')->on('email_list_subscribers')
+                ->onDelete('cascade');
+        });
+
+        Schema::create('email_list_subscribers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('email');
+            $table->string('email_campaign_id');
+            $table->uuid('uuid');
+            $table->nullableTimestamps();
+
+            $table
+                ->foreign('email_campaign_id')
+                ->references('id')->on('email_campaigns')
+                ->onDelete('cascade');
+        });
+
         Schema::create('email_campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('subject')->nullable();
+
+            $table->unsignedBigInteger('email_list_id')->nullable();
             $table->string('status');
 
             $table->longText('html')->nullable();
@@ -21,7 +57,16 @@ class CreateEmailCampaignTables extends Migration
             $table->boolean('track_opens')->default(false);
             $table->boolean('track_clicks')->default(false);
 
+            $table->integer('open_rate')->nullable();
+            $table->integer('click_rate')->nullable();
+            $table->integer('sent_to_number_of_subscribers')->nullable();
+
             $table->nullableTimestamps();
+
+            $table
+                ->foreign('email_list_id')
+                ->references('id')->on('email_lists')
+                ->onDelete('set null');
         });
 
         Schema::create('campaign_links', function (Blueprint $table) {
@@ -54,20 +99,7 @@ class CreateEmailCampaignTables extends Migration
                 ->onDelete('set null');
         });
 
-        Schema::create('email_subscribers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('email');
-            $table->string('email_campaign_id');
-            $table->uuid('uuid');
-            $table->nullableTimestamps();
-
-            $table
-                ->foreign('email_campaign_id')
-                ->references('id')->on('email_campaigns')
-                ->onDelete('cascade');
-        });
-
-        Schema::create('email_campaign_queue', function(Blueprint $table) {
+        Schema::create('email_campaign_sends', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('email_subscriber_id');
             $table->unsignedBigInteger('email_campaign_id');

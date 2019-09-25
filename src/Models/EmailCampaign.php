@@ -3,8 +3,8 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\EmailCampaigns\EmailList;
 use Spatie\EmailCampaigns\Enums\EmailCampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 
@@ -15,6 +15,9 @@ class EmailCampaign extends Model
     public $casts = [
         'track_opens' => 'bool',
         'track_clicks' => 'boolean',
+        'open_rate' => 'integer',
+        'click_rate' => 'integer',
+        'send_to_number_of_subscribers' => 'integer',
     ];
 
     public static function boot()
@@ -26,14 +29,19 @@ class EmailCampaign extends Model
         });
     }
 
+    public function emailList(): BelongsTo
+    {
+        return $this->belongsTo(EmailList::class);
+    }
+
     public function links(): HasMany
     {
         return $this->hasMany(CampaignLink::class);
     }
 
-    public function queue(): HasMany
+    public function sends(): HasMany
     {
-        return $this->hasMany(EmailCampaignSendQueueItem::class);
+        return $this->hasMany(EmailCampaignSend::class);
     }
 
     public function trackOpens()
@@ -50,11 +58,29 @@ class EmailCampaign extends Model
         return $this;
     }
 
-    public function sendTo(EmailList $emailList)
+    public function to(EmailList $emailList)
     {
-        dispatch(new SendCampaignJob($this, $emailList));
+        $this->email_list_id = $emailList->id;
+
+        return $this;
     }
 
+    public function send(): void
+    {
+        $this->ensureReadyForSending();
 
+        dispatch(new SendCampaignJob($this, $this->emai));
+
+    }
+
+    public function sendTo(EmailList $emailList): void
+    {
+        $this->to($emailList)->send();
+    }
+
+    private function ensureReadyForSending()
+    {
+
+    }
 }
 
