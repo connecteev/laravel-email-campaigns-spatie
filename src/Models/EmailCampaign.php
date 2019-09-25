@@ -82,17 +82,18 @@ class EmailCampaign extends Model
         return $this;
     }
 
-    public function send(): void
+    public function send()
     {
         $this->ensureSendable();
 
-        dispatch(new SendCampaignJob($this, $this->emai));
+        dispatch(new SendCampaignJob($this, $this->emailList));
 
+        return $this;
     }
 
-    public function sendTo(EmailList $emailList): void
+    public function sendTo(EmailList $emailList)
     {
-        $this->to($emailList)->send();
+        return $this->to($emailList)->send();
     }
 
     protected function ensureSendable()

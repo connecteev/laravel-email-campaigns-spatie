@@ -2,16 +2,23 @@
 
 namespace Spatie\EmailCampaigns\Jobs;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 
-class RegisterClickJob
+class RegisterClickJob implements ShouldQueue
 {
-    /** @var string */
-    private $campaignLinkUuid;
+    use Dispatchable, InteractsWithQueue, Queueable;
 
     /** @var string */
-    private $subscriberUuid;
+    public $campaignLinkUuid;
+
+    /** @var string */
+    public $subscriberUuid;
 
     public function __construct(string $campaignLinkUuid, string $subscriberUuid)
     {

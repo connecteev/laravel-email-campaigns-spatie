@@ -2,6 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Tests\Models;
 
+use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Tests\TestCase;
@@ -14,6 +16,8 @@ class EmailCampaignTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Queue::fake();
 
         $this->campaign = EmailCampaign::create()->refresh();
     }
@@ -62,6 +66,41 @@ class EmailCampaignTest extends TestCase
         $this->campaign->to($list);
 
         $this->assertEquals($list->id, $this->campaign->refresh()->email_list_id);
+    }
+
+    /** @test */
+    public function it_can_be_sent()
+    {
+        $list = factory(EmailList::class)->create();
+
+        $campaign = EmailCampaign::create()
+            ->subject('test')
+            ->to($list)
+            ->send();
+
+        Queue::assertPushed(SendCampaignJob::class, function(SendCampaignJob $job) use ($campaign) {
+            $this->assertEquals($campaign->id, $job->campaign->id);
+
+            return true;
+        });
+    }
+
+    /** @test */
+    public function it_has_a_shorthand_to_set_the_list_and_send_it_in_one_go()
+    {
+        $list = factory(EmailList::class)->create();
+
+        $campaign = EmailCampaign::create()
+            ->subject('test')
+            ->sendTo($list);
+
+        $this->assertEquals($list->id, $campaign->refresh()->email_list_id);
+
+        Queue::assertPushed(SendCampaignJob::class, function(SendCampaignJob $job) use ($campaign) {
+            $this->assertEquals($campaign->id, $job->campaign->id);
+
+            return true;
+        });
     }
 }
 

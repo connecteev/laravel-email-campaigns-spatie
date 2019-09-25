@@ -2,12 +2,11 @@
 
 namespace Spatie\EmailCampaigns\Jobs;
 
-use DOMDocument;
-use DOMElement;
-use Exception;
-use Illuminate\Mail\Message;
-use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
@@ -15,19 +14,17 @@ use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 use Symfony\Component\DomCrawler\Crawler;
 
-class SendCampaignJob
+class SendCampaignJob implements ShouldQueue
 {
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
     public $campaign;
 
-    /** @var \Spatie\EmailCampaigns\EmailList */
-    public $emailList;
 
-    public function __construct(EmailCampaign $campaign, EmailList $emailList)
+    public function __construct(EmailCampaign $campaign)
     {
         $this->campaign = $campaign;
-
-        $this->emailList = $emailList;
     }
 
     public function handle()
@@ -59,7 +56,7 @@ class SendCampaignJob
 
     protected function send()
     {
-        $this->emailList->subscribers->each(function (EmailListSubscriber $emailSubscriber) {
+        $this->campaign->emailList->subscribers->each(function (EmailListSubscriber $emailSubscriber) {
             $pendingSend = $this->campaign->sends()->create([
                 'email_subscriber_id' => $emailSubscriber->id,
             ]);
@@ -68,7 +65,6 @@ class SendCampaignJob
         });
 
         event(new EmailCampaignSent($this->campaign));
-
     }
 }
 
