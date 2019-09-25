@@ -11,7 +11,7 @@
 ```php
 $campaign = EmailCampaign::create([
     'subject' => 'My newsletter #1',
-    'text' => $content'
+    'text' => $content,
     'track_opens' => true,
     'track_clicks' => true,
 ])->send();
