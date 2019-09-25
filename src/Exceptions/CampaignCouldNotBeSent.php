@@ -20,5 +20,10 @@ class CampaignCouldNotBeSent extends \Exception
     {
         return new static("The campaign `{$emailCampaign->name}` can't be sent, because there is no list set to send it to.");
     }
+
+    public static function noSubjectSet(EmailCampaign $emailCampaign)
+    {
+        return new static("The campaign `{$emailCampaign->name}` can't be sent, because no subject has been set.");
+    }
 }
 

@@ -16,5 +16,23 @@ class EmailListSubscriber extends Model
     {
         return $this->hasManyThrough(EmailList::class, EmailListSubscription::class);
     }
+
+    public function subscribeTo(EmailList $emailList): self
+    {
+        EmailListSubscription::firstOrCreate([
+            'email_list_subscriber_id' => $this->id,
+            'email_list_id' => $emailList->id,
+        ]);
+
+        return $this->fresh();
+    }
+
+    public function isSubscribedTo(EmailList $emailList): bool
+    {
+        return EmailListSubscription::query()
+            ->where('email_list_subscriber_id', $this->id)
+            ->where('email_list_id', $emailList->id)
+            ->exists();
+    }
 }
 

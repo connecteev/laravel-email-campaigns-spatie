@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmailListSubscription extends Model
 {
-
+    public $guarded = [];
 }
 

@@ -46,20 +46,29 @@ class EmailCampaign extends Model
         return $this->hasMany(EmailCampaignSend::class);
     }
 
-    public function trackOpens()
+    public function subject(string $subject)
     {
         $this->ensureUpdatable();
 
-        $this->update(['track_opens' => true]);
+        $this->update(compact('subject'));
 
         return $this;
     }
 
-    public function trackClicks()
+    public function trackOpens(bool $bool = true)
     {
         $this->ensureUpdatable();
 
-        $this->update(['track_clicks' => true]);
+        $this->update(['track_opens' => $bool]);
+
+        return $this;
+    }
+
+    public function trackClicks(bool $bool = true)
+    {
+        $this->ensureUpdatable();
+
+        $this->update(['track_clicks' => $bool]);
 
         return $this;
     }
@@ -68,7 +77,7 @@ class EmailCampaign extends Model
     {
         $this->ensureUpdatable();
 
-        $this->email_list_id = $emailList->id;
+        $this->update(['email_list_id' => $emailList->id]);
 
         return $this;
     }
@@ -94,6 +103,10 @@ class EmailCampaign extends Model
 
         if ($this->status === EmailCampaignStatus::SENT) {
             throw CampaignCouldNotBeSent::alreadySent($this);
+        }
+
+        if (empty($this->subject)) {
+            throw CampaignCouldNotBeSent::noSubjectSet($this);
         }
 
         if (is_null($this->emailList)) {

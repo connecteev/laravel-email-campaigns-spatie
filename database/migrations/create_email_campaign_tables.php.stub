@@ -11,12 +11,14 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('email_lists', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->timestamps();
         });
 
         Schema::create('email_list_subscriptions', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('email_list_id');
             $table->unsignedBigInteger('email_list_subscriber_id');
+            $table->timestamps();
 
             $table
                 ->foreign('email_list_id')
@@ -32,19 +34,12 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('email_list_subscribers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email');
-            $table->string('email_campaign_id');
             $table->uuid('uuid');
             $table->nullableTimestamps();
-
-            $table
-                ->foreign('email_campaign_id')
-                ->references('id')->on('email_campaigns')
-                ->onDelete('cascade');
         });
 
         Schema::create('email_campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->string('subject')->nullable();
 
             $table->unsignedBigInteger('email_list_id')->nullable();
@@ -61,7 +56,7 @@ class CreateEmailCampaignTables extends Migration
             $table->integer('click_rate')->nullable();
             $table->integer('sent_to_number_of_subscribers')->nullable();
 
-            $table->nullableTimestamps();
+            $table->timestamps();
 
             $table
                 ->foreign('email_list_id')
