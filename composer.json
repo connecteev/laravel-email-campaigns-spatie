@@ -21,11 +21,11 @@
         "illuminate/events": "^6.0",
         "illuminate/mail": "^6.0",
         "illuminate/support": "^6.0",
-        "orchestra/testbench": "^4.0",
         "symfony/dom-crawler": "^4.3"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.6",
+        "orchestra/testbench": "^4.0",
         "phpunit/phpunit": "^8.2",
         "symfony/var-dumper": "^4.3"
     },
