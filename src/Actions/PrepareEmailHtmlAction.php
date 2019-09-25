@@ -4,6 +4,7 @@ namespace Spatie\EmailCampaigns\Actions;
 
 use DOMDocument;
 use DOMElement;
+use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 
 class PrepareEmailHtmlAction
@@ -26,6 +27,12 @@ class PrepareEmailHtmlAction
         $dom->loadHTML($emailCampaign->email_html);
 
         collect($dom->getElementsByTagName('a'))
+            ->filter(function (DOMElement $linkElement) {
+                return Str::startsWith(
+                    $linkElement->getAttribute('href'),
+                    ['http://', 'https://']
+                );
+            })
             ->each(function(DOMElement $linkElement) use ($emailCampaign) {
                 $originalHref = $linkElement->getAttribute('href');
 
