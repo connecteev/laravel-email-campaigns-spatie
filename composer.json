@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": "^7.3",
+        "ext-dom": "*",
         "illuminate/database": "^6.0",
         "illuminate/events": "^6.0",
         "illuminate/mail": "^6.0",
