@@ -3,8 +3,8 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use MongoDB\Driver\Monitoring\Subscriber;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmailListSubscription extends Model
 {
@@ -15,4 +15,3 @@ class EmailListSubscription extends Model
         return $this->belongsTo(Subscriber::class, 'email_list_subscriber_id');
     }
 }
-

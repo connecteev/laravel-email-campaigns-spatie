@@ -3,10 +3,10 @@
 namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
-use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Tests\TestCase;
 
 class EmailCampaignTest extends TestCase
 {
@@ -78,7 +78,7 @@ class EmailCampaignTest extends TestCase
             ->to($list)
             ->send();
 
-        Queue::assertPushed(SendCampaignJob::class, function(SendCampaignJob $job) use ($campaign) {
+        Queue::assertPushed(SendCampaignJob::class, function (SendCampaignJob $job) use ($campaign) {
             $this->assertEquals($campaign->id, $job->campaign->id);
 
             return true;
@@ -96,11 +96,10 @@ class EmailCampaignTest extends TestCase
 
         $this->assertEquals($list->id, $campaign->refresh()->email_list_id);
 
-        Queue::assertPushed(SendCampaignJob::class, function(SendCampaignJob $job) use ($campaign) {
+        Queue::assertPushed(SendCampaignJob::class, function (SendCampaignJob $job) use ($campaign) {
             $this->assertEquals($campaign->id, $job->campaign->id);
 
             return true;
         });
     }
 }
-

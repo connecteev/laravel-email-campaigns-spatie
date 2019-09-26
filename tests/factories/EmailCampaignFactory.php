@@ -11,4 +11,3 @@ $factory->define(EmailCampaign::class, function (Generator $faker) {
         'track_clicks' => $faker->boolean,
     ];
 });
-

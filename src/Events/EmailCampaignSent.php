@@ -14,4 +14,3 @@ class EmailCampaignSent
         $this->emailCampaign = $emailCampaign;
     }
 }
-

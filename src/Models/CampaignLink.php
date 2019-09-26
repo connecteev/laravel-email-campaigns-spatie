@@ -3,11 +3,10 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 
 class CampaignLink extends Model
 {
@@ -34,7 +33,6 @@ class CampaignLink extends Model
 
     public function getUrlAttribute()
     {
-        return url(action(TrackClicksController::class, $this->uuid)) . '[[subscriberUuid]]?redirect=' . urlencode($this->original_link);
+        return url(action(TrackClicksController::class, $this->uuid)).'[[subscriberUuid]]?redirect='.urlencode($this->original_link);
     }
 }
-
