@@ -5,11 +5,11 @@ namespace Spatie\EmailCampaigns\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Mail\Message;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
+use Spatie\EmailCampaigns\Mails\CampaignMail;
 use Spatie\EmailCampaigns\Models\EmailCampaignSend;
 
 class SendMailJob implements ShouldQueue
@@ -34,15 +34,13 @@ class SendMailJob implements ShouldQueue
 
         $personalisedHtml = (new PersonalizeHtmlAction())->handle(
             $this->pendingSend->emailCampaign->email_html,
-            $this->pendingSend->emailSubscriber,
-            $this->pendingSend->emailCampaig,
+            $this->pendingSend->emailListSubscriber,
+            $this->pendingSend->emailCampaign,
             );
 
-        Mail::raw($personalisedHtml, function (Message $message) {
-            $message
-                ->to($this->pendingSend->emailSubscriber->email)
-                ->subject($this->pendingSend->emailCampaign->subject);
-        });
+        $campaignMail = new CampaignMail($this->pendingSend->emailCampaign->subject, $personalisedHtml);
+
+        Mail::to($this->pendingSend->emailListSubscriber->email)->send($campaignMail);
 
         $this->pendingSend->markAsSent();
     }

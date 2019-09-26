@@ -14,6 +14,11 @@ class EmailList extends Model
         return $this->belongsToMany(EmailListSubscriber::class, 'email_list_subscriptions');
     }
 
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(EmailListSubscription::class);
+    }
+
     public function campaigns(): HasMany
     {
         return $this->hasMany(EmailCampaign::class);

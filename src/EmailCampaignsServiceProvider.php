@@ -30,6 +30,13 @@ class EmailCampaignsServiceProvider extends ServiceProvider
                 __DIR__.'/../database/migrations/create_email_campaign_tables.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_email_campaigns.php'),
             ], 'migrations');
         }
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'email-campaigns');
+
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/email-campaigns'),
+        ], 'views');
+
     }
 
     public function register()

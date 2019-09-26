@@ -11,7 +11,6 @@ use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
-use Symfony\Component\DomCrawler\Crawler;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -19,7 +18,6 @@ class SendCampaignJob implements ShouldQueue
 
     /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
     public $campaign;
-
 
     public function __construct(EmailCampaign $campaign)
     {

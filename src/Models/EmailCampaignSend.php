@@ -9,13 +9,9 @@ class EmailCampaignSend extends Model
 {
     public $dates = ['sent_at'];
 
-    public function markAsSent()
+    public function emailListSubscriber(): BelongsTo
     {
-        $this->sent_at = now();
-
-        $this->save();
-
-        return $this;
+        return $this->belongsTo(EmailListSubscriber::class);
     }
 
     public function emailCampaign(): BelongsTo
@@ -23,9 +19,13 @@ class EmailCampaignSend extends Model
         return $this->belongsTo(EmailCampaign::class);
     }
 
-    public function emailSubscriber(): BelongsTo
+    public function markAsSent()
     {
-        return $this->belongsTo(EmailListSubscriber::class);
+        $this->sent_at = now();
+
+        $this->save();
+
+        return $this;
     }
 
     public function wasAlreadySent(): bool
