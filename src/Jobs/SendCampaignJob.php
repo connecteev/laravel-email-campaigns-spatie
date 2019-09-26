@@ -10,7 +10,6 @@ use Illuminate\Queue\SerializesModels;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
-use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 use Symfony\Component\DomCrawler\Crawler;
 

@@ -27,5 +27,10 @@ class EmailCampaignSend extends Model
     {
         return $this->belongsTo(EmailListSubscriber::class);
     }
+
+    public function wasAlreadySent(): bool
+    {
+        return ! is_null($this->sent_at);
+    }
 }
 

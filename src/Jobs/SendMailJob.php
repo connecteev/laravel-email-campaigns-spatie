@@ -16,6 +16,8 @@ class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $deleteWhenMissingModels = true;
+
     /** @var \Spatie\EmailCampaigns\Models\EmailCampaignSend */
     public $pendingSend;
 
@@ -26,6 +28,10 @@ class SendMailJob implements ShouldQueue
 
     public function handle()
     {
+        if ($this->pendingSend->wasAlreadySent()) {
+            return;
+        }
+
         $personalisedHtml = (new PersonalizeHtmlAction())->handle(
             $this->pendingSend->emailCampaign->email_html,
             $this->pendingSend->emailSubscriber,
