@@ -8,4 +8,3 @@ class EmailCampaignStatus
     const SENDING = 'sending';
     const SENT = 'sent';
 }
-

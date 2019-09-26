@@ -26,4 +26,3 @@ class CampaignMail extends Mailable
             ->view('email-campaigns::mails.campaign');
     }
 }
-

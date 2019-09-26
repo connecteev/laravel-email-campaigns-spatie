@@ -12,4 +12,3 @@ $factory->define(EmailCampaignSend::class, function (Generator $faker) {
         'email_list_subscriber_id' => factory(EmailListSubscriber::class),
     ];
 });
-

@@ -4,18 +4,10 @@ namespace Spatie\EmailCampaigns;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
-use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
-use Spatie\EmailCampaigns\Models\CampaignLink;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
-use Spatie\MediaLibrary\Commands\CleanCommand;
-use Spatie\MediaLibrary\Commands\ClearCommand;
-use Spatie\MediaLibrary\Filesystem\Filesystem;
-use Spatie\MediaLibrary\Commands\RegenerateCommand;
-use Spatie\MediaLibrary\ResponsiveImages\WidthCalculator\WidthCalculator;
-use Spatie\MediaLibrary\ResponsiveImages\TinyPlaceholderGenerator\TinyPlaceholderGenerator;
 
 class EmailCampaignsServiceProvider extends ServiceProvider
 {
@@ -36,7 +28,6 @@ class EmailCampaignsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/email-campaigns'),
         ], 'views');
-
     }
 
     public function register()
@@ -50,7 +41,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-        Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}',TrackClicksController::class);
+        Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}', TrackClicksController::class);
 
         return $this;
     }
@@ -63,7 +54,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
             throw InvalidConfig::invalidPrepareEmailAction($prepareEmailHtmlActionClass);
         }
 
-        $this->app->bind(PrepareEmailHtmlAction::class, function() use ($prepareEmailHtmlActionClass) {
+        $this->app->bind(PrepareEmailHtmlAction::class, function () use ($prepareEmailHtmlActionClass) {
             return new $prepareEmailHtmlActionClass;
         });
 
@@ -73,9 +64,8 @@ class EmailCampaignsServiceProvider extends ServiceProvider
             throw InvalidConfig::invalidPersonalizeHtmlAction($personalizeHtmlActionClass);
         }
 
-        $this->app->bind(PersonalizeHtmlAction::class, function() use ($personalizeHtmlActionClass) {
+        $this->app->bind(PersonalizeHtmlAction::class, function () use ($personalizeHtmlActionClass) {
             return new $personalizeHtmlActionClass;
         });
     }
-
 }

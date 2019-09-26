@@ -17,4 +17,3 @@ class CampaignCouldNotBeUpdated extends Exception
         return new static("The campaign `{$emailCampaign->name}` cannot be updated because it was already sent.");
     }
 }
-

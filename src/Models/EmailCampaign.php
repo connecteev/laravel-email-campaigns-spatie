@@ -3,12 +3,12 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\EmailCampaignStatus;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
-use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 
 class EmailCampaign extends Model
 {
@@ -26,7 +26,7 @@ class EmailCampaign extends Model
     {
         parent::boot();
 
-        static::creating(function(EmailCampaign $emailCampaign) {
+        static::creating(function (EmailCampaign $emailCampaign) {
             $emailCampaign->status = EmailCampaignStatus::CREATED;
         });
     }
@@ -126,4 +126,3 @@ class EmailCampaign extends Model
         }
     }
 }
-

@@ -22,4 +22,3 @@ class InvalidConfig extends Exception
         return new static("The class specified in the `email-campaigns.actions.personalize_html` key '{$currentValue}' should be or extend `{$expectedClass}`.");
     }
 }
-

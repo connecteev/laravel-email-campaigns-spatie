@@ -3,9 +3,9 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
 
 class RegisterOpenJob implements ShouldQueue
 {
@@ -17,7 +17,5 @@ class RegisterOpenJob implements ShouldQueue
 
     public function handle()
     {
-
     }
 }
-

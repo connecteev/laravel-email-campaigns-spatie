@@ -8,4 +8,3 @@ class CampaignOpen extends Model
 {
     protected $guarded = [];
 }
-

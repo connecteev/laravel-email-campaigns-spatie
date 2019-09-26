@@ -33,4 +33,3 @@ class EmailCampaignSend extends Model
         return ! is_null($this->sent_at);
     }
 }
-

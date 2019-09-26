@@ -3,14 +3,14 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
-use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -31,7 +31,6 @@ class SendCampaignJob implements ShouldQueue
             ->prepareWebviewHtml()
             ->fillMailQueue()
             ->send();
-
 
         $this->makeLinksTrackable($this->campaign);
     }
@@ -64,4 +63,3 @@ class SendCampaignJob implements ShouldQueue
         event(new EmailCampaignSent($this->campaign));
     }
 }
-

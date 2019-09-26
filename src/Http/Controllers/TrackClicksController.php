@@ -4,8 +4,6 @@ namespace Spatie\EmailCampaigns\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\EmailCampaigns\Jobs\RegisterClickJob;
-use Spatie\EmailCampaigns\Models\CampaignLink;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 
 class TrackClicksController
 {
@@ -20,4 +18,3 @@ class TrackClicksController
         return redirect()->to($redirectUrl);
     }
 }
-

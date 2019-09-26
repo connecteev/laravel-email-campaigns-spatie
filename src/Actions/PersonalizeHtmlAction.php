@@ -7,12 +7,10 @@ use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 
 class PersonalizeHtmlAction
 {
-    public function handle($html, EmailListSubscriber $emailSubscriber, EmailCampaign $emailCampaign) {
+    public function handle($html, EmailListSubscriber $emailSubscriber, EmailCampaign $emailCampaign)
+    {
         $html = str_replace('[[subscriberUuid]]', $emailSubscriber->uuid, $html);
-
-
 
         return $html;
     }
 }
-

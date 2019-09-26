@@ -2,8 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Actions;
 
-use DOMDocument;
 use DOMElement;
+use DOMDocument;
 use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 
@@ -33,7 +33,7 @@ class PrepareEmailHtmlAction
                     ['http://', 'https://']
                 );
             })
-            ->each(function(DOMElement $linkElement) use ($emailCampaign) {
+            ->each(function (DOMElement $linkElement) use ($emailCampaign) {
                 $originalHref = $linkElement->getAttribute('href');
 
                 $campaignLink = $emailCampaign->links()->create([
@@ -46,4 +46,3 @@ class PrepareEmailHtmlAction
         $this->email_html = $dom->saveHtml();
     }
 }
-

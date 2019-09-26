@@ -26,4 +26,3 @@ class CampaignCouldNotBeSent extends \Exception
         return new static("The campaign `{$emailCampaign->name}` can't be sent, because no subject has been set.");
     }
 }
-

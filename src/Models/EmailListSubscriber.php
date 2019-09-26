@@ -3,8 +3,8 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class EmailListSubscriber extends Model
 {
@@ -35,4 +35,3 @@ class EmailListSubscriber extends Model
             ->exists();
     }
 }
-
