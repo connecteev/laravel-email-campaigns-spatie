@@ -32,4 +32,20 @@ class SendMailJobTest extends TestCase
             return true;
         });
     }
+
+    /** @test */
+    public function it_will_not_resend_a_mail_that_has_already_been_sent()
+    {
+        $pendingSend = factory(EmailCampaignSend::class)->create();
+
+        $this->assertFalse($pendingSend->wasAlreadySent());
+
+        dispatch(new SendMailJob($pendingSend));
+
+        $this->assertTrue($pendingSend->refresh()->wasAlreadySent());
+        Mail::assertSent(CampaignMail::class, 1);
+
+        dispatch(new SendMailJob($pendingSend));
+        Mail::assertSent(CampaignMail::class, 1);
+    }
 }

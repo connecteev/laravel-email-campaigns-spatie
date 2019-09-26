@@ -29,7 +29,6 @@ class SendCampaignJob implements ShouldQueue
         $this
             ->prepareEmailHtml()
             ->prepareWebviewHtml()
-            ->fillMailQueue()
             ->send();
 
         $this->makeLinksTrackable($this->campaign);
@@ -59,6 +58,8 @@ class SendCampaignJob implements ShouldQueue
 
             dispatch(new SendMailJob($pendingSend));
         });
+
+        $this->campaign->markAsSent();
 
         event(new EmailCampaignSent($this->campaign));
     }

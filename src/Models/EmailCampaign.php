@@ -20,6 +20,7 @@ class EmailCampaign extends Model
         'open_rate' => 'integer',
         'click_rate' => 'integer',
         'send_to_number_of_subscribers' => 'integer',
+        'sent_at' => 'timestamp',
     ];
 
     public static function boot()
@@ -86,6 +87,8 @@ class EmailCampaign extends Model
     {
         $this->ensureSendable();
 
+        $this->markAsSending();
+
         dispatch(new SendCampaignJob($this, $this->emailList));
 
         return $this;
@@ -125,4 +128,29 @@ class EmailCampaign extends Model
             throw CampaignCouldNotBeSent::alreadySent($this);
         }
     }
+
+    private function markAsSending()
+    {
+        $this->update(['status' => EmailCampaignStatus::SENDING]);
+
+        return $this;
+    }
+
+    public function markAsSent()
+    {
+        $this->status = EmailCampaignStatus::SENT;
+
+        $this->sent_at = now();
+
+        $this->update([
+            'status' => EmailCampaignStatus::SENT,
+            'sent_at' => now(),
+        ]);
+
+        return $this;
+
+
+    }
+
+
 }
