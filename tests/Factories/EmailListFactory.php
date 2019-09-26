@@ -14,15 +14,23 @@ class EmailListFactory
     public function withSubscriberCount(int $subscriberCount)
     {
         $this->subscriberCount = $subscriberCount;
+
+        return $this;
     }
 
-    public function create(array $attributes = [])
+    public function create(array $attributes = []): EmailList
     {
         $emailList = factory(EmailList::class)->create($attributes);
 
-        Collection::times(3)->each(function(int $i) {
-            factory(EmailListSubscriber::class)->create(['email' => "subscriber{$i}@example.com"]);
-        });
+        Collection::times($this->subscriberCount)
+            ->map(function (int $i) {
+                return factory(EmailListSubscriber::class)->create(['email' => "subscriber{$i}@example.com"]);
+            })
+            ->each(function(EmailListSubscriber $emailListSubscriber) use ($emailList) {
+                $emailListSubscriber->subscribeTo($emailList);
+            });
+
+        return $emailList->refresh();
     }
 }
 

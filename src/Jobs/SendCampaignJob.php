@@ -30,8 +30,6 @@ class SendCampaignJob implements ShouldQueue
             ->prepareEmailHtml()
             ->prepareWebviewHtml()
             ->send();
-
-        $this->makeLinksTrackable($this->campaign);
     }
 
     protected function prepareEmailHtml()
@@ -43,7 +41,7 @@ class SendCampaignJob implements ShouldQueue
 
     private function prepareWebviewHtml()
     {
-        $this->campaign->webview_html = $this->html;
+        $this->campaign->webview_html = $this->campaign->html;
         $this->campaign->save();
 
         return $this;
@@ -53,7 +51,7 @@ class SendCampaignJob implements ShouldQueue
     {
         $this->campaign->emailList->subscribers->each(function (EmailListSubscriber $emailSubscriber) {
             $pendingSend = $this->campaign->sends()->create([
-                'email_subscriber_id' => $emailSubscriber->id,
+                'email_list_subscriber_id' => $emailSubscriber->id,
             ]);
 
             dispatch(new SendMailJob($pendingSend));

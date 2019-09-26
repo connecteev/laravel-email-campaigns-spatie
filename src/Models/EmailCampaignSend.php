@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EmailCampaignSend extends Model
 {
+    public $guarded = [];
+
     public $dates = ['sent_at'];
 
     public function emailListSubscriber(): BelongsTo
