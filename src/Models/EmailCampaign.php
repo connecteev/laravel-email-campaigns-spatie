@@ -138,18 +138,17 @@ class EmailCampaign extends Model
 
     public function markAsSent()
     {
-        $this->status = EmailCampaignStatus::SENT;
-
-        $this->sent_at = now();
-
         $this->update([
             'status' => EmailCampaignStatus::SENT,
             'sent_at' => now(),
         ]);
 
         return $this;
+    }
 
-
+    public function wasAlreadySent(): bool
+    {
+        return $this->status === EmailCampaignStatus::SENT;
     }
 
 

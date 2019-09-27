@@ -26,6 +26,10 @@ class SendCampaignJob implements ShouldQueue
 
     public function handle()
     {
+        if ($this->campaign->wasAlreadySent()) {
+            return;
+        }
+
         $this
             ->prepareEmailHtml()
             ->prepareWebviewHtml()

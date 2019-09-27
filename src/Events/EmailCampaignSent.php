@@ -7,7 +7,7 @@ use Spatie\EmailCampaigns\Models\EmailCampaign;
 class EmailCampaignSent
 {
     /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
-    private $emailCampaign;
+    public $emailCampaign;
 
     public function __construct(EmailCampaign $emailCampaign)
     {
