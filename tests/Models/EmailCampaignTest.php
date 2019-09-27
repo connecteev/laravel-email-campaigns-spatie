@@ -75,6 +75,7 @@ class EmailCampaignTest extends TestCase
 
         $campaign = EmailCampaign::create()
             ->subject('test')
+            ->content('my content')
             ->to($list)
             ->send();
 
@@ -91,6 +92,7 @@ class EmailCampaignTest extends TestCase
         $list = factory(EmailList::class)->create();
 
         $campaign = EmailCampaign::create()
+            ->content('my content')
             ->subject('test')
             ->sendTo($list);
 
