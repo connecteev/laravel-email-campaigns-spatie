@@ -40,9 +40,9 @@ class PrepareEmailHtmlAction
                     'original_link' => $originalHref,
                 ]);
 
-                $linkElement->setAttribute('href', $campaignLink->link);
+                $linkElement->setAttribute('href', $campaignLink->url);
             });
 
-        $this->email_html = $dom->saveHtml();
+        $emailCampaign->update(['email_html' => $dom->saveHtml()]);
     }
 }

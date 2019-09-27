@@ -83,6 +83,15 @@ class EmailCampaign extends Model
         return $this;
     }
 
+    public function content(string $html)
+    {
+        $this->ensureUpdatable();
+
+        $this->update(compact('html'));
+
+        return $this;
+    }
+
     public function send()
     {
         $this->ensureSendable();
@@ -115,6 +124,10 @@ class EmailCampaign extends Model
 
         if (is_null($this->emailList)) {
             throw CampaignCouldNotBeSent::noListSet($this);
+        }
+
+        if (empty($this->html)) {
+            throw CampaignCouldNotBeSent::noContent($this);
         }
     }
 
@@ -150,6 +163,4 @@ class EmailCampaign extends Model
     {
         return $this->status === EmailCampaignStatus::SENT;
     }
-
-
 }

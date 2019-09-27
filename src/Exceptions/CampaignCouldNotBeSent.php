@@ -2,6 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Exceptions;
 
+use PharIo\Manifest\Email;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 
 class CampaignCouldNotBeSent extends \Exception
@@ -24,5 +25,10 @@ class CampaignCouldNotBeSent extends \Exception
     public static function noSubjectSet(EmailCampaign $emailCampaign)
     {
         return new static("The campaign `{$emailCampaign->name}` can't be sent, because no subject has been set.");
+    }
+
+    public static function noContent(EmailCampaign $emailCampaign): self
+    {
+        return new static("The campaign `{$emailCampaign->name}` can't be sent because not content has been set.");
     }
 }
