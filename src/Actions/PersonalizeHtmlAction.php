@@ -9,7 +9,7 @@ class PersonalizeHtmlAction
 {
     public function handle($html, EmailListSubscriber $emailSubscriber, EmailCampaign $emailCampaign)
     {
-        $html = str_replace('[[subscriberUuid]]', $emailSubscriber->uuid, $html);
+        $html = str_replace(urlencode('[[subscriberUuid]]'), $emailSubscriber->uuid, $html);
 
         return $html;
     }

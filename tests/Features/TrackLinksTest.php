@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\EmailCampaigns\Tests\Http\Controllers;
+namespace Spatie\EmailCampaigns\Tests\Features;
 
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
@@ -10,7 +10,7 @@ use Spatie\EmailCampaigns\Tests\Factories\EmailCampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-class TrackClicksControllerTest extends TestCase
+class TrackLinksTest extends TestCase
 {
     /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
     private $campaign;
@@ -27,9 +27,9 @@ class TrackClicksControllerTest extends TestCase
             'html' => 'my link: <a href="https://spatie.be">Spatie</a>',
         ]);
 
-        Event::listen(MessageSent::class, function(MessageSent $event) {
+        Event::listen(MessageSent::class, function (MessageSent $event) {
             $link = (new Crawler($event->message->getBody()))
-            ->filter('a')->first()->attr('href');
+                ->filter('a')->first()->attr('href');
 
             return $this->link = Str::after($link, 'http://localhost');
         });
@@ -38,9 +38,15 @@ class TrackClicksControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_tests()
+    public function it_can_register_a_click()
     {
-        $this->assertTrue(true);
+        $this
+            ->get($this->link)
+            ->assertRedirect('https://spatie.be');
+
+        $this->assertDatabaseHas('campaign_clicks', [
+            'campaign_link_id' => $this->campaign->links->first()->id,
+            'email_subscriber_id' => $this->campaign->emailList->subscribers->first()->id,
+        ]);
     }
 }
-

@@ -29,7 +29,7 @@ class RegisterClickJob implements ShouldQueue
     public function handle()
     {
         /** @var \Spatie\EmailCampaigns\Models\CampaignLink|null $campaignLink */
-        if (! $campaignLink = CampaignLink::findOrFailByUuid($this->subscriberUuid)) {
+        if (! $campaignLink = CampaignLink::findByUuid($this->campaignLinkUuid)) {
             return;
         }
 
