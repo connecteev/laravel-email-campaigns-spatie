@@ -6,6 +6,7 @@ use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Models\CampaignClick;
 use Spatie\EmailCampaigns\Tests\Factories\EmailCampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -48,5 +49,19 @@ class TrackLinksTest extends TestCase
             'campaign_link_id' => $this->campaign->links->first()->id,
             'email_subscriber_id' => $this->campaign->emailList->subscribers->first()->id,
         ]);
+    }
+
+    /** @test */
+    public function it_will_only_register_the_first_click()
+    {
+        $this->assertEquals(0, CampaignClick::count());
+
+        foreach(range(1,3) as $i) {
+            $this
+                ->get($this->link)
+                ->assertRedirect('https://spatie.be');
+
+            $this->assertEquals(1, CampaignClick::count());
+        }
     }
 }

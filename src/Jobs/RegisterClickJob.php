@@ -38,7 +38,7 @@ class RegisterClickJob implements ShouldQueue
             return;
         }
 
-        $campaignLink->clicks()->create([
+        $campaignLink->clicks()->firstOrCreate([
             'email_subscriber_id' => $subscriber->id,
         ]);
     }
