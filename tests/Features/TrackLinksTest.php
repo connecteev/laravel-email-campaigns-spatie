@@ -52,7 +52,7 @@ class TrackLinksTest extends TestCase
     }
 
     /** @test */
-    public function it_will_only_register_the_first_click()
+    public function it_will_register_multiple_clicks()
     {
         $this->assertEquals(0, CampaignClick::count());
 
@@ -60,8 +60,8 @@ class TrackLinksTest extends TestCase
             $this
                 ->get($this->link)
                 ->assertRedirect('https://spatie.be');
-
-            $this->assertEquals(1, CampaignClick::count());
         }
+
+        $this->assertEquals(3, CampaignClick::count());
     }
 }
