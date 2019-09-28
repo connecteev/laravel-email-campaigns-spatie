@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
 use Spatie\EmailCampaigns\Models\EmailCampaignSend;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
+use Spatie\RateLimitedMiddleware\RateLimited;
 
 class SendMailJob implements ShouldQueue
 {
@@ -43,5 +44,19 @@ class SendMailJob implements ShouldQueue
         Mail::to($this->pendingSend->emailListSubscriber->email)->send($campaignMail);
 
         $this->pendingSend->markAsSent();
+    }
+
+    public function middleware()
+    {
+        $throttlingConfig = config('email-campaigns.throttling');
+
+        $rateLimitedMiddleware = (new RateLimited())
+            ->enabled($throttlingConfig['enabled'])
+            ->connectionName($throttlingConfig['redis_connection_name'])
+            ->key($throttlingConfig['redis_key'])
+            ->timespanInSeconds($throttlingConfig['timespan_in_seconds'])
+            ->allowedNumberOfJobsInTimeSpan($throttlingConfig['allowed_number_of_jobs_in_timespan']);
+
+        return [$rateLimitedMiddleware];
     }
 }
