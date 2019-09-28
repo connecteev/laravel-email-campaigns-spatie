@@ -19,28 +19,14 @@ class TrackLinksTest extends TestCase
     /** @var string */
     private $link;
 
-    public function setUp(): void
+    /** @test */
+    public function it_can_register_a_click()
     {
-        parent::setUp();
-
-        $this->campaign = (new EmailCampaignFactory())->withSubscriberCount(1)->create([
+        $this->sendCampaign([
             'track_clicks' => true,
             'html' => 'my link: <a href="https://spatie.be">Spatie</a>',
         ]);
 
-        Event::listen(MessageSent::class, function (MessageSent $event) {
-            $link = (new Crawler($event->message->getBody()))
-                ->filter('a')->first()->attr('href');
-
-            return $this->link = Str::after($link, 'http://localhost');
-        });
-
-        dispatch(new SendCampaignJob($this->campaign));
-    }
-
-    /** @test */
-    public function it_can_register_a_click()
-    {
         $this
             ->get($this->link)
             ->assertRedirect('https://spatie.be');
@@ -54,6 +40,11 @@ class TrackLinksTest extends TestCase
     /** @test */
     public function it_will_register_multiple_clicks()
     {
+        $this->sendCampaign([
+            'track_clicks' => true,
+            'html' => 'my link: <a href="https://spatie.be">Spatie</a>',
+        ]);
+
         $this->assertEquals(0, CampaignClick::count());
 
         foreach(range(1,3) as $i) {
@@ -63,5 +54,30 @@ class TrackLinksTest extends TestCase
         }
 
         $this->assertEquals(3, CampaignClick::count());
+    }
+
+    /** @test */
+    public function it_will_not_replace_links_if_clicks_should_not_be_tracked()
+    {
+        $this->sendCampaign([
+            'track_clicks' => false,
+            'html' => 'my link: <a href="https://spatie.be">Spatie</a>',
+        ]);
+
+        $this->assertEquals('https://spatie.be', $this->link);
+    }
+
+    protected function sendCampaign(array $attributes)
+    {
+        $this->campaign = (new EmailCampaignFactory())->withSubscriberCount(1)->create($attributes);
+
+        Event::listen(MessageSent::class, function (MessageSent $event) {
+            $link = (new Crawler($event->message->getBody()))
+                ->filter('a')->first()->attr('href');
+
+            $this->link = Str::after($link, 'http://localhost');
+        });
+
+        dispatch(new SendCampaignJob($this->campaign));
     }
 }
