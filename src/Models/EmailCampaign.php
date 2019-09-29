@@ -21,6 +21,7 @@ class EmailCampaign extends Model
         'click_rate' => 'integer',
         'send_to_number_of_subscribers' => 'integer',
         'sent_at' => 'timestamp',
+        'requires_double_opt_in' => 'boolean',
     ];
 
     public static function boot()

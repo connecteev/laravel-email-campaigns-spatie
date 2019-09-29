@@ -4,6 +4,8 @@ return [
     'actions' => [
         'personalize_html' => \Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction::class,
         'prepare_email_html' => \Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction::class,
+        'subscribe_action' => \Spatie\EmailCampaigns\Actions\SubscribeAction::class,
+        'confirm_subscription' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
     ],
 
     'throttling' => [

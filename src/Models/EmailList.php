@@ -22,4 +22,16 @@ class EmailList extends Model
     {
         return $this->hasMany(EmailCampaign::class);
     }
+
+    public function addSubscriber(string $email): EmailListSubscription
+    {
+        /** @var \Spatie\EmailCampaigns\Models\EmailListSubscriber $subscriber */
+        $subscriber = EmailListSubscriber::firstOrCreate([
+            'email' => $email,
+        ]);
+
+        return $subscriber->subscribeTo($this);
+
+
+    }
 }

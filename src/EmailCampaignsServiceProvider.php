@@ -4,9 +4,12 @@ namespace Spatie\EmailCampaigns;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
+use Spatie\EmailCampaigns\Actions\SubscribeAction;
 use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
+use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 
 class EmailCampaignsServiceProvider extends ServiceProvider
@@ -41,6 +44,8 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
+        Route::get('/confirm-subscription/{subscriptionUuid}', ConfirmSubscriptionController::class);
+
         Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}', TrackClicksController::class);
 
         return $this;
@@ -48,24 +53,25 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
     protected function registerActions()
     {
-        $prepareEmailHtmlActionClass = config('email-campaigns.actions.prepare_email_html');
+        $this
+            ->registerAction('personalize_html', PersonalizeHtmlAction::class)
+            ->registerAction('prepare_email_html', PrepareEmailHtmlAction::class)
+            ->registerAction('subscribe_action', SubscribeAction::class)
+            ->registerAction('confirm_subscription', ConfirmSubscriptionAction::class);
+    }
 
-        if (! is_a($prepareEmailHtmlActionClass, PrepareEmailHtmlAction::class, true)) {
-            throw InvalidConfig::invalidPrepareEmailAction($prepareEmailHtmlActionClass);
+    private function registerAction(string $actionName, string $actionClass)
+    {
+        $configuredClass = config("email-campaigns.actions.{$actionName}");
+
+        if (! is_a($configuredClass, $actionClass, true)) {
+            throw InvalidConfig::invalidAction($actionName, $configuredClass ?? '', $actionClass);
         }
 
-        $this->app->bind(PrepareEmailHtmlAction::class, function () use ($prepareEmailHtmlActionClass) {
-            return new $prepareEmailHtmlActionClass;
+        $this->app->bind($actionClass, function () use ($configuredClass) {
+            return new $configuredClass;
         });
 
-        $personalizeHtmlActionClass = config('email-campaigns.actions.personalize_html');
-
-        if (! is_a($personalizeHtmlActionClass, PersonalizeHtmlAction::class, true)) {
-            throw InvalidConfig::invalidPersonalizeHtmlAction($personalizeHtmlActionClass);
-        }
-
-        $this->app->bind(PersonalizeHtmlAction::class, function () use ($personalizeHtmlActionClass) {
-            return new $personalizeHtmlActionClass;
-        });
+        return $this;
     }
 }

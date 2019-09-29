@@ -11,13 +11,16 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('email_lists', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->boolean('requires_double_opt_in')->default(false);
             $table->timestamps();
         });
 
         Schema::create('email_list_subscriptions', function(Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('uuid');
             $table->unsignedBigInteger('email_list_id');
             $table->unsignedBigInteger('email_list_subscriber_id');
+            $table->string('status');
             $table->timestamps();
 
             $table
@@ -33,7 +36,7 @@ class CreateEmailCampaignTables extends Migration
 
         Schema::create('email_list_subscribers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->uuid('uuid');
             $table->nullableTimestamps();
         });
