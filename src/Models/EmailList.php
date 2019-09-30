@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EmailList extends Model
 {
+    public $guarded = [];
+
     public function subscribers(): BelongsToMany
     {
         return $this->belongsToMany(EmailListSubscriber::class, 'email_list_subscriptions');
@@ -31,7 +33,13 @@ class EmailList extends Model
         ]);
 
         return $subscriber->subscribeTo($this);
+    }
 
-
+    public function getSubscription(EmailListSubscriber $subscriber): ?EmailListSubscription
+    {
+        return EmailListSubscription::query()
+            ->where('email_list_id', $this->id)
+            ->where('email_list_subscriber_id', $subscriber->id)
+            ->first();
     }
 }

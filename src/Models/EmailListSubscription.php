@@ -3,7 +3,6 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Driver\Monitoring\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 use Spatie\EmailCampaigns\Actions\SubscribeAction;
@@ -22,7 +21,7 @@ class EmailListSubscription extends Model
 
     public function subscriber(): BelongsTo
     {
-        return $this->belongsTo(Subscriber::class, 'email_list_subscriber_id');
+        return $this->belongsTo(EmailListSubscriber::class, 'email_list_subscriber_id');
     }
 
     public function confirm()

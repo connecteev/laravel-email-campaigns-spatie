@@ -18,14 +18,14 @@ class ConfirmSubscriptionMail extends Mailable implements ShouldQueue
     {
         $this->subscription = $subscription;
 
-        $this->confirmationUrl = action(ConfirmSubscriptionController::class);
+        $this->confirmationUrl = action(ConfirmSubscriptionController::class, $subscription);
     }
 
     public function build()
     {
         return $this
             ->subject("Confirm your subscription to {$this->subscription->emailList->name}")
-            ->markdown('mail.confirmSubscription');
+            ->markdown('email-campaigns::mails.confirmSubscription');
     }
 }
 

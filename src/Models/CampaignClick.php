@@ -3,7 +3,6 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Driver\Monitoring\Subscriber;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CampaignClick extends Model
@@ -17,6 +16,6 @@ class CampaignClick extends Model
 
     public function subscriber(): BelongsTo
     {
-        return $this->belongsTo(Subscriber::class);
+        return $this->belongsTo(EmailListSubscriber::class);
     }
 }

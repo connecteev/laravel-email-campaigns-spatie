@@ -31,6 +31,7 @@ class EmailListSubscriber extends Model
         return EmailListSubscription::query()
             ->where('email_list_subscriber_id', $this->id)
             ->where('email_list_id', $emailList->id)
+            ->where('status', EmailListSubscriptionStatus::SUBSCRIBED)
             ->exists();
     }
 }

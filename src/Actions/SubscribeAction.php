@@ -19,13 +19,21 @@ class SubscribeAction
             $status = EmailListSubscriptionStatus::PENDING;
         }
 
-        $subscription = EmailListSubscription::firstOrCreate([
-            'email_list_subscriber_id' => $subscriber->id,
-            'email_list_id' => $emailList->id,
-            'status' => $status,
-        ]);
+        if ($subscriber->isSubscribedTo($emailList)) {
+            return $emailList->getSubscription($subscriber);
+        }
 
-        if ($emailList->requires_double_opt_in) {
+        $subscription = EmailListSubscription::firstOrCreate(
+            [
+                'email_list_subscriber_id' => $subscriber->id,
+                'email_list_id' => $emailList->id,
+            ],
+            [
+                'status' => $status,
+            ],
+            );
+
+        if ($subscription->status === EmailListSubscriptionStatus::PENDING) {
             Mail::to($subscriber->email)->send(new ConfirmSubscriptionMail($subscription));
         }
 
