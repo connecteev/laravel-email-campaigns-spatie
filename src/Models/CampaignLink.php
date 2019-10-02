@@ -16,7 +16,7 @@ class CampaignLink extends Model
 
     public function campaign(): BelongsTo
     {
-        return $this->belongsTo(EmailCampaign::class);
+        return $this->belongsTo(Campaign::class, 'email_campaign_id');
     }
 
     public function clicks(): HasMany

@@ -2,15 +2,15 @@
 
 namespace Spatie\EmailCampaigns\Events;
 
-use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Models\Campaign;
 
 class EmailCampaignSent
 {
-    /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
-    public $emailCampaign;
+    /** @var \Spatie\EmailCampaigns\Models\Campaign */
+    public $campaign;
 
-    public function __construct(EmailCampaign $emailCampaign)
+    public function __construct(Campaign $campaign)
     {
-        $this->emailCampaign = $emailCampaign;
+        $this->campaign = $campaign;
     }
 }

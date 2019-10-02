@@ -2,7 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Enums;
 
-class EmailCampaignStatus
+class CampaignStatus
 {
     const CREATED = 'created';
     const SENDING = 'sending';

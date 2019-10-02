@@ -7,7 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
@@ -17,10 +17,10 @@ class SendCampaignJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
+    /** @var \Spatie\EmailCampaigns\Models\Campaign */
     public $campaign;
 
-    public function __construct(EmailCampaign $campaign)
+    public function __construct(Campaign $campaign)
     {
         $this->campaign = $campaign;
     }

@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Models\Campaign;
 
 class EmailCampaignTest extends TestCase
 {
-    /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
+    /** @var \Spatie\EmailCampaigns\Models\Campaign */
     private $campaign;
 
     public function setUp(): void
@@ -19,7 +19,7 @@ class EmailCampaignTest extends TestCase
 
         Queue::fake();
 
-        $this->campaign = EmailCampaign::create()->refresh();
+        $this->campaign = Campaign::create()->refresh();
     }
 
     /** @test */
@@ -73,7 +73,7 @@ class EmailCampaignTest extends TestCase
     {
         $list = factory(EmailList::class)->create();
 
-        $campaign = EmailCampaign::create()
+        $campaign = Campaign::create()
             ->subject('test')
             ->content('my content')
             ->to($list)
@@ -91,7 +91,7 @@ class EmailCampaignTest extends TestCase
     {
         $list = factory(EmailList::class)->create();
 
-        $campaign = EmailCampaign::create()
+        $campaign = Campaign::create()
             ->content('my content')
             ->subject('test')
             ->sendTo($list);

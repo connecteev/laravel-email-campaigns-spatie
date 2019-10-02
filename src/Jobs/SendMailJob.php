@@ -33,14 +33,14 @@ class SendMailJob implements ShouldQueue
             return;
         }
         $personalisedHtml = (new PersonalizeHtmlAction())->handle(
-            $this->pendingSend->emailCampaign->email_html,
-            $this->pendingSend->emailListSubscription,
-            $this->pendingSend->emailCampaign,
+            $this->pendingSend->campaign->email_html,
+            $this->pendingSend->subscription,
+            $this->pendingSend->campaign,
             );
 
-        $campaignMail = new CampaignMail($this->pendingSend->emailCampaign->subject, $personalisedHtml);
+        $campaignMail = new CampaignMail($this->pendingSend->campaign->subject, $personalisedHtml);
 
-        Mail::to($this->pendingSend->emailListSubscription->subscriber->email)->send($campaignMail);
+        Mail::to($this->pendingSend->subscription->subscriber->email)->send($campaignMail);
 
         $this->pendingSend->markAsSent();
     }

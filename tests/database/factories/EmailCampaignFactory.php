@@ -1,9 +1,9 @@
 <?php
 
 use Faker\Generator;
-use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Models\Campaign;
 
-$factory->define(EmailCampaign::class, function (Generator $faker) {
+$factory->define(Campaign::class, function (Generator $faker) {
     return [
         'subject' => $faker->sentence,
         'html' => $faker->randomHtml(),

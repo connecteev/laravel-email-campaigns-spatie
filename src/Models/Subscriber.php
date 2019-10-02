@@ -5,7 +5,7 @@ namespace Spatie\EmailCampaigns\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 use Spatie\EmailCampaigns\Actions\SubscribeAction;
-use Spatie\EmailCampaigns\Enums\EmailCampaignStatus;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;

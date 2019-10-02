@@ -14,7 +14,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class UnsubscribeTest extends TestCase
 {
-    /** @var \Spatie\EmailCampaigns\Models\EmailCampaign */
+    /** @var \Spatie\EmailCampaigns\Models\Campaign */
     private $campaign;
 
     /** @var string */

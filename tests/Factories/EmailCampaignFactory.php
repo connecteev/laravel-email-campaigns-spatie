@@ -2,7 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Tests\Factories;
 
-use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Models\Campaign;
 
 class EmailCampaignFactory
 {
@@ -16,13 +16,13 @@ class EmailCampaignFactory
         return $this;
     }
 
-    public function create(array $attributes = []): EmailCampaign
+    public function create(array $attributes = []): Campaign
     {
         $emailList = (new EmailListFactory())
             ->withSubscriberCount($this->subscriberCount)
             ->create();
 
-        $campaign = factory(EmailCampaign::class)
+        $campaign = factory(Campaign::class)
             ->create($attributes)
             ->to($emailList);
 

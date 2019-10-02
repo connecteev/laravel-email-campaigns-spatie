@@ -25,9 +25,9 @@ class SendMailJobTest extends TestCase
         dispatch(new SendMailJob($pendingSend));
 
         Mail::assertSent(CampaignMail::class, function (CampaignMail $mail) use ($pendingSend) {
-            $this->assertEquals($pendingSend->emailCampaign->subject, $mail->subject);
+            $this->assertEquals($pendingSend->campaign->subject, $mail->subject);
 
-            $this->assertTrue($mail->hasTo($pendingSend->emailListSubscription->subscriber->email));
+            $this->assertTrue($mail->hasTo($pendingSend->subscription->subscriber->email));
 
             return true;
         });

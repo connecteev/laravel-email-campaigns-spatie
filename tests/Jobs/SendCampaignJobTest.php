@@ -36,7 +36,7 @@ class SendCampaignJobTest extends TestCase
         Mail::assertSent(CampaignMail::class, 3);
 
         Event::assertDispatched(EmailCampaignSent::class, function(EmailCampaignSent $event) {
-            $this->assertEquals($this->campaign->id, $event->emailCampaign->id);
+            $this->assertEquals($this->campaign->id, $event->campaign->id);
 
             return true;
         });

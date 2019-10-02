@@ -23,7 +23,7 @@ class EmailList extends Model
 
     public function campaigns(): HasMany
     {
-        return $this->hasMany(EmailCampaign::class);
+        return $this->hasMany(Campaign::class);
     }
 
     public function subscribe(string $email): Subscription

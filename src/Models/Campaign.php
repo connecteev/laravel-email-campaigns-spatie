@@ -5,13 +5,15 @@ namespace Spatie\EmailCampaigns\Models;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\EmailCampaigns\Enums\EmailCampaignStatus;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
 
-class EmailCampaign extends Model
+class Campaign extends Model
 {
+    public $table = 'email_campaigns';
+
     protected $guarded = [];
 
     public $casts = [
@@ -28,8 +30,8 @@ class EmailCampaign extends Model
     {
         parent::boot();
 
-        static::creating(function (EmailCampaign $emailCampaign) {
-            $emailCampaign->status = EmailCampaignStatus::CREATED;
+        static::creating(function (Campaign $campaign) {
+            $campaign->status = CampaignStatus::CREATED;
         });
     }
 
@@ -40,12 +42,12 @@ class EmailCampaign extends Model
 
     public function links(): HasMany
     {
-        return $this->hasMany(CampaignLink::class);
+        return $this->hasMany(CampaignLink::class, 'email_campaign_id');
     }
 
     public function sends(): HasMany
     {
-        return $this->hasMany(EmailCampaignSend::class);
+        return $this->hasMany(EmailCampaignSend::class, 'email_campaign_id');
     }
 
     public function subject(string $subject)
@@ -111,11 +113,11 @@ class EmailCampaign extends Model
 
     protected function ensureSendable()
     {
-        if ($this->status === EmailCampaignStatus::SENDING) {
+        if ($this->status === CampaignStatus::SENDING) {
             throw CampaignCouldNotBeSent::beingSent($this);
         }
 
-        if ($this->status === EmailCampaignStatus::SENT) {
+        if ($this->status === CampaignStatus::SENT) {
             throw CampaignCouldNotBeSent::alreadySent($this);
         }
 
@@ -134,18 +136,18 @@ class EmailCampaign extends Model
 
     protected function ensureUpdatable(): void
     {
-        if ($this->status === EmailCampaignStatus::SENDING) {
+        if ($this->status === CampaignStatus::SENDING) {
             throw CampaignCouldNotBeUpdated::beingSent($this);
         }
 
-        if ($this->status === EmailCampaignStatus::SENT) {
+        if ($this->status === CampaignStatus::SENT) {
             throw CampaignCouldNotBeSent::alreadySent($this);
         }
     }
 
     private function markAsSending()
     {
-        $this->update(['status' => EmailCampaignStatus::SENDING]);
+        $this->update(['status' => CampaignStatus::SENDING]);
 
         return $this;
     }
@@ -153,7 +155,7 @@ class EmailCampaign extends Model
     public function markAsSent()
     {
         $this->update([
-            'status' => EmailCampaignStatus::SENT,
+            'status' => CampaignStatus::SENT,
             'sent_at' => now(),
         ]);
 
@@ -162,6 +164,6 @@ class EmailCampaign extends Model
 
     public function wasAlreadySent(): bool
     {
-        return $this->status === EmailCampaignStatus::SENT;
+        return $this->status === CampaignStatus::SENT;
     }
 }

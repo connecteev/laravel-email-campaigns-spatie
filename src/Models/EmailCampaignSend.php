@@ -11,14 +11,14 @@ class EmailCampaignSend extends Model
 
     public $dates = ['sent_at'];
 
-    public function emailListSubscription(): BelongsTo
+    public function subscription(): BelongsTo
     {
-        return $this->belongsTo(Subscription::class);
+        return $this->belongsTo(Subscription::class, 'email_list_subscription_id');
     }
 
-    public function emailCampaign(): BelongsTo
+    public function campaign(): BelongsTo
     {
-        return $this->belongsTo(EmailCampaign::class);
+        return $this->belongsTo(Campaign::class, 'email_campaign_id');
     }
 
     public function markAsSent()

@@ -5,26 +5,26 @@ namespace Spatie\EmailCampaigns\Actions;
 use DOMElement;
 use DOMDocument;
 use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Models\EmailCampaign;
+use Spatie\EmailCampaigns\Models\Campaign;
 
 class PrepareEmailHtmlAction
 {
-    public function execute(EmailCampaign $emailCampaign)
+    public function execute(Campaign $campaign)
     {
-        $emailCampaign->email_html = $emailCampaign->html;
+        $campaign->email_html = $campaign->html;
 
-        if ($emailCampaign->track_clicks) {
-            $this->trackClicks($emailCampaign);
+        if ($campaign->track_clicks) {
+            $this->trackClicks($campaign);
         }
 
-        $emailCampaign->save();
+        $campaign->save();
     }
 
-    protected function trackClicks(EmailCampaign $emailCampaign)
+    protected function trackClicks(Campaign $campaign)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
-        $dom->loadHTML($emailCampaign->email_html, LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD|LIBXML_NOWARNING);
+        $dom->loadHTML($campaign->email_html, LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD|LIBXML_NOWARNING);
 
         collect($dom->getElementsByTagName('a'))
             ->filter(function (DOMElement $linkElement) {
@@ -33,16 +33,16 @@ class PrepareEmailHtmlAction
                     ['http://', 'https://']
                 );
             })
-            ->each(function (DOMElement $linkElement) use ($emailCampaign) {
+            ->each(function (DOMElement $linkElement) use ($campaign) {
                 $originalHref = $linkElement->getAttribute('href');
 
-                $campaignLink = $emailCampaign->links()->create([
+                $campaignLink = $campaign->links()->create([
                     'original_link' => $originalHref,
                 ]);
 
                 $linkElement->setAttribute('href', $campaignLink->url);
             });
 
-        $emailCampaign->update(['email_html' => $dom->saveHtml()]);
+        $campaign->update(['email_html' => $dom->saveHtml()]);
     }
 }
