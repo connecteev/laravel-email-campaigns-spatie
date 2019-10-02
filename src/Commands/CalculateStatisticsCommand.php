@@ -2,7 +2,9 @@
 
 namespace Spatie\EmailCampaigns\Commands;
 
+use Illuminate\Support\Collection;
 use PHPUnit\TextUI\Command;
+use Spatie\EmailCampaigns\Models\Campaign;
 
 class CalculateStatisticsCommand extends Command
 {
@@ -12,7 +14,14 @@ class CalculateStatisticsCommand extends Command
 
     public function handle()
     {
+        $now = now();
 
+        Campaign::sentBetween($now, $now->addMinutes(5), 1);
+    }
+
+    public function calculateStatistics(Collection $campaigns, $statisticFreshnessTreshold)
+    {
+        return $this;
     }
 }
 
