@@ -21,7 +21,7 @@ class EmailListSubscription extends Model
 
     public function subscriber(): BelongsTo
     {
-        return $this->belongsTo(EmailListSubscriber::class, 'email_list_subscriber_id');
+        return $this->belongsTo(Subscriber::class, 'email_list_subscriber_id');
     }
 
     public function confirm()

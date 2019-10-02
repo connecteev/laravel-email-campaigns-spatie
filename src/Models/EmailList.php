@@ -13,7 +13,7 @@ class EmailList extends Model
 
     public function subscribers(): BelongsToMany
     {
-        return $this->belongsToMany(EmailListSubscriber::class, 'email_list_subscriptions');
+        return $this->belongsToMany(Subscriber::class, 'email_list_subscriptions', 'email_list_id',  'email_list_subscriber_id');
     }
 
     public function subscriptions(): HasMany
@@ -28,8 +28,8 @@ class EmailList extends Model
 
     public function subscribe(string $email): EmailListSubscription
     {
-        /** @var \Spatie\EmailCampaigns\Models\EmailListSubscriber $subscriber */
-        $subscriber = EmailListSubscriber::firstOrCreate([
+        /** @var \Spatie\EmailCampaigns\Models\Subscriber $subscriber */
+        $subscriber = Subscriber::firstOrCreate([
             'email' => $email,
         ]);
 
@@ -38,7 +38,7 @@ class EmailList extends Model
 
     public function isSubscribed(string $email): bool
     {
-        if (!$subscriber = EmailListSubscriber::findForEmail($email)) {
+        if (!$subscriber = Subscriber::findForEmail($email)) {
             return false;
         };
 
@@ -49,7 +49,7 @@ class EmailList extends Model
         return $subscription->status === EmailListSubscriptionStatus::SUBSCRIBED;
     }
 
-    public function getSubscription(EmailListSubscriber $subscriber): ?EmailListSubscription
+    public function getSubscription(Subscriber $subscriber): ?EmailListSubscription
     {
         return EmailListSubscription::query()
             ->where('email_list_id', $this->id)

@@ -24,10 +24,10 @@ class CampaignLink extends Model
         return $this->hasMany(CampaignClick::class);
     }
 
-    public function registerClick(EmailListSubscriber $subscriber)
+    public function registerClick(Subscriber $subscriber)
     {
         $this->clicks()->create([
-            'email_subscriber_id' => $subscriber->id,
+            'email_list_subscriber_id' => $subscriber->id,
         ]);
     }
 

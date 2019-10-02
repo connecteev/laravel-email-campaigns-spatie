@@ -23,7 +23,7 @@ class UnsubscribeTest extends TestCase
     /** @var \Spatie\EmailCampaigns\Models\EmailList */
     private $emailList;
 
-    /** @var \Spatie\EmailCampaigns\Models\EmailListSubscriber */
+    /** @var \Spatie\EmailCampaigns\Models\Subscriber */
     private $subscriber;
 
     public function setUp(): void

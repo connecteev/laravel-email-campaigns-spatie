@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Models\EmailListSubscription;
 

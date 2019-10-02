@@ -84,7 +84,7 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('campaign_clicks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('campaign_link_id');
-            $table->unsignedBigInteger('email_subscriber_id');
+            $table->unsignedBigInteger('email_list_subscriber_id');
             $table->nullableTimestamps();
 
             $table
@@ -93,7 +93,7 @@ class CreateEmailCampaignTables extends Migration
                 ->onDelete('cascade');
 
             $table
-                ->foreign('email_subscriber_id')
+                ->foreign('email_list_subscriber_id')
                 ->references('id')->on('email_subscribers')
                 ->onDelete('set null');
         });
@@ -101,7 +101,7 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('campaign_opens', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('campaign_id');
-            $table->unsignedBigInteger('email_subscriber_id');
+            $table->unsignedBigInteger('email_list_subscriber_id');
             $table->nullableTimestamps();
 
             $table
@@ -110,7 +110,7 @@ class CreateEmailCampaignTables extends Migration
                 ->onDelete('cascade');
 
             $table
-                ->foreign('email_subscriber_id')
+                ->foreign('email_list_subscriber_id')
                 ->references('id')->on('email_subscribers')
                 ->onDelete('set null');
         });

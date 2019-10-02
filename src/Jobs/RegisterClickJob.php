@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Models\CampaignLink;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\Subscriber;
 
 class RegisterClickJob implements ShouldQueue
 {
@@ -33,13 +33,13 @@ class RegisterClickJob implements ShouldQueue
             return;
         }
 
-        /** @var \Spatie\EmailCampaigns\Models\EmailListSubscriber|null $subscriber */
-        if (! $subscriber = EmailListSubscriber::findByUuid($this->subscriberUuid)) {
+        /** @var \Spatie\EmailCampaigns\Models\Subscriber|null $subscriber */
+        if (! $subscriber = Subscriber::findByUuid($this->subscriberUuid)) {
             return;
         }
 
         $campaignLink->clicks()->create([
-            'email_subscriber_id' => $subscriber->id,
+            'email_list_subscriber_id' => $subscriber->id,
         ]);
     }
 }

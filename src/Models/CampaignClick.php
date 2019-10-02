@@ -16,6 +16,6 @@ class CampaignClick extends Model
 
     public function subscriber(): BelongsTo
     {
-        return $this->belongsTo(EmailListSubscriber::class);
+        return $this->belongsTo(Subscriber::class);
     }
 }

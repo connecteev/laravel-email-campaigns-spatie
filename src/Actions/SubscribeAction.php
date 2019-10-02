@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
 use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\EmailListSubscription;
 
 class SubscribeAction
 {
-    public function execute(EmailListSubscriber $subscriber, EmailList $emailList): EmailListSubscription
+    public function execute(Subscriber $subscriber, EmailList $emailList): EmailListSubscription
     {
         $status = EmailListSubscriptionStatus::SUBSCRIBED;
 

@@ -7,19 +7,19 @@ use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
 use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\EmailListSubscription;
 
-class EmailListSubscriberTest extends TestCase
+class SubscriberTest extends TestCase
 {
-    /** @var \Spatie\EmailCampaigns\Models\EmailListSubscriber */
+    /** @var \Spatie\EmailCampaigns\Models\Subscriber */
     private $subscriber;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->subscriber = factory(EmailListSubscriber::class)->create();
+        $this->subscriber = factory(Subscriber::class)->create();
 
         Mail::fake();
     }

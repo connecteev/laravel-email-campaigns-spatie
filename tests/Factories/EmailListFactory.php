@@ -4,7 +4,7 @@ namespace Spatie\EmailCampaigns\Tests\Factories;
 
 use Illuminate\Support\Collection;
 use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\Subscriber;
 
 class EmailListFactory
 {
@@ -24,10 +24,10 @@ class EmailListFactory
 
         Collection::times($this->subscriberCount)
             ->map(function (int $i) {
-                return factory(EmailListSubscriber::class)->create(['email' => "subscriber{$i}@example.com"]);
+                return factory(Subscriber::class)->create(['email' => "subscriber{$i}@example.com"]);
             })
-            ->each(function(EmailListSubscriber $emailListSubscriber) use ($emailList) {
-                $emailListSubscriber->subscribeTo($emailList);
+            ->each(function(Subscriber $subscriber) use ($emailList) {
+                $subscriber->subscribeTo($emailList);
             });
 
         return $emailList->refresh();

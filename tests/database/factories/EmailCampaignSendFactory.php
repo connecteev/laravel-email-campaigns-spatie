@@ -3,7 +3,7 @@
 use Faker\Generator;
 use Spatie\EmailCampaigns\Models\EmailCampaign;
 use Spatie\EmailCampaigns\Models\EmailCampaignSend;
-use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\EmailListSubscription;
 
 $factory->define(EmailCampaignSend::class, function (Generator $faker) {

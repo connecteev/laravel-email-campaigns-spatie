@@ -33,7 +33,7 @@ class TrackLinksTest extends TestCase
 
         $this->assertDatabaseHas('campaign_clicks', [
             'campaign_link_id' => $this->campaign->links->first()->id,
-            'email_subscriber_id' => $this->campaign->emailList->subscribers->first()->id,
+            'email_list_subscriber_id' => $this->campaign->emailList->subscribers->first()->id,
         ]);
     }
 

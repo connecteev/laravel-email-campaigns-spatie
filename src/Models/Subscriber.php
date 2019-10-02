@@ -10,13 +10,15 @@ use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
-class EmailListSubscriber extends Model
+class Subscriber extends Model
 {
     use HasUuid;
 
+    public $table = 'email_list_subscribers';
+
     protected $guarded = [];
 
-    public static function findForEmail(string $email): ?EmailListSubscriber
+    public static function findForEmail(string $email): ?Subscriber
     {
         return static::where('email', $email)->first();
     }
