@@ -15,7 +15,7 @@ class UnsubscribeController
 
         $emailList = $subscription->emailList;
 
-        $subscription->delete();
+        $subscription->markAsUnsubscribed();
 
         return view('email-campaigns::unsubscribe.unsubscribed', compact('emailList'));
     }

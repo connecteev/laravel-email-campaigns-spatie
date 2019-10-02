@@ -48,6 +48,21 @@ class EmailListSubscriberTest extends TestCase
     }
 
     /** @test */
+    public function it_can_resubscribe_someone()
+    {
+        $list = factory(EmailList::class)->create();
+
+        $subscription = $this->subscriber->subscribeTo($list);
+        $this->assertTrue($this->subscriber->isSubscribedTo($list));
+
+        $subscription->markAsUnsubscribed();
+        $this->assertFalse($this->subscriber->isSubscribedTo($list));
+
+        $this->subscriber->subscribeTo($list);
+        $this->assertTrue($this->subscriber->isSubscribedTo($list));
+    }
+
+    /** @test */
     public function it_will_send_a_confirmation_mail_if_the_list_requires_double_optin()
     {
         $list = factory(EmailList::class)->create([

@@ -23,7 +23,7 @@ class SubscribeAction
             return $emailList->getSubscription($subscriber);
         }
 
-        $subscription = EmailListSubscription::firstOrCreate(
+        $subscription = EmailListSubscription::updateOrCreate(
             [
                 'email_list_subscriber_id' => $subscriber->id,
                 'email_list_id' => $emailList->id,
