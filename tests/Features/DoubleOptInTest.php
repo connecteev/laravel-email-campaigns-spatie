@@ -11,7 +11,7 @@ use Spatie\EmailCampaigns\Models\EmailListSubscription;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-class DoubleOptinTest extends TestCase
+class DoubleOptInTest extends TestCase
 {
     /** @var \Spatie\EmailCampaigns\Models\EmailList */
     private $emailList;
@@ -27,7 +27,6 @@ class DoubleOptinTest extends TestCase
         $this->emailList = factory(EmailList::class)->create(['requires_double_opt_in' => true]);
 
         Event::listen(MessageSent::class, function (MessageSent $event) {
-
             $link = (new Crawler($event->message->getBody()))
                 ->filter('.button-primary')->first()->attr('href');
 
