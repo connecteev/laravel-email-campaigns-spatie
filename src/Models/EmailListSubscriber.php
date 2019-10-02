@@ -16,6 +16,11 @@ class EmailListSubscriber extends Model
 
     protected $guarded = [];
 
+    public static function findForEmail(string $email): ?EmailListSubscriber
+    {
+        return static::where('email', $email)->first();
+    }
+
     public function emailLists(): HasManyThrough
     {
         return $this->hasManyThrough(EmailList::class, EmailListSubscription::class);
