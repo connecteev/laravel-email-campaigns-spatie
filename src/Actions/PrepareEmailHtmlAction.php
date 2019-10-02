@@ -22,9 +22,9 @@ class PrepareEmailHtmlAction
 
     protected function trackClicks(EmailCampaign $emailCampaign)
     {
-        $dom = new DOMDocument();
+        $dom = new DOMDocument('1.0', 'UTF-8');
 
-        $dom->loadHTML($emailCampaign->email_html);
+        $dom->loadHTML($emailCampaign->email_html, LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD|LIBXML_NOWARNING);
 
         collect($dom->getElementsByTagName('a'))
             ->filter(function (DOMElement $linkElement) {

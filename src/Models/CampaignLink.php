@@ -33,6 +33,6 @@ class CampaignLink extends Model
 
     public function getUrlAttribute()
     {
-        return url(action(TrackClicksController::class, $this->uuid)).'/[[subscriberUuid]]?redirect='.urlencode($this->original_link);
+        return url(action(TrackClicksController::class, $this->uuid)).'/@@subscriberUuid@@?redirect='.urlencode($this->original_link);
     }
 }

@@ -6,7 +6,7 @@ use Spatie\EmailCampaigns\Models\EmailListSubscription;
 
 class UnsubscribeController
 {
-    public function __construct(string $emailListSubscriptionUuid)
+    public function __invoke(string $emailListSubscriptionUuid)
     {
         /** @var \Spatie\EmailCampaigns\Models\EmailListSubscription $subscription */
         if (! $subscription = EmailListSubscription::findByUuid($emailListSubscriptionUuid)) {

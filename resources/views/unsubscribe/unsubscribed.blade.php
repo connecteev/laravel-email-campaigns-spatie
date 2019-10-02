@@ -1,1 +1,1 @@
-Your have been unsubscription from the "{{ $subscription->emailList->name }}" email list.
+You have been unsubscribed from the "{{ $emailList->name }}" email list.
