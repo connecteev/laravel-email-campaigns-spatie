@@ -52,9 +52,9 @@ class SendMailJob implements ShouldQueue
         $rateLimitedMiddleware = (new RateLimited())
             ->enabled($throttlingConfig['enabled'])
             ->connectionName($throttlingConfig['redis_connection_name'])
-            ->key($throttlingConfig['redis_key'])
-            ->timespanInSeconds($throttlingConfig['timespan_in_seconds'])
-            ->allowedNumberOfJobsInTimeSpan($throttlingConfig['allowed_number_of_jobs_in_timespan']);
+            ->allow($throttlingConfig['allowed_number_of_jobs_in_timespan'])
+            ->everySeconds($throttlingConfig['timespan_in_seconds'])
+            ->releaseAfterSeconds($throttlingConfig['release_in_seconds']);
 
         return [$rateLimitedMiddleware];
     }
