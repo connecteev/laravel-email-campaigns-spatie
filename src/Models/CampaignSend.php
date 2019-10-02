@@ -5,8 +5,10 @@ namespace Spatie\EmailCampaigns\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class EmailCampaignSend extends Model
+class CampaignSend extends Model
 {
+    public $table = 'email_campaign_sends';
+
     public $guarded = [];
 
     public $dates = ['sent_at'];

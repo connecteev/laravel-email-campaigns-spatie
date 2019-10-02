@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Jobs\SendMailJob;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Models\EmailCampaignSend;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 
 class SendMailJobTest extends TestCase
 {
@@ -20,7 +20,7 @@ class SendMailJobTest extends TestCase
     /** @test */
     public function it_can_send_a_mail()
     {
-        $pendingSend = factory(EmailCampaignSend::class)->create();
+        $pendingSend = factory(CampaignSend::class)->create();
 
         dispatch(new SendMailJob($pendingSend));
 
@@ -36,7 +36,7 @@ class SendMailJobTest extends TestCase
     /** @test */
     public function it_will_not_resend_a_mail_that_has_already_been_sent()
     {
-        $pendingSend = factory(EmailCampaignSend::class)->create();
+        $pendingSend = factory(CampaignSend::class)->create();
 
         $this->assertFalse($pendingSend->wasAlreadySent());
 

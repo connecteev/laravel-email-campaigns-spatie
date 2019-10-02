@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Models\EmailCampaignSend;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\RateLimitedMiddleware\RateLimited;
 
@@ -19,10 +19,10 @@ class SendMailJob implements ShouldQueue
 
     public $deleteWhenMissingModels = true;
 
-    /** @var \Spatie\EmailCampaigns\Models\EmailCampaignSend */
+    /** @var \Spatie\EmailCampaigns\Models\CampaignSend */
     public $pendingSend;
 
-    public function __construct(EmailCampaignSend $pendingSend)
+    public function __construct(CampaignSend $pendingSend)
     {
         $this->pendingSend = $pendingSend;
     }

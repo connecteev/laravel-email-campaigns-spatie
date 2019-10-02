@@ -47,7 +47,7 @@ class Campaign extends Model
 
     public function sends(): HasMany
     {
-        return $this->hasMany(EmailCampaignSend::class, 'email_campaign_id');
+        return $this->hasMany(CampaignSend::class, 'email_campaign_id');
     }
 
     public function subject(string $subject)
