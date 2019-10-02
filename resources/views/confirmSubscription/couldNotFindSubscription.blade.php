@@ -1,1 +1,1 @@
-We could not find your subscription to the email list. The url you clicked seems invalid.
+We could not find your subscription to the email list. The link you clicked seems invalid.
