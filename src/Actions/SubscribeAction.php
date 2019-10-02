@@ -3,27 +3,27 @@
 namespace Spatie\EmailCampaigns\Actions;
 
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Models\Subscription;
 
 class SubscribeAction
 {
-    public function execute(Subscriber $subscriber, EmailList $emailList): EmailListSubscription
+    public function execute(Subscriber $subscriber, EmailList $emailList): Subscription
     {
-        $status = EmailListSubscriptionStatus::SUBSCRIBED;
+        $status = SubscriptionStatus::SUBSCRIBED;
 
         if ($emailList->requires_double_opt_in) {
-            $status = EmailListSubscriptionStatus::PENDING;
+            $status = SubscriptionStatus::PENDING;
         }
 
         if ($subscriber->isSubscribedTo($emailList)) {
             return $emailList->getSubscription($subscriber);
         }
 
-        $subscription = EmailListSubscription::updateOrCreate(
+        $subscription = Subscription::updateOrCreate(
             [
                 'email_list_subscriber_id' => $subscriber->id,
                 'email_list_id' => $emailList->id,
@@ -33,7 +33,7 @@ class SubscribeAction
             ],
             );
 
-        if ($subscription->status === EmailListSubscriptionStatus::PENDING) {
+        if ($subscription->status === SubscriptionStatus::PENDING) {
             Mail::to($subscriber->email)->send(new ConfirmSubscriptionMail($subscription));
         }
 

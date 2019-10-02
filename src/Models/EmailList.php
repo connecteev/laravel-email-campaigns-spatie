@@ -5,7 +5,7 @@ namespace Spatie\EmailCampaigns\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class EmailList extends Model
 {
@@ -18,7 +18,7 @@ class EmailList extends Model
 
     public function subscriptions(): HasMany
     {
-        return $this->hasMany(EmailListSubscription::class);
+        return $this->hasMany(Subscription::class);
     }
 
     public function campaigns(): HasMany
@@ -26,7 +26,7 @@ class EmailList extends Model
         return $this->hasMany(EmailCampaign::class);
     }
 
-    public function subscribe(string $email): EmailListSubscription
+    public function subscribe(string $email): Subscription
     {
         /** @var \Spatie\EmailCampaigns\Models\Subscriber $subscriber */
         $subscriber = Subscriber::firstOrCreate([
@@ -46,12 +46,12 @@ class EmailList extends Model
             return false;
         };
 
-        return $subscription->status === EmailListSubscriptionStatus::SUBSCRIBED;
+        return $subscription->status === SubscriptionStatus::SUBSCRIBED;
     }
 
-    public function getSubscription(Subscriber $subscriber): ?EmailListSubscription
+    public function getSubscription(Subscriber $subscriber): ?Subscription
     {
-        return EmailListSubscription::query()
+        return Subscription::query()
             ->where('email_list_id', $this->id)
             ->where('email_list_subscriber_id', $subscriber->id)
             ->first();

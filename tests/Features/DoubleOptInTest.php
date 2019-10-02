@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Models\Subscription;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -62,7 +62,7 @@ class DoubleOptInTest extends TestCase
         $this->assertStringContainsString('already confirmed', $content);
 
         $this->assertTrue($this->emailList->isSubscribed('john@example.com'));
-        $this->assertEquals(1, EmailListSubscription::count());
+        $this->assertEquals(1, Subscription::count());
     }
 
     /** @test */

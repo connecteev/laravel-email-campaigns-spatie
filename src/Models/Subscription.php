@@ -5,11 +5,13 @@ namespace Spatie\EmailCampaigns\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 
-class EmailListSubscription extends Model
+class Subscription extends Model
 {
+    public $table = 'email_list_subscriptions';
+
     use HasUuid;
 
     public $guarded = [];
@@ -31,7 +33,7 @@ class EmailListSubscription extends Model
 
     public function markAsUnsubscribed()
     {
-        $this->update(['status' => EmailListSubscriptionStatus::UNSUBSCRIBED]);
+        $this->update(['status' => SubscriptionStatus::UNSUBSCRIBED]);
 
         return $this;
     }

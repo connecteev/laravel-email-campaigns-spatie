@@ -5,9 +5,9 @@ namespace Spatie\EmailCampaigns\Tests\Features;
 use Illuminate\Mail\Events\MessageSent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Models\Subscription;
 use Spatie\EmailCampaigns\Tests\Factories\EmailCampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
@@ -58,7 +58,7 @@ class UnsubscribeTest extends TestCase
         $this->assertFalse($this->subscriber->isSubscribedTo($this->emailList));
 
         $subscription = $this->emailList->subscriptions->first();
-        $this->assertEquals(EmailListSubscriptionStatus::UNSUBSCRIBED, $subscription->status);
+        $this->assertEquals(SubscriptionStatus::UNSUBSCRIBED, $subscription->status);
     }
 
     protected function sendCampaign()

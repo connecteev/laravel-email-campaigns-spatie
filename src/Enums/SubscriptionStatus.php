@@ -2,7 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Enums;
 
-class EmailListSubscriptionStatus
+class SubscriptionStatus
 {
     public const PENDING = 'pending';
     public const SUBSCRIBED = 'subscribed';

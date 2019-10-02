@@ -13,7 +13,7 @@ class EmailCampaignSend extends Model
 
     public function emailListSubscription(): BelongsTo
     {
-        return $this->belongsTo(EmailListSubscription::class);
+        return $this->belongsTo(Subscription::class);
     }
 
     public function emailCampaign(): BelongsTo

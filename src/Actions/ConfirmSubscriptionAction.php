@@ -2,14 +2,14 @@
 
 namespace Spatie\EmailCampaigns\Actions;
 
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Models\Subscription;
 
 class ConfirmSubscriptionAction
 {
-    public function execute(EmailListSubscription $emailListSubscription)
+    public function execute(Subscription $emailListSubscription)
     {
-        $emailListSubscription->update(['status' => EmailListSubscriptionStatus::SUBSCRIBED]);
+        $emailListSubscription->update(['status' => SubscriptionStatus::SUBSCRIBED]);
     }
 }
 

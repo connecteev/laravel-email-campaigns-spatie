@@ -2,21 +2,21 @@
 
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Models\Subscription;
 
 class ConfirmSubscriptionController
 {
     public function __invoke(string $subscriptionUuid)
     {
-        /** @var \Spatie\EmailCampaigns\Models\EmailListSubscription $subscription */
-        $subscription = EmailListSubscription::findByUuid($subscriptionUuid);
+        /** @var \Spatie\EmailCampaigns\Models\Subscription $subscription */
+        $subscription = Subscription::findByUuid($subscriptionUuid);
 
         if (! $subscription) {
             return $this->couldNotFindSubscriptionResponse();
         }
 
-        if ($subscription->status === EmailListSubscriptionStatus::SUBSCRIBED) {
+        if ($subscription->status === SubscriptionStatus::SUBSCRIBED) {
             return $this->wasAlreadyConfirmedResponse($subscription);
         }
 
@@ -25,12 +25,12 @@ class ConfirmSubscriptionController
         return $this->subscriptionConfirmedResponse($subscription);
     }
 
-    public function subscriptionConfirmedResponse(EmailListSubscription $subscription)
+    public function subscriptionConfirmedResponse(Subscription $subscription)
     {
         return view('email-campaigns::confirmSubscription.confirmed', compact('subscription'));
     }
 
-    public function wasAlreadyConfirmedResponse(EmailListSubscription $subscription)
+    public function wasAlreadyConfirmedResponse(Subscription $subscription)
     {
         return view('email-campaigns::confirmSubscription.wasAlreadyConfirmed', compact('subscription'));
     }

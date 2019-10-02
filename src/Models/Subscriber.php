@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 use Spatie\EmailCampaigns\Actions\SubscribeAction;
 use Spatie\EmailCampaigns\Enums\EmailCampaignStatus;
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
@@ -25,20 +25,20 @@ class Subscriber extends Model
 
     public function emailLists(): HasManyThrough
     {
-        return $this->hasManyThrough(EmailList::class, EmailListSubscription::class);
+        return $this->hasManyThrough(EmailList::class, Subscription::class);
     }
 
-    public function subscribeTo(EmailList $emailList): EmailListSubscription
+    public function subscribeTo(EmailList $emailList): Subscription
     {
        return app(SubscribeAction::class)->execute($this, $emailList);
     }
 
     public function isSubscribedTo(EmailList $emailList): bool
     {
-        return EmailListSubscription::query()
+        return Subscription::query()
             ->where('email_list_subscriber_id', $this->id)
             ->where('email_list_id', $emailList->id)
-            ->where('status', EmailListSubscriptionStatus::SUBSCRIBED)
+            ->where('status', SubscriptionStatus::SUBSCRIBED)
             ->exists();
     }
 }

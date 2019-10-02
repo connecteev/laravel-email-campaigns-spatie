@@ -5,16 +5,16 @@ namespace Spatie\EmailCampaigns\Mails;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Models\Subscription;
 
 class ConfirmSubscriptionMail extends Mailable implements ShouldQueue
 {
-    /** @var \Spatie\EmailCampaigns\Models\EmailListSubscription */
+    /** @var \Spatie\EmailCampaigns\Models\Subscription */
     public $subscription;
 
     public $confirmationUrl;
 
-    public function __construct(EmailListSubscription $subscription)
+    public function __construct(Subscription $subscription)
     {
         $this->subscription = $subscription;
 

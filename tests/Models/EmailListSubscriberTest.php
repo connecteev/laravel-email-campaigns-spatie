@@ -3,12 +3,12 @@
 namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Enums\EmailListSubscriptionStatus;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Models\Subscription;
 
 class SubscriberTest extends TestCase
 {
@@ -33,7 +33,7 @@ class SubscriberTest extends TestCase
         $subscription = $this->subscriber->subscribeTo($list);
         $this->assertTrue($this->subscriber->isSubscribedTo($list));
 
-        $this->assertEquals(EmailListSubscriptionStatus::SUBSCRIBED, $subscription->status);
+        $this->assertEquals(SubscriptionStatus::SUBSCRIBED, $subscription->status);
     }
 
     public function it_will_only_subscribe_a_subscriber_once()
@@ -44,7 +44,7 @@ class SubscriberTest extends TestCase
         $this->subscriber->subscribeTo($list);
         $this->subscriber->subscribeTo($list);
 
-        $this->assertEquals(1, EmailListSubscription::count());
+        $this->assertEquals(1, Subscription::count());
     }
 
     /** @test */
@@ -82,7 +82,7 @@ class SubscriberTest extends TestCase
     /** @test */
     public function no_email_will_be_sent_when_adding_someone_that_was_already_subscribed()
     {
-        $subscription = factory(EmailListSubscription::class)->create();
+        $subscription = factory(Subscription::class)->create();
 
         $subscription->emailList->update(['requires_double_opt_in' => true]);
 

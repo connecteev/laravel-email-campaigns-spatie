@@ -2,14 +2,14 @@
 
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
-use Spatie\EmailCampaigns\Models\EmailListSubscription;
+use Spatie\EmailCampaigns\Models\Subscription;
 
 class UnsubscribeController
 {
     public function __invoke(string $emailListSubscriptionUuid)
     {
-        /** @var \Spatie\EmailCampaigns\Models\EmailListSubscription $subscription */
-        if (! $subscription = EmailListSubscription::findByUuid($emailListSubscriptionUuid)) {
+        /** @var \Spatie\EmailCampaigns\Models\Subscription $subscription */
+        if (! $subscription = Subscription::findByUuid($emailListSubscriptionUuid)) {
             return view('email-campaigns::unsubscribe.notFound');
         };
 
