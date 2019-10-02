@@ -152,11 +152,12 @@ class Campaign extends Model
         return $this;
     }
 
-    public function markAsSent()
+    public function markAsSent(int $numberOfSubscribers)
     {
         $this->update([
             'status' => CampaignStatus::SENT,
             'sent_at' => now(),
+            'sent_to_number_of_subscribers' => $numberOfSubscribers,
         ]);
 
         return $this;

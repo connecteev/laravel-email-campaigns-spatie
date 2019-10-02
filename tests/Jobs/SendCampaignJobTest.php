@@ -4,6 +4,7 @@ namespace Spatie\EmailCampaigns\Tests\Jobs;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
@@ -40,6 +41,10 @@ class SendCampaignJobTest extends TestCase
 
             return true;
         });
+
+        $this->campaign->refresh();
+        $this->assertEquals(CampaignStatus::SENT, $this->campaign->status);
+        $this->assertEquals(3, $this->campaign->sent_to_number_of_subscribers);
     }
 
     /** @test */
