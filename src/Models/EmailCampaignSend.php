@@ -11,9 +11,9 @@ class EmailCampaignSend extends Model
 
     public $dates = ['sent_at'];
 
-    public function emailListSubscriber(): BelongsTo
+    public function emailListSubscription(): BelongsTo
     {
-        return $this->belongsTo(EmailListSubscriber::class);
+        return $this->belongsTo(EmailListSubscription::class);
     }
 
     public function emailCampaign(): BelongsTo

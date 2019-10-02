@@ -48,6 +48,8 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
         Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}', TrackClicksController::class);
 
+        Route::get('/unsubscribe/{subscriptionUuid}');
+
         return $this;
     }
 

@@ -32,16 +32,15 @@ class SendMailJob implements ShouldQueue
         if ($this->pendingSend->wasAlreadySent()) {
             return;
         }
-
         $personalisedHtml = (new PersonalizeHtmlAction())->handle(
             $this->pendingSend->emailCampaign->email_html,
-            $this->pendingSend->emailListSubscriber,
+            $this->pendingSend->emailListSubscription,
             $this->pendingSend->emailCampaign,
             );
 
         $campaignMail = new CampaignMail($this->pendingSend->emailCampaign->subject, $personalisedHtml);
 
-        Mail::to($this->pendingSend->emailListSubscriber->email)->send($campaignMail);
+        Mail::to($this->pendingSend->emailListSubscription->subscriber->email)->send($campaignMail);
 
         $this->pendingSend->markAsSent();
     }

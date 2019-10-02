@@ -1,12 +1,14 @@
 <?php
 
 use Faker\Generator;
+use Spatie\EmailCampaigns\Models\EmailCampaign;
 use Spatie\EmailCampaigns\Models\EmailCampaignSend;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
+use Spatie\EmailCampaigns\Models\EmailListSubscription;
 
 $factory->define(EmailCampaignSend::class, function (Generator $faker) {
     return [
-        'email_campaign_id' => factory(\Spatie\EmailCampaigns\Models\EmailCampaign::class),
-        'email_list_subscriber_id' => factory(EmailListSubscriber::class),
+        'email_campaign_id' => factory(EmailCampaign::class),
+        'email_list_subscription_id' => factory(EmailListSubscription::class),
     ];
 });

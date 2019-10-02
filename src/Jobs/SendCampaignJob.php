@@ -11,6 +11,7 @@ use Spatie\EmailCampaigns\Models\EmailCampaign;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\EmailListSubscriber;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
+use Spatie\EmailCampaigns\Models\EmailListSubscription;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -53,9 +54,9 @@ class SendCampaignJob implements ShouldQueue
 
     protected function send()
     {
-        $this->campaign->emailList->subscribers->each(function (EmailListSubscriber $emailSubscriber) {
+        $this->campaign->emailList->subscriptions->each(function (EmailListSubscription $emailListSubscription) {
             $pendingSend = $this->campaign->sends()->create([
-                'email_list_subscriber_id' => $emailSubscriber->id,
+                'email_list_subscription_id' => $emailListSubscription->id,
             ]);
 
             dispatch(new SendMailJob($pendingSend));
