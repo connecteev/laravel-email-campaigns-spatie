@@ -4,9 +4,9 @@ namespace Spatie\EmailCampaigns\Commands;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
+use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use PHPUnit\TextUI\Command;
-use Spatie\EmailCampaigns\Jobs\RecalculateStatisticsJob;
+use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
 use Spatie\EmailCampaigns\Models\Campaign;
 
 class CalculateStatisticsCommand extends Command
@@ -20,6 +20,8 @@ class CalculateStatisticsCommand extends Command
 
     public function handle()
     {
+        $this->comment('Start calculating statistics...');
+
         $this->now = now();
 
         collect([
@@ -32,26 +34,30 @@ class CalculateStatisticsCommand extends Command
             [$startInterval, $endInterval, $recalculateThreshold] = $recalculatePeriod;
 
             $this
-                ->findCampaignsWithStatisticsToRecalculate($startInterval, $endInterval, $recalculateThresshold)
+                ->findCampaignsWithStatisticsToRecalculate($startInterval, $endInterval, $recalculateThreshold)
                 ->each(function (Campaign $campaign) {
-                    dispatch_now(new RecalculateStatisticsJob($campaign));
+                    $this->info("Calculating statistics for campaign id {$campaign->id}...");
+                    dispatch_now(new CalculateStatisticsJob($campaign));
                 });
         });
 
-
+        $this->comment('All done!');
     }
 
     public function calculateStatistics(
         CarbonInterval $startInterval,
         CarbonInterval $endInterval,
         CarbonInterval $recalculateThreshold
-    ) {
+    ): Collection
+    {
         $periodStart = $this->now->copy()->add($startInterval);
         $periodEnd = $this->now->copy()->add($endInterval);
 
-        $campaigns = Campaign::sentBetween($periodStart, $periodEnd)
-            ->filter(function(Campaign $campaign) {
-                return $campaign->statistics_calculated_at;
+        return Campaign::sentBetween($periodStart, $periodEnd)
+            ->filter(function (Campaign $campaign) use ($recalculateThreshold) {
+                $threshold = $this->now->copy()->add($recalculateThreshold);
+
+                return $campaign->statistics_calculated_at->isBefore($threshold);
             });
     }
 }

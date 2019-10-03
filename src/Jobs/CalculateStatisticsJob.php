@@ -1,0 +1,63 @@
+<?php
+
+namespace Spatie\EmailCampaigns\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Models\CampaignLink;
+
+class CalculateStatisticsJob
+{
+    use Dispatchable, InteractsWithQueue, Queueable;
+
+    /** @var \Spatie\EmailCampaigns\Models\Campaign */
+    public $campaign;
+
+    public function __construct(Campaign $campaign)
+    {
+        $this->campaign = $campaign;
+    }
+
+    public function handle()
+    {
+        $this
+            ->calculateCampainStatistics()
+            ->calculateLinkStatistics();
+    }
+
+    protected function calculateCampainStatistics(): void
+    {
+        $sendToNumberOfSubscribers = $this->campaign->sends()->count();
+
+        $openCount = $this->campaign->opens()->count();
+        $uniqueOpenCount = $this->campaign->opens()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count();
+        $openRate = round(($uniqueOpenCount / $sendToNumberOfSubscribers) * 100);
+
+
+        $clickCount = $this->campaign->clicks()->count();
+        $uniqueClickCount = $this->campaign->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count();
+        $clickRate = round(($uniqueClickCount / $sendToNumberOfSubscribers) * 100);
+
+        $this->campaign->update([
+            'sent_to_number_of_subscribers' => 0,
+            'open_count' => $openCount,
+            'unique_open_count' => $uniqueOpenCount,
+            'open_rate' => $openRate,
+            'click_count' => $clickCount,
+            'unique_click_count' => $uniqueClickCount,
+            'click_rate' => $clickRate,
+        ]);
+
+        return $this;
+    }
+
+    protected function calculateLinkStatistics()
+    {
+        $this->campaign->links->each(function(CampaignLink $link) {
+
+        });
+    }
+}
+

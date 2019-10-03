@@ -12,6 +12,11 @@ class CampaignLink extends Model
 {
     use HasUuid;
 
+    public $casts = [
+        'click_count' => 'integer',
+        'unique_click_count' => 'integer',
+    ];
+
     protected $guarded = [];
 
     public function campaign(): BelongsTo

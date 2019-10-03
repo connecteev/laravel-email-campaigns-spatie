@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
@@ -53,6 +54,16 @@ class Campaign extends Model
     public function links(): HasMany
     {
         return $this->hasMany(CampaignLink::class, 'email_campaign_id');
+    }
+
+    public function clicks(): HasManyThrough
+    {
+        return $this->hasManyThrough(CampaignClick::class, CampaignLink::class);
+    }
+
+    public function opens(): HasMany
+    {
+        return $this->hasMany(CampaignOpen::class);
     }
 
     public function sends(): HasMany

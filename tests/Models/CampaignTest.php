@@ -116,7 +116,7 @@ class CampaignTest extends TestCase
         $sentAt1730 = CampaignFactory::createSentAt('2019-01-01 17:30:00');
 
         $campaigns = Campaign::sentBetween(
-            Carbon::createFromFormat('Y-m-d H:i:s', '2019-01-01 15:30:00'),
+            Carbon::createFromFormat('Y-m-d H:i:s', '2019-01-01 13:30:00'),
             Carbon::createFromFormat('Y-m-d H:i:s', '2019-01-01 17:30:00'),
         )->get();
 

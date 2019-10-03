@@ -55,9 +55,13 @@ class CreateEmailCampaignTables extends Migration
             $table->boolean('track_opens')->default(false);
             $table->boolean('track_clicks')->default(false);
 
-            $table->integer('open_rate')->nullable();
-            $table->integer('click_rate')->nullable();
             $table->integer('sent_to_number_of_subscribers')->nullable();
+            $table->integer('open_count')->nullable();
+            $table->integer('unique_open_count')->nullable();
+            $table->integer('open_rate')->nullable();
+            $table->integer('click_count')->nullable();
+            $table->integer('unique_click_count')->nullable();
+            $table->integer('click_rate')->nullable();
 
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('statistics_calculated_at')->nullable();
@@ -74,6 +78,8 @@ class CreateEmailCampaignTables extends Migration
             $table->uuid('uuid');
             $table->unsignedBigInteger('email_campaign_id');
             $table->string('original_link');
+            $table->integer('click_count');
+            $table->integer('unique_click_count');
             $table->nullableTimestamps();
 
             $table
