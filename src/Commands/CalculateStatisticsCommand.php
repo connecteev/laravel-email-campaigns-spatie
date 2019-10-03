@@ -2,8 +2,11 @@
 
 namespace Spatie\EmailCampaigns\Commands;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Support\Collection;
 use PHPUnit\TextUI\Command;
+use Spatie\EmailCampaigns\Jobs\RecalculateStatisticsJob;
 use Spatie\EmailCampaigns\Models\Campaign;
 
 class CalculateStatisticsCommand extends Command
@@ -12,16 +15,44 @@ class CalculateStatisticsCommand extends Command
 
     public $description = 'Calculate the statistics of the recently sent campaigns';
 
+    /** @var \Illuminate\Support\Carbon */
+    protected $now;
+
     public function handle()
     {
-        $now = now();
+        $this->now = now();
 
-        Campaign::sentBetween($now, $now->addMinutes(5), 1);
+        collect([
+            [CarbonInterval::minute(0), CarbonInterval::minute(5), CarbonInterval::minute(0)],
+            [CarbonInterval::minute(0), CarbonInterval::minute(5), CarbonInterval::minute(0)],
+            [CarbonInterval::minute(5), CarbonInterval::hour(2), CarbonInterval::minute(10)],
+            [CarbonInterval::hour(2), CarbonInterval::day(), CarbonInterval::hour()],
+            [CarbonInterval::hour(2), CarbonInterval::weeks(2), CarbonInterval::hour(4)],
+        ])->each(function (array $recalculatePeriod) {
+            [$startInterval, $endInterval, $recalculateThreshold] = $recalculatePeriod;
+
+            $this
+                ->findCampaignsWithStatisticsToRecalculate($startInterval, $endInterval, $recalculateThresshold)
+                ->each(function (Campaign $campaign) {
+                    dispatch_now(new RecalculateStatisticsJob($campaign));
+                });
+        });
+
+
     }
 
-    public function calculateStatistics(Collection $campaigns, $statisticFreshnessTreshold)
-    {
-        return $this;
+    public function calculateStatistics(
+        CarbonInterval $startInterval,
+        CarbonInterval $endInterval,
+        CarbonInterval $recalculateThreshold
+    ) {
+        $periodStart = $this->now->copy()->add($startInterval);
+        $periodEnd = $this->now->copy()->add($endInterval);
+
+        $campaigns = Campaign::sentBetween($periodStart, $periodEnd)
+            ->filter(function(Campaign $campaign) {
+                return $campaign->statistics_calculated_at;
+            });
     }
 }
 

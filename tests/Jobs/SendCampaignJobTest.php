@@ -8,7 +8,7 @@ use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Tests\Factories\EmailCampaignFactory;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 
 class SendCampaignJobTest extends TestCase
@@ -20,7 +20,7 @@ class SendCampaignJobTest extends TestCase
     {
         parent::setUp();
 
-        $this->campaign = (new EmailCampaignFactory())
+        $this->campaign = (new CampaignFactory())
             ->withSubscriberCount(3)
             ->create();
 

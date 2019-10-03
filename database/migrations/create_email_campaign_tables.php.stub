@@ -60,6 +60,7 @@ class CreateEmailCampaignTables extends Migration
             $table->integer('sent_to_number_of_subscribers')->nullable();
 
             $table->timestamp('sent_at')->nullable();
+            $table->timestamp('statistics_calculated_at')->nullable();
             $table->timestamps();
 
             $table

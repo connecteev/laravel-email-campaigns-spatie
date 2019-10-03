@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\Subscription;
-use Spatie\EmailCampaigns\Tests\Factories\EmailCampaignFactory;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -30,7 +30,7 @@ class UnsubscribeTest extends TestCase
     {
         parent::setUp();
 
-        $this->campaign = (new EmailCampaignFactory())->withSubscriberCount(1)->create([
+        $this->campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
             'html' => '<a href="@@unsubscribeLink@@">Unsubscribe</a>',
         ]);
 

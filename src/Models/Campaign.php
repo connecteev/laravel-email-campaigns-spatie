@@ -2,6 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -24,6 +26,7 @@ class Campaign extends Model
         'send_to_number_of_subscribers' => 'integer',
         'sent_at' => 'timestamp',
         'requires_double_opt_in' => 'boolean',
+        'statistics_calculated_at' => 'timestamp'
     ];
 
     public static function boot()
@@ -33,6 +36,13 @@ class Campaign extends Model
         static::creating(function (Campaign $campaign) {
             $campaign->status = CampaignStatus::CREATED;
         });
+    }
+
+    public static function scopeSentBetween(Builder $query, Carbon $periodStart, Carbon $periodEnd): void
+    {
+        $query
+            ->where('sent_at', '>=', $periodStart)
+            ->where('sent_at', '<', $periodEnd);
     }
 
     public function emailList(): BelongsTo
@@ -157,6 +167,7 @@ class Campaign extends Model
         $this->update([
             'status' => CampaignStatus::SENT,
             'sent_at' => now(),
+            'statistics_calculated_at' => now(),
             'sent_to_number_of_subscribers' => $numberOfSubscribers,
         ]);
 

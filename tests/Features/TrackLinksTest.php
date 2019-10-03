@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\CampaignClick;
-use Spatie\EmailCampaigns\Tests\Factories\EmailCampaignFactory;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -69,7 +69,7 @@ class TrackLinksTest extends TestCase
 
     protected function sendCampaign(array $attributes)
     {
-        $this->campaign = (new EmailCampaignFactory())->withSubscriberCount(1)->create($attributes);
+        $this->campaign = (new CampaignFactory())->withSubscriberCount(1)->create($attributes);
 
         Event::listen(MessageSent::class, function (MessageSent $event) {
             $link = (new Crawler($event->message->getBody()))

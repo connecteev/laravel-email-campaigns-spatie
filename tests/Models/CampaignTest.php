@@ -2,13 +2,15 @@
 
 namespace Spatie\EmailCampaigns\Tests\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\Campaign;
 
-class EmailCampaignTest extends TestCase
+class CampaignTest extends TestCase
 {
     /** @var \Spatie\EmailCampaigns\Models\Campaign */
     private $campaign;
@@ -103,5 +105,24 @@ class EmailCampaignTest extends TestCase
 
             return true;
         });
+    }
+
+    /** @test */
+    public function it_has_a_scope_that_can_get_campaigns_sent_in_a_certain_period()
+    {
+        $sentAt1430 = CampaignFactory::createSentAt('2019-01-01 14:30:00');
+        $sentAt1530 = CampaignFactory::createSentAt('2019-01-01 15:30:00');
+        $sentAt1630 = CampaignFactory::createSentAt('2019-01-01 16:30:00');
+        $sentAt1730 = CampaignFactory::createSentAt('2019-01-01 17:30:00');
+
+        $campaigns = Campaign::sentBetween(
+            Carbon::createFromFormat('Y-m-d H:i:s', '2019-01-01 15:30:00'),
+            Carbon::createFromFormat('Y-m-d H:i:s', '2019-01-01 17:30:00'),
+        )->get();
+
+        $this->assertEquals(
+            [$sentAt1430->id, $sentAt1530->id, $sentAt1630->id],
+            $campaigns->pluck('id')->values()->toArray(),
+        );
     }
 }
