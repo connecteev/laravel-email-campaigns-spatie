@@ -34,13 +34,13 @@ class CalculateStatisticsJob
     protected function calculateCampaignStatistics()
     {
         $sendToNumberOfSubscribers = $this->campaign->sends()->count();
-
         $openCount = $this->campaign->opens()->count();
-        $uniqueOpenCount = $this->campaign->opens()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count();
+        $uniqueOpenCount = $this->campaign->opens()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->get()->count();
+
         $openRate = round($uniqueOpenCount / $sendToNumberOfSubscribers, 2) * 100;
 
         $clickCount = $this->campaign->clicks()->count();
-        $uniqueClickCount = $this->campaign->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count();
+        $uniqueClickCount = $this->campaign->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->get()->count();
         $clickRate = round($uniqueClickCount / $sendToNumberOfSubscribers, 2) * 100;
 
         $this->campaign->update([
@@ -61,7 +61,7 @@ class CalculateStatisticsJob
         $this->campaign->links->each(function (CampaignLink $link) {
             $link->update([
                 'click_count' => $link->clicks()->count(),
-                'click_unique_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count(),
+                'unique_click_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count(),
             ]);
 
         });

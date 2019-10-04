@@ -5,7 +5,10 @@ namespace Spatie\EmailCampaigns\Tests\Jobs;
 
 
 use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Models\CampaignLink;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 
 class CalculateStatisticsJobTest extends TestCase
@@ -26,6 +29,55 @@ class CalculateStatisticsJobTest extends TestCase
             'click_count' => 0,
             'unique_click_count' => 0,
             'click_rate' => 0,
+        ]);
+
+    }
+
+    /** @test */
+    public function it_can_calculate_statistics_regarding_opens()
+    {
+        $campaign = (new CampaignFactory())->withSubscriberCount(5)->create();
+        dispatch(new SendCampaignJob($campaign));
+
+        $campaignSends = $campaign->sends()->take(3)->get();
+        $this
+            ->simulateOpen($campaignSends)
+            ->simulateOpen($campaignSends->take(1));
+
+        dispatch(new CalculateStatisticsJob($campaign));
+
+        $this->assertDatabaseHas('email_campaigns', [
+            'id' => $campaign->id,
+            'open_count' => 4,
+            'unique_open_count' => 3,
+            'open_rate' => 60,
+        ]);
+    }
+
+    /** @test */
+    public function it_can_calculate_statistics_regarding_clicks()
+    {
+        $campaign = (new CampaignFactory())->withSubscriberCount(5)->create([
+            'html' => '<a href="https://spatie.be">Spatie</a><a href="https://flareapp.io">Flare</a><a href="https://docs.spatie.be">Docs</a>',
+            'track_clicks' => true,
+        ]);
+        dispatch(new SendCampaignJob($campaign));
+
+        $subscribers = $campaign->emailList->subscribers->take(3);
+        $campaignLinks = $campaign->links()->take(2)->get()
+            ->each(function (CampaignLink $campaignLink) use ($subscribers) {
+                $this->simulateClick($campaignLink, $subscribers);
+            });
+        $this->simulateClick($campaignLinks->first(), $subscribers->take(1));
+
+        dispatch(new CalculateStatisticsJob($campaign));
+
+        $this->assertDatabaseHas('email_campaigns', [
+            'id' => $campaign->id,
+            'sent_to_number_of_subscribers' => 5,
+            'click_count' => 7,
+            'unique_click_count' => 3,
+            'click_rate' => 60,
         ]);
     }
 }

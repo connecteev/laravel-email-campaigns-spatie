@@ -58,7 +58,7 @@ class Campaign extends Model
 
     public function clicks(): HasManyThrough
     {
-        return $this->hasManyThrough(CampaignClick::class, CampaignLink::class);
+        return $this->hasManyThrough(CampaignClick::class, CampaignLink::class, 'email_campaign_id');
     }
 
     public function opens(): HasMany
