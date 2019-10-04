@@ -33,12 +33,11 @@ class CalculateStatisticsJob
 
         $openCount = $this->campaign->opens()->count();
         $uniqueOpenCount = $this->campaign->opens()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count();
-        $openRate = round(($uniqueOpenCount / $sendToNumberOfSubscribers) * 100);
-
+        $openRate = round($uniqueOpenCount / $sendToNumberOfSubscribers, 2) * 100;
 
         $clickCount = $this->campaign->clicks()->count();
         $uniqueClickCount = $this->campaign->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count();
-        $clickRate = round(($uniqueClickCount / $sendToNumberOfSubscribers) * 100);
+        $clickRate = round($uniqueClickCount / $sendToNumberOfSubscribers, 2) * 100;
 
         $this->campaign->update([
             'sent_to_number_of_subscribers' => 0,
