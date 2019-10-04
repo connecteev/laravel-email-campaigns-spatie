@@ -27,7 +27,7 @@ class CalculateStatisticsJob
             ->calculateLinkStatistics();
     }
 
-    protected function calculateCampainStatistics(): void
+    protected function calculateCampainStatistics()
     {
         $sendToNumberOfSubscribers = $this->campaign->sends()->count();
 
@@ -55,7 +55,11 @@ class CalculateStatisticsJob
 
     protected function calculateLinkStatistics()
     {
-        $this->campaign->links->each(function(CampaignLink $link) {
+        $this->campaign->links->each(function (CampaignLink $link) {
+            $link->update([
+                'click_count' => $link->clicks()->count(),
+                'click_unique_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->count(),
+            ]);
 
         });
     }
