@@ -30,7 +30,6 @@ class CalculateStatisticsJobTest extends TestCase
             'unique_click_count' => 0,
             'click_rate' => 0,
         ]);
-
     }
 
     /** @test */
