@@ -4,9 +4,12 @@ namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 
 class CampaignSend extends Model
 {
+    use HasUuid;
+
     public $table = 'email_campaign_sends';
 
     public $guarded = [];

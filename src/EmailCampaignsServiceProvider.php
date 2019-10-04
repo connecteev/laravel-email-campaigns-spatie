@@ -12,6 +12,7 @@ use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
+use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 
 class EmailCampaignsServiceProvider extends ServiceProvider
@@ -62,8 +63,10 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::get('/confirm-subscription/{subscriptionUuid}', ConfirmSubscriptionController::class);
-        Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid?}', TrackClicksController::class);
         Route::get('/unsubscribe/{subscriptionUuid}', UnsubscribeController::class);
+
+        Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);
+        Route::get('/track-opens/{campaignSendUuid}', TrackOpensController::class);
 
         return $this;
     }

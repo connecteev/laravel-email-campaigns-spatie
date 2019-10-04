@@ -30,15 +30,5 @@ class TrackLinksControllerTest extends TestCase
             return true;
         });
     }
-
-    /** @test */
-    public function it_will_not_dispatch_a_job_if_the_subscriber_uuid_is_missing()
-    {
-        $this
-            ->get(action(TrackClicksController::class, ['campaignLinkUuid']) . '?redirect=https://mylink.com')
-            ->assertRedirect('https://mylink.com');
-
-        Queue::assertNothingPushed();
-    }
 }
 

@@ -124,6 +124,7 @@ class CreateEmailCampaignTables extends Migration
 
         Schema::create('email_campaign_sends', function(Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->unsignedBigInteger('email_campaign_id');
             $table->unsignedBigInteger('email_list_subscription_id');
             $table->timestamp('sent_at')->nullable();

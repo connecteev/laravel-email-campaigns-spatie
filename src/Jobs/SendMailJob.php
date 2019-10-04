@@ -34,8 +34,7 @@ class SendMailJob implements ShouldQueue
         }
         $personalisedHtml = (new PersonalizeHtmlAction())->handle(
             $this->pendingSend->campaign->email_html,
-            $this->pendingSend->subscription,
-            $this->pendingSend->campaign,
+            $this->pendingSend,
             );
 
         $campaignMail = new CampaignMail($this->pendingSend->campaign->subject, $personalisedHtml);

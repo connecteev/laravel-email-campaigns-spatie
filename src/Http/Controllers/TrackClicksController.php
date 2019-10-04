@@ -7,7 +7,7 @@ use Spatie\EmailCampaigns\Jobs\RegisterClickJob;
 
 class TrackClicksController
 {
-    public function __invoke(Request $request, string $campaignLinkUuid, string $subscriberUuid = null)
+    public function __invoke(Request $request, string $campaignLinkUuid, string $subscriberUuid)
     {
         if (! is_null($subscriberUuid)) {
             dispatch(new RegisterClickJob($campaignLinkUuid, $subscriberUuid));

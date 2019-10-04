@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Events\EmailCampaignSent;
 use Spatie\EmailCampaigns\Models\Subscriber;
@@ -57,8 +58,10 @@ class SendCampaignJob implements ShouldQueue
 
 
         $this->campaign->emailList->subscriptions->each(function (Subscription $emailListSubscription) {
+
             $pendingSend = $this->campaign->sends()->create([
                 'email_list_subscription_id' => $emailListSubscription->id,
+                'uuid' => (string)Str::uuid(),
             ]);
 
             dispatch(new SendMailJob($pendingSend));
