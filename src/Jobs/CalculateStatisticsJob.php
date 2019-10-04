@@ -22,12 +22,16 @@ class CalculateStatisticsJob
 
     public function handle()
     {
+        if ($this->campaign->sends()->count() === 0) {
+            return;
+        }
+
         $this
-            ->calculateCampainStatistics()
+            ->calculateCampaignStatistics()
             ->calculateLinkStatistics();
     }
 
-    protected function calculateCampainStatistics()
+    protected function calculateCampaignStatistics()
     {
         $sendToNumberOfSubscribers = $this->campaign->sends()->count();
 
