@@ -55,7 +55,7 @@ class CalculateStatisticsJobTest extends TestCase
     }
 
     /** @test */
-    public function it_can_calculate_statistics_regarding_clicks()
+    public function it_can_calculate_statistics_regarding_clicks_on_the_campaign()
     {
         $campaign = (new CampaignFactory())->withSubscriberCount(5)->create([
             'html' => '<a href="https://spatie.be">Spatie</a><a href="https://flareapp.io">Flare</a><a href="https://docs.spatie.be">Docs</a>',
@@ -79,5 +79,31 @@ class CalculateStatisticsJobTest extends TestCase
             'unique_click_count' => 3,
             'click_rate' => 60,
         ]);
+    }
+
+    /** @test */
+    public function it_can_calculate_statistics_regarding_clicks_on_individual_links()
+    {
+        $campaign = (new CampaignFactory())->withSubscriberCount(3)->create([
+            'html' => '<a href="https://spatie.be">Spatie</a>',
+            'track_clicks' => true,
+        ]);
+        dispatch(new SendCampaignJob($campaign));
+
+        $subscriber1 = $campaign->emailList->subscribers[0];
+        $subscriber2 = $campaign->emailList->subscribers[1];
+        $subscriber3 = $campaign->emailList->subscribers[2];
+
+        $link = $campaign->links->first();
+
+        $this
+            ->simulateClick($link, $subscriber1)
+            ->simulateClick($link, $subscriber2)
+            ->simulateClick($link, $subscriber2);
+
+        dispatch(new CalculateStatisticsJob($campaign));
+
+        $this->assertEquals(3, $link->click_count);
+        $this->assertEquals(2, $link->unique_click_count);
     }
 }

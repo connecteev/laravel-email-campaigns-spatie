@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Tests;
 
 use CreateEmailCampaignTables;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -57,9 +58,13 @@ abstract class TestCase extends Orchestra
         return $this;
     }
 
-    public function simulateClick(CampaignLink $campaignLink, Collection $subscribers)
+    public function simulateClick(CampaignLink $campaignLink, $subscribers)
     {
-        $subscribers->each(function(Subscriber $subscriber) use ($campaignLink) {
+        if ($subscribers instanceof Model) {
+            $subscribers = collect([$subscribers]);
+        }
+
+        collect($subscribers)->each(function(Subscriber $subscriber) use ($campaignLink) {
            $this
                 ->get(action(TrackClicksController::class, [
                     $campaignLink->uuid,
@@ -67,5 +72,7 @@ abstract class TestCase extends Orchestra
                 ]))
                 ->assertRedirect();
         });
+
+        return $this;
     }
 }
