@@ -62,11 +62,13 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-        Route::get('/confirm-subscription/{subscriptionUuid}', ConfirmSubscriptionController::class);
-        Route::get('/unsubscribe/{subscriptionUuid}', UnsubscribeController::class);
+        Route::macro('emailCampaigns', function() {
+            Route::get('/confirm-subscription/{subscriptionUuid}', ConfirmSubscriptionController::class);
+            Route::get('/unsubscribe/{subscriptionUuid}', UnsubscribeController::class);
 
-        Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);
-        Route::get('/track-opens/{campaignSendUuid}', TrackOpensController::class);
+            Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);
+            Route::get('/track-opens/{campaignSendUuid}', TrackOpensController::class);
+        });
 
         return $this;
     }

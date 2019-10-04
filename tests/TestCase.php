@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Tests;
 
 use CreateEmailCampaignTables;
+use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\EmailCampaigns\EmailCampaignsServiceProvider;
 
@@ -13,6 +14,8 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         $this->withFactories(__DIR__.'/database/factories');
+
+        Route::emailCampaigns('email-campaigns');
     }
 
     protected function getPackageProviders($app)
