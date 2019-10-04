@@ -55,8 +55,6 @@ class SendCampaignJob implements ShouldQueue
 
     protected function send()
     {
-
-
         $this->campaign->emailList->subscriptions->each(function (Subscription $emailListSubscription) {
 
             $pendingSend = $this->campaign->sends()->create([
