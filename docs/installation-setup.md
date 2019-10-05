@@ -1,5 +1,37 @@
-<?php
+---
+title: Installation & setup
+weight: 4
+---
 
+This package can be installed via composer:
+
+```bash
+composer require "spatie/laravel-email-campaigns:^1.0.0"
+```
+You need to publish and run the migration:
+
+```bash
+php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="migrations"
+php artisan migrate
+```
+
+You must use register the routes needed to handle subscription confirmations, open and click tracking. You can do that by adding this macro to your routes file.
+
+```php
+Route::emailCampaigns('email-campaigns');
+```
+
+Most e-mail providers have a limit on how many mails you can send within a given amount of time. To throttle mails, this package uses redis. Make sure that is available on your system.
+
+You must publish the config file with this command.
+
+```bash
+php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="config"
+```
+
+This is the default content of the config file:
+
+```php
 return [
 
     /*
@@ -28,3 +60,6 @@ return [
         'release_in_seconds' => 5,
     ],
 ];
+```
+
+Make sure to specify a valid connection name in the `throttling.redis_connection_name` key.
