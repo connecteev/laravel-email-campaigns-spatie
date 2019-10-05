@@ -3,11 +3,11 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
-use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Models\CampaignLink;
+use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;
 
 class CalculateStatisticsJob
 {
@@ -64,10 +64,8 @@ class CalculateStatisticsJob
         $this->campaign->links->each(function (CampaignLink $link) {
             $link->update([
                 'click_count' => $link->clicks()->count(),
-                'unique_click_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->toBase()->getCountForPagination(['email_list_subscriber_id'])
+                'unique_click_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->toBase()->getCountForPagination(['email_list_subscriber_id']),
             ]);
-
         });
     }
 }
-

@@ -3,17 +3,16 @@
 namespace Spatie\EmailCampaigns\Tests;
 
 use CreateEmailCampaignTables;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\EmailCampaigns\Models\Subscriber;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Spatie\EmailCampaigns\EmailCampaignsServiceProvider;
-use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
-use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Models\Subscriber;
+use Spatie\EmailCampaigns\EmailCampaignsServiceProvider;
+use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
+use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 
 abstract class TestCase extends Orchestra
 {
@@ -21,7 +20,7 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__ . '/database/factories');
+        $this->withFactories(__DIR__.'/database/factories');
 
         Route::emailCampaigns('email-campaigns');
     }
@@ -42,7 +41,7 @@ abstract class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        include_once __DIR__ . '/../database/migrations/create_email_campaign_tables.php.stub';
+        include_once __DIR__.'/../database/migrations/create_email_campaign_tables.php.stub';
 
         (new CreateEmailCampaignTables())->up();
     }
@@ -64,8 +63,8 @@ abstract class TestCase extends Orchestra
             $subscribers = collect([$subscribers]);
         }
 
-        collect($subscribers)->each(function(Subscriber $subscriber) use ($campaignLink) {
-           $this
+        collect($subscribers)->each(function (Subscriber $subscriber) use ($campaignLink) {
+            $this
                 ->get(action(TrackClicksController::class, [
                     $campaignLink->uuid,
                     $subscriber->uuid,

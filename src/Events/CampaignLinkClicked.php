@@ -3,8 +3,6 @@
 namespace Spatie\EmailCampaigns\Events;
 
 use Spatie\EmailCampaigns\Models\CampaignClick;
-use Spatie\EmailCampaigns\Models\CampaignLink;
-use Spatie\EmailCampaigns\Models\Subscriber;
 
 class CampaignLinkClicked
 {

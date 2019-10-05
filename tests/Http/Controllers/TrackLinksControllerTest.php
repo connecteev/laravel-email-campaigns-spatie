@@ -3,9 +3,9 @@
 namespace Spatie\EmailCampaigns\Tests\Http\Controllers;
 
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
-use Spatie\EmailCampaigns\Jobs\RegisterClickJob;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Jobs\RegisterClickJob;
+use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 
 class TrackLinksControllerTest extends TestCase
 {
@@ -20,7 +20,7 @@ class TrackLinksControllerTest extends TestCase
     public function it_will_dispatch_a_job_to_register_a_click()
     {
         $this
-            ->get(action(TrackClicksController::class, ['campaignLinkUuid', 'subscriberUuid']) . '?redirect=https://mylink.com')
+            ->get(action(TrackClicksController::class, ['campaignLinkUuid', 'subscriberUuid']).'?redirect=https://mylink.com')
             ->assertRedirect('https://mylink.com');
 
         Queue::assertPushed(RegisterClickJob::class, function (RegisterClickJob $job) {
@@ -31,4 +31,3 @@ class TrackLinksControllerTest extends TestCase
         });
     }
 }
-

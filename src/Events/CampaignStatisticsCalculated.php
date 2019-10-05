@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Events;
-
 
 use Spatie\EmailCampaigns\Models\Campaign;
 

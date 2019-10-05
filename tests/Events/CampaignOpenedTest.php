@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
+use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Events\CampaignOpened;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
-use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Tests\TestCase;
 
 class CampaignOpenedTest extends TestCase
 {
@@ -24,7 +23,7 @@ class CampaignOpenedTest extends TestCase
             ->get($trackCampaignOpenUrl)
             ->assertSuccessful();
 
-        Event::assertDispatched(CampaignOpened::class, function(CampaignOpened $event) use ($campaignSend) {
+        Event::assertDispatched(CampaignOpened::class, function (CampaignOpened $event) use ($campaignSend) {
             $this->assertEquals($campaignSend->subscription->subscriber->uuid, $event->campaignOpen->subscriber->uuid);
             $this->assertEquals($campaignSend->campaign->uuid, $event->campaignOpen->campaign->uuid);
 

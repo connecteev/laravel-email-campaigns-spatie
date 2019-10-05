@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Events;
 
-
 use Illuminate\Support\Facades\Event;
-use Spatie\EmailCampaigns\Events\CampaignMailSent;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Jobs\SendMailJob;
 use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Events\CampaignMailSent;
 
 class CampaignMailSentTest extends TestCase
 {
@@ -21,7 +19,7 @@ class CampaignMailSentTest extends TestCase
 
         dispatch(new SendMailJob($send));
 
-        Event::assertDispatched(CampaignMailSent::class, function(CampaignMailSent $event) use ($send) {
+        Event::assertDispatched(CampaignMailSent::class, function (CampaignMailSent $event) use ($send) {
             $this->assertEquals($send->uuid, $event->campaignSend->uuid);
 
             return true;

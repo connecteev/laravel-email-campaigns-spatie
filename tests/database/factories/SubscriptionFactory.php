@@ -1,10 +1,10 @@
 <?php
 
 use Faker\Generator;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 $factory->define(Subscription::class, function (Generator $faker) {
     return [

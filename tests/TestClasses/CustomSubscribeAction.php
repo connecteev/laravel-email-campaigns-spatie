@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
-use Spatie\EmailCampaigns\Actions\SubscribeAction;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Actions\SubscribeAction;
 
 class CustomSubscribeAction extends SubscribeAction
 {

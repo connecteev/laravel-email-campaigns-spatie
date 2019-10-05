@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
-
-use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 
 class CustomConfirmSubscriptionAction extends ConfirmSubscriptionAction
 {

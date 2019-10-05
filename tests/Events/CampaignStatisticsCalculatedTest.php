@@ -1,14 +1,12 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Events;
 
-
 use Illuminate\Support\Facades\Event;
-use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;
-use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
-use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
+use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;
 
 class CampaignStatisticsCalculatedTest extends TestCase
 {
@@ -21,7 +19,7 @@ class CampaignStatisticsCalculatedTest extends TestCase
 
         dispatch(new CalculateStatisticsJob($campaign));
 
-        Event::assertDispatched(CampaignStatisticsCalculated::class, function(CampaignStatisticsCalculated $event) use ($campaign) {
+        Event::assertDispatched(CampaignStatisticsCalculated::class, function (CampaignStatisticsCalculated $event) use ($campaign) {
             $this->assertEquals($campaign->id, $event->campaign->id);
 
             return true;

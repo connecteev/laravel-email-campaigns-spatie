@@ -6,15 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Support\Config;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
-use Spatie\EmailCampaigns\Events\CampaignMailSent;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
-use Spatie\EmailCampaigns\Support\Config;
 use Spatie\RateLimitedMiddleware\RateLimited;
+use Spatie\EmailCampaigns\Models\CampaignSend;
+use Spatie\EmailCampaigns\Events\CampaignMailSent;
+use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 
 class SendMailJob implements ShouldQueue
 {

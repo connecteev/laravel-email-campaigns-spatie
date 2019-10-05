@@ -3,13 +3,13 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
 
@@ -27,7 +27,7 @@ class Campaign extends Model
         'send_to_number_of_subscribers' => 'integer',
         'sent_at' => 'datetime',
         'requires_double_opt_in' => 'boolean',
-        'statistics_calculated_at' => 'datetime'
+        'statistics_calculated_at' => 'datetime',
     ];
 
     public static function boot()

@@ -2,19 +2,18 @@
 
 namespace Spatie\EmailCampaigns\Tests\Features;
 
-use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
-use Spatie\EmailCampaigns\Enums\CampaignStatus;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
-use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Tests\TestCase;
-use Spatie\EmailCampaigns\Tests\TestClasses\CustomConfirmSubscriptionAction;
+use Spatie\EmailCampaigns\Tests\TestClasses\CustomSubscribeAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomPersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomPrepareEmailHtmlAction;
-use Spatie\EmailCampaigns\Tests\TestClasses\CustomSubscribeAction;
+use Spatie\EmailCampaigns\Tests\TestClasses\CustomConfirmSubscriptionAction;
 
 class CustomizableActionTest extends TestCase
 {

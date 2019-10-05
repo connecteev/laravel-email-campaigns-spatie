@@ -3,14 +3,11 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
-use Spatie\EmailCampaigns\Actions\SubscribeAction;
-use Spatie\EmailCampaigns\Enums\CampaignStatus;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
-use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Support\Config;
+use Spatie\EmailCampaigns\Actions\SubscribeAction;
+use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Subscriber extends Model
 {
@@ -32,9 +29,9 @@ class Subscriber extends Model
 
     public function subscribeTo(EmailList $emailList): Subscription
     {
-       $action = Config::getActionClass('subscribe_action', SubscribeAction::class);
+        $action = Config::getActionClass('subscribe_action', SubscribeAction::class);
 
-       return $action->execute($this, $emailList);
+        return $action->execute($this, $emailList);
     }
 
     public function isSubscribedTo(EmailList $emailList): bool

@@ -3,13 +3,12 @@
 namespace Spatie\EmailCampaigns\Actions;
 
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Spatie\EmailCampaigns\Events\Subscribed;
-use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Models\EmailList;
+use Spatie\EmailCampaigns\Events\Subscribed;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 
 class SubscribeAction
 {
@@ -46,4 +45,3 @@ class SubscribeAction
         return $subscription;
     }
 }
-

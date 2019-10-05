@@ -3,12 +3,12 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Events\Unsubscribed;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
-use Spatie\EmailCampaigns\Support\Config;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 
 class Subscription extends Model
 {

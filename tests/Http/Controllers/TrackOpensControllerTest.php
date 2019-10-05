@@ -3,9 +3,9 @@
 namespace Spatie\EmailCampaigns\Tests\Http\Controllers;
 
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
-use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
+use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 
 class TrackOpensControllerTest extends TestCase
 {
@@ -31,4 +31,3 @@ class TrackOpensControllerTest extends TestCase
         });
     }
 }
-
