@@ -10,6 +10,5 @@ $factory->define(CampaignSend::class, function (Generator $faker) {
     return [
         'email_campaign_id' => factory(Campaign::class),
         'email_list_subscription_id' => factory(Subscription::class),
-        'uuid' => $faker->uuid,
     ];
 });
