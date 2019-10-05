@@ -13,7 +13,7 @@ use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Tests\TestCase;
 
-class CampaignLinkClickedEventTest extends TestCase
+class CampaignLinkClickedTest extends TestCase
 {
     /** @test */
     public function it_will_fire_an_event_when_a_link_gets_clicked()
