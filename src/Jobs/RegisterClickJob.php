@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Spatie\EmailCampaigns\Events\CampaignLinkClicked;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\Subscriber;
 
@@ -38,8 +39,10 @@ class RegisterClickJob implements ShouldQueue
             return;
         }
 
-        $campaignLink->clicks()->create([
+        $campaignClick = $campaignLink->clicks()->create([
             'email_list_subscriber_id' => $subscriber->id,
         ]);
+
+        event(new CampaignLinkClicked($campaignClick));
     }
 }

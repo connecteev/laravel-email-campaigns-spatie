@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 
@@ -53,6 +54,8 @@ class CalculateStatisticsJob
             'unique_click_count' => $uniqueClickCount,
             'click_rate' => $clickRate,
         ]);
+
+        event(new CampaignStatisticsCalculated($this->campaign));
 
         return $this;
     }

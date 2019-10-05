@@ -1,10 +1,12 @@
 <?php
 
+
 namespace Spatie\EmailCampaigns\Events;
+
 
 use Spatie\EmailCampaigns\Models\Campaign;
 
-class EmailCampaignSent
+class CampaignStatisticsCalculated
 {
     /** @var \Spatie\EmailCampaigns\Models\Campaign */
     public $campaign;

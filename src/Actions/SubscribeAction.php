@@ -4,6 +4,7 @@ namespace Spatie\EmailCampaigns\Actions;
 
 use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Events\Subscribed;
 use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
@@ -35,6 +36,10 @@ class SubscribeAction
 
         if ($subscription->status === SubscriptionStatus::PENDING) {
             Mail::to($subscriber->email)->send(new ConfirmSubscriptionMail($subscription));
+        }
+
+        if ($subscription->status === SubscriptionStatus::SUBSCRIBED) {
+            event(new Subscribed($subscription));
         }
 
         return $subscription;

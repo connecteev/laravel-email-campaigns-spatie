@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Spatie\EmailCampaigns\Events\CampaignOpened;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\CampaignOpen;
 use Spatie\EmailCampaigns\Models\CampaignSend;
@@ -30,9 +31,11 @@ class RegisterOpenJob implements ShouldQueue
             return;
         }
 
-        CampaignOpen::create([
+        $campaignOpen = CampaignOpen::create([
             'campaign_id' => $campaignSend->campaign->id,
             'email_list_subscriber_id' => $campaignSend->subscription->subscriber->id,
         ]);
+
+        event(new CampaignOpened($campaignOpen));
     }
 }

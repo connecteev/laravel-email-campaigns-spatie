@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Spatie\EmailCampaigns\Events\CampaignMailSent;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
@@ -42,6 +43,8 @@ class SendMailJob implements ShouldQueue
         Mail::to($this->pendingSend->subscription->subscriber->email)->send($campaignMail);
 
         $this->pendingSend->markAsSent();
+
+        event(new CampaignMailSent($this->pendingSend));
     }
 
     public function middleware()

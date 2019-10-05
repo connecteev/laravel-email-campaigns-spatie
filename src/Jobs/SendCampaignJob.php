@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Events\EmailCampaignSent;
+use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Models\Subscription;
@@ -67,6 +67,6 @@ class SendCampaignJob implements ShouldQueue
 
         $this->campaign->markAsSent($this->campaign->emailList->subscriptions->count());
 
-        event(new EmailCampaignSent($this->campaign));
+        event(new CampaignSent($this->campaign));
     }
 }
