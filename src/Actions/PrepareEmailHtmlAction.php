@@ -4,7 +4,9 @@ namespace Spatie\EmailCampaigns\Actions;
 
 use DOMElement;
 use DOMDocument;
+use ErrorException;
 use Illuminate\Support\Str;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Models\Campaign;
 
@@ -29,7 +31,13 @@ class PrepareEmailHtmlAction
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
 
-        $dom->loadHTML($campaign->email_html, LIBXML_HTML_NOIMPLIED|LIBXML_HTML_NODEFDTD|LIBXML_NOWARNING);
+        try {
+
+
+            $dom->loadHTML($campaign->email_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING);
+        } catch (ErrorException $errorException) {
+            throw CampaignCouldNotBeSent::invalidContent($campaign, $errorException);
+        }
 
         collect($dom->getElementsByTagName('a'))
             ->filter(function (DOMElement $linkElement) {

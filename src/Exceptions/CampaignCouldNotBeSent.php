@@ -2,10 +2,12 @@
 
 namespace Spatie\EmailCampaigns\Exceptions;
 
+use ErrorException;
+use Exception;
 use PharIo\Manifest\Email;
 use Spatie\EmailCampaigns\Models\Campaign;
 
-class CampaignCouldNotBeSent extends \Exception
+class CampaignCouldNotBeSent extends Exception
 {
     public static function beingSent(Campaign $campaign): self
     {
@@ -30,5 +32,10 @@ class CampaignCouldNotBeSent extends \Exception
     public static function noContent(Campaign $campaign): self
     {
         return new static("The campaign `{$campaign->name}` can't be sent because not content has been set.");
+    }
+
+    public static function invalidContent(Campaign $campaign, ErrorException $errorException): self
+    {
+        return new static("The campaign `{$campaign->name}` can't be sent because the content isn't valid. Please check if the html is valid. DOMDocument reported: `{$errorException->getMessage()}`", 0, $errorException);
     }
 }

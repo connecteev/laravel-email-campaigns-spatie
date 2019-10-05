@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Events\CampaignSent;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 
@@ -58,6 +60,19 @@ class SendCampaignJobTest extends TestCase
         dispatch(new SendCampaignJob($this->campaign));
         Mail::assertSent(CampaignMail::class, 3);
         Event::assertDispatched(CampaignSent::class, 1);
+    }
+
+    /** @test */
+    public function it_will_not_send_invalid_html()
+    {
+        $this->campaign->update([
+            'track_clicks' => true,
+            'html' => '<qsdfqlsmdkjm><<>><<',
+        ]);
+
+        $this->expectException(CampaignCouldNotBeSent::class);
+
+        dispatch(new SendCampaignJob($this->campaign));
     }
 }
 
