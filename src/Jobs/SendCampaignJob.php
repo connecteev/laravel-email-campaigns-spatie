@@ -13,6 +13,7 @@ use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Support\Config;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -40,7 +41,9 @@ class SendCampaignJob implements ShouldQueue
 
     protected function prepareEmailHtml()
     {
-        (new PrepareEmailHtmlAction())->execute($this->campaign);
+        $action = Config::getActionClass('prepare_email_html', PrepareEmailHtmlAction::class);
+
+        $action->execute($this->campaign);
 
         return $this;
     }

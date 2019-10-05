@@ -9,7 +9,7 @@ use Spatie\EmailCampaigns\Models\Subscription;
 
 class PersonalizeHtmlAction
 {
-    public function handle($html, CampaignSend $pendingSend)
+    public function execute($html, CampaignSend $pendingSend)
     {
         $subscription = $pendingSend->subscription;
 

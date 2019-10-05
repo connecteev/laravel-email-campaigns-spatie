@@ -29,9 +29,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/email-campaigns.php', 'email-campaigns');
 
-        $this
-            ->registerActions()
-            ->registerCommands();
+        $this->registerCommands();
     }
 
     public function registerViews()
@@ -73,17 +71,6 @@ class EmailCampaignsServiceProvider extends ServiceProvider
         return $this;
     }
 
-    protected function registerActions()
-    {
-        $this
-            ->registerAction('personalize_html', PersonalizeHtmlAction::class)
-            ->registerAction('prepare_email_html', PrepareEmailHtmlAction::class)
-            ->registerAction('subscribe_action', SubscribeAction::class)
-            ->registerAction('confirm_subscription', ConfirmSubscriptionAction::class);
-
-        return $this;
-    }
-
     protected function registerCommands()
     {
         $this->app->bind('command.email-campaigns:calculate-statistics', CalculateStatisticsCommand::class);
@@ -91,21 +78,6 @@ class EmailCampaignsServiceProvider extends ServiceProvider
         $this->commands([
             'command.email-campaigns:calculate-statistics',
         ]);
-
-        return $this;
-    }
-
-    private function registerAction(string $actionName, string $actionClass)
-    {
-        $configuredClass = config("email-campaigns.actions.{$actionName}");
-
-        if (!is_a($configuredClass, $actionClass, true)) {
-            throw InvalidConfig::invalidAction($actionName, $configuredClass ?? '', $actionClass);
-        }
-
-        $this->app->bind($actionClass, function () use ($configuredClass) {
-            return new $configuredClass;
-        });
 
         return $this;
     }

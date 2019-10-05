@@ -8,10 +8,12 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Events\CampaignMailSent;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
+use Spatie\EmailCampaigns\Support\Config;
 use Spatie\RateLimitedMiddleware\RateLimited;
 
 class SendMailJob implements ShouldQueue
@@ -33,7 +35,10 @@ class SendMailJob implements ShouldQueue
         if ($this->pendingSend->wasAlreadySent()) {
             return;
         }
-        $personalisedHtml = (new PersonalizeHtmlAction())->handle(
+
+        $action = Config::getActionClass('personalize_html', PersonalizeHtmlAction::class);
+
+        $personalisedHtml = $action->execute(
             $this->pendingSend->campaign->email_html,
             $this->pendingSend,
             );

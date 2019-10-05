@@ -8,6 +8,7 @@ use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Events\Unsubscribed;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
+use Spatie\EmailCampaigns\Support\Config;
 
 class Subscription extends Model
 {
@@ -29,7 +30,9 @@ class Subscription extends Model
 
     public function confirm()
     {
-        return app(ConfirmSubscriptionAction::class)->execute($this);
+        $action = Config::getActionClass('confirm_subscription', ConfirmSubscriptionAction::class);
+
+        return $action->execute($this);
     }
 
     public function markAsUnsubscribed()
