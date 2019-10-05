@@ -20,7 +20,7 @@ return [
      * e-mail sending service. To use this feature you must have Redis installed.
      */
     'throttling' => [
-        'enabled' => true,
+        'enabled' => false,
         'redis_connection_name' => '',
         'redis_key' => 'laravel-email-campaigns',
         'allowed_number_of_jobs_in_timespan' => 5,

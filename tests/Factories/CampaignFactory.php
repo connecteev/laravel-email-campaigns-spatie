@@ -21,7 +21,9 @@ class CampaignFactory
     {
         $emailList = (new EmailListFactory())
             ->withSubscriberCount($this->subscriberCount)
-            ->create();
+            ->create([
+                'requires_double_opt_in' => false,
+            ]);
 
         $campaign = factory(Campaign::class)
             ->create($attributes)

@@ -32,6 +32,7 @@ class SendMailJob implements ShouldQueue
     public function handle()
     {
         if ($this->pendingSend->wasAlreadySent()) {
+
             return;
         }
 
