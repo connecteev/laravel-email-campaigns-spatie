@@ -25,7 +25,7 @@ class Campaign extends Model
         'open_rate' => 'integer',
         'click_rate' => 'integer',
         'send_to_number_of_subscribers' => 'integer',
-        'sent_at' => 'timestamp',
+        'sent_at' => 'datetime',
         'requires_double_opt_in' => 'boolean',
         'statistics_calculated_at' => 'datetime'
     ];

@@ -28,7 +28,7 @@ class CalculateStatisticsCommand extends Command
             [CarbonInterval::minute(0), CarbonInterval::minute(5), CarbonInterval::minute(0)],
             [CarbonInterval::minute(5), CarbonInterval::hour(2), CarbonInterval::minute(10)],
             [CarbonInterval::hour(2), CarbonInterval::day(), CarbonInterval::hour()],
-            [CarbonInterval::hour(2), CarbonInterval::weeks(2), CarbonInterval::hour(4)],
+            [CarbonInterval::day(), CarbonInterval::weeks(2), CarbonInterval::hour(4)],
         ])->each(function (array $recalculatePeriod) {
             [$startInterval, $endInterval, $recalculateThreshold] = $recalculatePeriod;
 
@@ -52,13 +52,10 @@ class CalculateStatisticsCommand extends Command
         $periodEnd = $this->now->copy()->subtract($startInterval);
         $periodStart = $this->now->copy()->subtract($endInterval);
 
-        dump($periodStart->format('Y-m-d H:i:s'), $periodEnd->format('Y-m-d H:i:s'), '--');
-
         return Campaign::sentBetween($periodStart, $periodEnd)
             ->get()
-            ->filter(function (Campaign $campaign) use ($recalculateThreshold) {
-                dd($campaign->id);
-                $threshold = $this->now->copy()->add($recalculateThreshold);
+            ->filter(function (Campaign $campaign) use ($periodEnd, $periodStart, $recalculateThreshold) {
+                $threshold = $this->now->copy()->subtract($recalculateThreshold);
 
                 if (is_null($campaign->statistics_calculated_at)) {
                     return true;
