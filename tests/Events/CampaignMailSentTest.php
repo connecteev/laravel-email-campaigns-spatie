@@ -22,7 +22,7 @@ class CampaignMailSentTest extends TestCase
         dispatch(new SendMailJob($send));
 
         Event::assertDispatched(CampaignMailSent::class, function(CampaignMailSent $event) use ($send) {
-            $this->assertEquals($send->id, $event->campaignSend->id);
+            $this->assertEquals($send->uuid, $event->campaignSend->uuid);
 
             return true;
         });

@@ -35,8 +35,8 @@ class CampaignLinkClickedTest extends TestCase
 
         Event::assertDispatched(CampaignLinkClicked::class, function(CampaignLinkClicked $event) use ($subscriber, $campaignLink) {
             $campaignClick = $event->campaignClick;
-            $this->assertEquals($campaignLink->id, $campaignClick->link->id);
-            $this->assertEquals($subscriber->id, $campaignClick->subscriber->id);
+            $this->assertEquals($campaignLink->uuid, $campaignClick->link->uuid);
+            $this->assertEquals($subscriber->uuid, $campaignClick->subscriber->uuid);
 
             return true;
         });
