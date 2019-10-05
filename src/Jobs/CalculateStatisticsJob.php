@@ -30,11 +30,12 @@ class CalculateStatisticsJob
         }
 
         $this->campaign->update(['statistics_calculated_at' => now()]);
+
+        event(new CampaignStatisticsCalculated($this->campaign));
     }
 
     protected function calculateCampaignStatistics()
     {
-
         $sendToNumberOfSubscribers = $this->campaign->sends()->count();
         $openCount = $this->campaign->opens()->count();
         $uniqueOpenCount = $this->campaign->opens()->groupBy('email_list_subscriber_id')->toBase()->getCountForPagination(['email_list_subscriber_id']);
@@ -54,8 +55,6 @@ class CalculateStatisticsJob
             'unique_click_count' => $uniqueClickCount,
             'click_rate' => $clickRate,
         ]);
-
-        event(new CampaignStatisticsCalculated($this->campaign));
 
         return $this;
     }
