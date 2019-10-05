@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Actions;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Events\Subscribed;
 use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
