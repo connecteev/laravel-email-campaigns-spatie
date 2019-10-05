@@ -2,7 +2,6 @@
 
 namespace Spatie\EmailCampaigns\Support;
 
-use Spatie\EmailCampaigns\Actions\SubscribeAction;
 use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 
 class Config
@@ -11,7 +10,7 @@ class Config
     {
         $configuredClass = config("email-campaigns.actions.{$actionName}");
 
-        if (!is_a($configuredClass, $actionClass, true)) {
+        if (! is_a($configuredClass, $actionClass, true)) {
             throw InvalidConfig::invalidAction($actionName, $configuredClass ?? '', $actionClass);
         }
 

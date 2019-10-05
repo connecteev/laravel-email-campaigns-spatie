@@ -2,9 +2,9 @@
 
 namespace Spatie\EmailCampaigns\Actions;
 
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Events\Subscribed;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class ConfirmSubscriptionAction
 {
@@ -15,4 +15,3 @@ class ConfirmSubscriptionAction
         event(new Subscribed($subscription));
     }
 }
-

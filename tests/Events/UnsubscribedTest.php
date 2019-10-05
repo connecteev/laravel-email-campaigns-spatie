@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Events\Unsubscribed;
 use Spatie\EmailCampaigns\Models\Subscription;
-use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class UnsubscribedTest extends TestCase
 {
@@ -23,7 +22,7 @@ class UnsubscribedTest extends TestCase
 
         $subscription->markAsUnsubscribed();
 
-        Event::assertDispatched(Unsubscribed::class, function(Unsubscribed $event) use ($subscription) {
+        Event::assertDispatched(Unsubscribed::class, function (Unsubscribed $event) use ($subscription) {
             $this->assertEquals($subscription->id, $event->subscription->id);
 
             return true;

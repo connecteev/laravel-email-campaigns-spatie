@@ -2,12 +2,11 @@
 
 namespace Spatie\EmailCampaigns\Commands;
 
-use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
 
 class CalculateStatisticsCommand extends Command
 {
@@ -47,8 +46,7 @@ class CalculateStatisticsCommand extends Command
         CarbonInterval $startInterval,
         CarbonInterval $endInterval,
         CarbonInterval $recalculateThreshold
-    ): Collection
-    {
+    ): Collection {
         $periodEnd = $this->now->copy()->subtract($startInterval);
         $periodStart = $this->now->copy()->subtract($endInterval);
 
@@ -65,4 +63,3 @@ class CalculateStatisticsCommand extends Command
             });
     }
 }
-

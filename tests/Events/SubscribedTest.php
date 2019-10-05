@@ -3,9 +3,9 @@
 namespace Spatie\EmailCampaigns\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
-use Spatie\EmailCampaigns\Events\Subscribed;
-use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\EmailList;
+use Spatie\EmailCampaigns\Events\Subscribed;
 
 class SubscribedTest extends TestCase
 {
@@ -26,7 +26,7 @@ class SubscribedTest extends TestCase
 
         $emailList->subscribe('john@example.com');
 
-        Event::assertDispatched(Subscribed::class, function(Subscribed $event) {
+        Event::assertDispatched(Subscribed::class, function (Subscribed $event) {
             $this->assertEquals('john@example.com', $event->subscription->subscriber->email);
 
             return true;
@@ -60,7 +60,7 @@ class SubscribedTest extends TestCase
 
         $subscription->confirm();
 
-        Event::assertDispatched(Subscribed::class, function(Subscribed $event) {
+        Event::assertDispatched(Subscribed::class, function (Subscribed $event) {
             $this->assertEquals('john@example.com', $event->subscription->subscriber->email);
 
             return true;

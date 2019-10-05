@@ -2,8 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
-use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
 use Spatie\EmailCampaigns\Support\WebBeacon;
+use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
 
 class TrackOpensController
 {

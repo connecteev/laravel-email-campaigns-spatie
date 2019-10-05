@@ -2,16 +2,16 @@
 
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Enums\CampaignStatus;
-use Spatie\EmailCampaigns\Events\CampaignSent;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
-use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Illuminate\Support\Facades\Event;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Events\CampaignSent;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 
 class SendCampaignJobTest extends TestCase
 {
@@ -38,7 +38,7 @@ class SendCampaignJobTest extends TestCase
 
         Mail::assertSent(CampaignMail::class, 3);
 
-        Event::assertDispatched(CampaignSent::class, function(CampaignSent $event) {
+        Event::assertDispatched(CampaignSent::class, function (CampaignSent $event) {
             $this->assertEquals($this->campaign->id, $event->campaign->id);
 
             return true;
@@ -75,4 +75,3 @@ class SendCampaignJobTest extends TestCase
         dispatch(new SendCampaignJob($this->campaign));
     }
 }
-

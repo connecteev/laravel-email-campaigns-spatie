@@ -2,14 +2,14 @@
 
 namespace Spatie\EmailCampaigns\Tests\Features;
 
-use Illuminate\Mail\Events\MessageSent;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
-use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Models\Subscription;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Mail\Events\MessageSent;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Spatie\EmailCampaigns\Models\EmailList;
+use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 
 class DoubleOptInTest extends TestCase
 {
@@ -23,7 +23,7 @@ class DoubleOptInTest extends TestCase
     {
         parent::setUp();
 
-        /** @var \Spatie\EmailCampaigns\Models\EmailList $emailList */
+        /* @var \Spatie\EmailCampaigns\Models\EmailList $emailList */
         $this->emailList = factory(EmailList::class)->create(['requires_double_opt_in' => true]);
 
         Event::listen(MessageSent::class, function (MessageSent $event) {
@@ -37,7 +37,8 @@ class DoubleOptInTest extends TestCase
     }
 
     /** @test */
-    public function when_subscribing_to_a_double_opt_in_list_a_click_in_the_confirmation_mail_is_needed_to_subscribe() {
+    public function when_subscribing_to_a_double_opt_in_list_a_click_in_the_confirmation_mail_is_needed_to_subscribe()
+    {
         $this->assertFalse($this->emailList->isSubscribed('john@example.com'));
 
         $this
@@ -73,7 +74,6 @@ class DoubleOptInTest extends TestCase
             ->assertSuccessful()
             ->baseResponse->content();
 
-        $this->assertStringContainsString("The link you clicked seems invalid", $content);
+        $this->assertStringContainsString('The link you clicked seems invalid', $content);
     }
 }
-

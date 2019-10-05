@@ -2,18 +2,17 @@
 
 namespace Spatie\EmailCampaigns\Jobs;
 
+use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Support\Config;
+use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Events\CampaignSent;
-use Spatie\EmailCampaigns\Models\Subscriber;
-use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Models\Subscription;
-use Spatie\EmailCampaigns\Support\Config;
+use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -59,10 +58,9 @@ class SendCampaignJob implements ShouldQueue
     protected function send()
     {
         $this->campaign->emailList->subscriptions->each(function (Subscription $emailListSubscription) {
-
             $pendingSend = $this->campaign->sends()->create([
                 'email_list_subscription_id' => $emailListSubscription->id,
-                'uuid' => (string)Str::uuid(),
+                'uuid' => (string) Str::uuid(),
             ]);
 
             dispatch(new SendMailJob($pendingSend));

@@ -2,14 +2,14 @@
 
 namespace Spatie\EmailCampaigns\Tests\Features;
 
-use Illuminate\Mail\Events\MessageSent;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Mail\Events\MessageSent;
+use Spatie\EmailCampaigns\Tests\TestCase;
+use Symfony\Component\DomCrawler\Crawler;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Models\CampaignClick;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Tests\TestCase;
-use Symfony\Component\DomCrawler\Crawler;
 
 class TrackClicksTest extends TestCase
 {
@@ -47,7 +47,7 @@ class TrackClicksTest extends TestCase
 
         $this->assertEquals(0, CampaignClick::count());
 
-        foreach(range(1,3) as $i) {
+        foreach (range(1, 3) as $i) {
             $this
                 ->get($this->link)
                 ->assertRedirect('https://spatie.be');

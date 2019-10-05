@@ -2,8 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class ConfirmSubscriptionController
 {
@@ -40,4 +40,3 @@ class ConfirmSubscriptionController
         return view('email-campaigns::confirmSubscription.couldNotFindSubscription');
     }
 }
-

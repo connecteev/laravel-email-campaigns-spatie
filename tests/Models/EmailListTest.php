@@ -2,10 +2,10 @@
 
 namespace Spatie\EmailCampaigns\Tests\Models;
 
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
-use Spatie\EmailCampaigns\Tests\TestCase;
 
 class EmailListTest extends TestCase
 {
@@ -35,7 +35,5 @@ class EmailListTest extends TestCase
 
         $this->assertEquals(1, Subscription::count());
         $this->assertEquals(1, Subscriber::count());
-
     }
 }
-

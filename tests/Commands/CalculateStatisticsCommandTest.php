@@ -1,16 +1,14 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Commands;
 
-
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Bus;
-use Spatie\EmailCampaigns\Commands\CalculateStatisticsCommand;
-use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
-use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\TestTime\TestTime;
+use Illuminate\Support\Facades\Bus;
+use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
+use Spatie\EmailCampaigns\Commands\CalculateStatisticsCommand;
 
 class CalculateStatisticsCommandTest extends TestCase
 {
@@ -21,7 +19,6 @@ class CalculateStatisticsCommandTest extends TestCase
         Bus::fake();
 
         TestTime::freeze('Y-m-d H:i:s', '2019-01-01 00:00:00');
-
     }
 
     /**
@@ -33,8 +30,7 @@ class CalculateStatisticsCommandTest extends TestCase
         Carbon $sentAt,
         ?Carbon $statisticsCalculatedAt,
         bool $jobShouldHaveBeenDispatched
-    )
-    {
+    ) {
         $campaign = factory(Campaign::class)->create([
             'sent_at' => $sentAt,
             'statistics_calculated_at' => $statisticsCalculatedAt,
@@ -46,7 +42,6 @@ class CalculateStatisticsCommandTest extends TestCase
             ? Bus::assertDispatched(CalculateStatisticsJob::class)
             : Bus::assertNotDispatched(CalculateStatisticsJob::class);
     }
-
 
     public function caseProvider(): array
     {

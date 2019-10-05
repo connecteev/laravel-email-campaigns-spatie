@@ -11,7 +11,7 @@ class UnsubscribeController
         /** @var \Spatie\EmailCampaigns\Models\Subscription $subscription */
         if (! $subscription = Subscription::findByUuid($emailListSubscriptionUuid)) {
             return view('email-campaigns::unsubscribe.notFound');
-        };
+        }
 
         $emailList = $subscription->emailList;
 
@@ -20,4 +20,3 @@ class UnsubscribeController
         return view('email-campaigns::unsubscribe.unsubscribed', compact('emailList'));
     }
 }
-

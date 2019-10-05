@@ -2,8 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
-use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 
 class CustomPrepareEmailHtmlAction extends PrepareEmailHtmlAction
 {

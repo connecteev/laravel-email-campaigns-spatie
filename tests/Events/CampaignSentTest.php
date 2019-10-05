@@ -3,11 +3,10 @@
 namespace Spatie\EmailCampaigns\Tests\Events;
 
 use Illuminate\Support\Facades\Event;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Tests\TestCase;
 
 class CampaignSentTest extends TestCase
 {
@@ -20,7 +19,7 @@ class CampaignSentTest extends TestCase
 
         dispatch(new SendCampaignJob($campaign));
 
-        Event::assertDispatched(CampaignSent::class, function(CampaignSent $event) use ($campaign) {
+        Event::assertDispatched(CampaignSent::class, function (CampaignSent $event) use ($campaign) {
             $this->assertEquals($campaign->id, $event->campaign->id);
 
             return true;

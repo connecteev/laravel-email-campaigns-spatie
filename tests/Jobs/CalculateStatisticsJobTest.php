@@ -1,16 +1,14 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
-
-use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
-use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\TestTime\TestTime;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\CampaignLink;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Tests\TestCase;
-use Spatie\TestTime\TestTime;
 
 class CalculateStatisticsJobTest extends TestCase
 {

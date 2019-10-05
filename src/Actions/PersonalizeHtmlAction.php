@@ -2,10 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Actions;
 
-use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
-use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 
 class PersonalizeHtmlAction
 {

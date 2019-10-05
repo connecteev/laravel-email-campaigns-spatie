@@ -6,11 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Spatie\EmailCampaigns\Events\CampaignOpened;
-use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Models\CampaignOpen;
 use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Models\Subscriber;
+use Spatie\EmailCampaigns\Events\CampaignOpened;
 
 class RegisterOpenJob implements ShouldQueue
 {

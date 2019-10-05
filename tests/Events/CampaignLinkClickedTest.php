@@ -1,17 +1,13 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Events;
 
-
 use Illuminate\Support\Facades\Event;
+use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Subscriber;
+use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Events\CampaignLinkClicked;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
-use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
-use Spatie\EmailCampaigns\Models\CampaignClick;
-use Spatie\EmailCampaigns\Models\CampaignLink;
-use Spatie\EmailCampaigns\Models\Subscriber;
-use Spatie\EmailCampaigns\Tests\TestCase;
 
 class CampaignLinkClickedTest extends TestCase
 {
@@ -33,7 +29,7 @@ class CampaignLinkClickedTest extends TestCase
             ->get($trackClickUrl)
             ->assertRedirect();
 
-        Event::assertDispatched(CampaignLinkClicked::class, function(CampaignLinkClicked $event) use ($subscriber, $campaignLink) {
+        Event::assertDispatched(CampaignLinkClicked::class, function (CampaignLinkClicked $event) use ($subscriber, $campaignLink) {
             $campaignClick = $event->campaignClick;
             $this->assertEquals($campaignLink->uuid, $campaignClick->link->uuid);
             $this->assertEquals($subscriber->uuid, $campaignClick->subscriber->uuid);

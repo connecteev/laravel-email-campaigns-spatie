@@ -2,10 +2,10 @@
 
 namespace Spatie\EmailCampaigns\Mails;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 
 class ConfirmSubscriptionMail extends Mailable implements ShouldQueue
 {
@@ -28,4 +28,3 @@ class ConfirmSubscriptionMail extends Mailable implements ShouldQueue
             ->markdown('email-campaigns::mails.confirmSubscription');
     }
 }
-

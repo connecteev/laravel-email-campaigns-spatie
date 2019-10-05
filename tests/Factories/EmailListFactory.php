@@ -26,11 +26,10 @@ class EmailListFactory
             ->map(function (int $i) {
                 return factory(Subscriber::class)->create(['email' => "subscriber{$i}@example.com"]);
             })
-            ->each(function(Subscriber $subscriber) use ($emailList) {
+            ->each(function (Subscriber $subscriber) use ($emailList) {
                 $subscriber->subscribeTo($emailList);
             });
 
         return $emailList->refresh();
     }
 }
-

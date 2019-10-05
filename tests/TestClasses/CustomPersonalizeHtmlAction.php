@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
-
-use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Models\CampaignSend;
+use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 
 class CustomPersonalizeHtmlAction extends PersonalizeHtmlAction
 {

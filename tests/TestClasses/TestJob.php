@@ -3,10 +3,10 @@
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Spatie\EmailCampaigns\Jobs\Middleware\RateLimited;
 
 class TestJob implements ShouldQueue
@@ -21,7 +21,7 @@ class TestJob implements ShouldQueue
     public function middleware()
     {
         dump('middleware');
+
         return [new RateLimited()];
     }
 }
-

@@ -4,11 +4,11 @@ namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 
 class CampaignTest extends TestCase
 {

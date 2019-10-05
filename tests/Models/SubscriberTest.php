@@ -3,12 +3,12 @@
 namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 
 class SubscriberTest extends TestCase
 {
@@ -66,7 +66,7 @@ class SubscriberTest extends TestCase
     public function it_will_send_a_confirmation_mail_if_the_list_requires_double_optin()
     {
         $list = factory(EmailList::class)->create([
-            'requires_double_opt_in' => true
+            'requires_double_opt_in' => true,
         ]);
 
         $subscription = $this->subscriber->subscribeTo($list);
@@ -75,6 +75,7 @@ class SubscriberTest extends TestCase
 
         Mail::assertQueued(ConfirmSubscriptionMail::class, function (ConfirmSubscriptionMail $mail) use ($subscription) {
             $this->assertEquals($subscription->id, $mail->subscription->id);
+
             return true;
         });
     }

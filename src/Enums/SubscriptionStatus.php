@@ -8,4 +8,3 @@ class SubscriptionStatus
     public const SUBSCRIBED = 'subscribed';
     public const UNSUBSCRIBED = 'unsubscribed';
 }
-
