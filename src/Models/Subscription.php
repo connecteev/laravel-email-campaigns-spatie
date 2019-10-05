@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Events\Unsubscribed;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 
 class Subscription extends Model
@@ -34,6 +35,8 @@ class Subscription extends Model
     public function markAsUnsubscribed()
     {
         $this->update(['status' => SubscriptionStatus::UNSUBSCRIBED]);
+
+        event(new Unsubscribed($this));
 
         return $this;
     }
