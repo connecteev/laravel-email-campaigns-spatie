@@ -15,7 +15,7 @@ class CampaignMailSentTest extends TestCase
     /** @test */
     public function it_will_fire_an_event_when_the_mail_is_sent()
     {
-        Event::fake();
+        Event::fake(CampaignMailSent::class);
 
         $send = factory(CampaignSend::class)->create();
 

@@ -18,7 +18,7 @@ class CampaignLinkClickedTest extends TestCase
     /** @test */
     public function it_will_fire_an_event_when_a_link_gets_clicked()
     {
-        Event::fake();
+        Event::fake(CampaignLinkClicked::class);
 
         $campaignLink = factory(CampaignLink::class)->create();
 

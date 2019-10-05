@@ -14,7 +14,7 @@ class CampaignOpenedTest extends TestCase
     /** @test */
     public function it_fires_an_event_when_a_campaign_is_opened()
     {
-        Event::fake();
+        Event::fake(CampaignOpened::class);
 
         $campaignSend = factory(CampaignSend::class)->create();
 
