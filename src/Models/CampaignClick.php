@@ -11,11 +11,11 @@ class CampaignClick extends Model
 
     public function link(): BelongsTo
     {
-        return $this->belongsTo(CampaignLink::class);
+        return $this->belongsTo(CampaignLink::class, 'campaign_link_id');
     }
 
     public function subscriber(): BelongsTo
     {
-        return $this->belongsTo(Subscriber::class);
+        return $this->belongsTo(Subscriber::class, 'email_list_subscriber_id');
     }
 }

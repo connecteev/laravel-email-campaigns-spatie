@@ -13,7 +13,6 @@ class ConfirmSubscriptionAction
         $subscription->update(['status' => SubscriptionStatus::SUBSCRIBED]);
 
         event(new Subscribed($subscription));
-
     }
 }
 

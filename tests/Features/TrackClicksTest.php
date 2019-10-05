@@ -11,7 +11,7 @@ use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 
-class TrackLinksTest extends TestCase
+class TrackClicksTest extends TestCase
 {
     /** @var \Spatie\EmailCampaigns\Models\Campaign */
     private $campaign;
