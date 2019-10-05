@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
 use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
+use Spatie\EmailCampaigns\Support\WebBeacon;
 
 class TrackOpensController
 {
@@ -12,7 +13,7 @@ class TrackOpensController
             dispatch(new RegisterOpenJob($campaignSendUuid));
         }
 
-        $webBeaconContent = sprintf('%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%', 71, 73, 70, 56, 57, 97, 1, 0, 1, 0, 128, 255, 0, 192, 192, 192, 0, 0, 0, 33, 249, 4, 1, 0, 0, 0, 0, 44, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 2, 68, 1, 0, 59);
+        $webBeaconContent = WebBeacon::content();
 
         return response($webBeaconContent)->withHeaders([
             'Content-type' => 'image/gif',
