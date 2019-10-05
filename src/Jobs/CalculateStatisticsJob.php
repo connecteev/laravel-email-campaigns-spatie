@@ -61,7 +61,7 @@ class CalculateStatisticsJob
         $this->campaign->links->each(function (CampaignLink $link) {
             $link->update([
                 'click_count' => $link->clicks()->count(),
-                'unique_click_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->get()->count(),
+                'unique_click_count' => $link->clicks()->select('email_list_subscriber_id')->groupBy('email_list_subscriber_id')->toBase()->getCountForPagination(['email_list_subscriber_id'])
             ]);
 
         });
