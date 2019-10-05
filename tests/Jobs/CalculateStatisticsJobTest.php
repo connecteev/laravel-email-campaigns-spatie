@@ -10,6 +10,7 @@ use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\TestTime\TestTime;
 
 class CalculateStatisticsJobTest extends TestCase
 {
@@ -30,6 +31,18 @@ class CalculateStatisticsJobTest extends TestCase
             'unique_click_count' => 0,
             'click_rate' => 0,
         ]);
+    }
+
+    /** @test */
+    public function it_will_save_the_datetime_when_the_statistics_where_calculated()
+    {
+        TestTime::freeze();
+
+        $campaign = factory(Campaign::class)->create();
+        $this->assertNull($campaign->statistics_calculated_at);
+
+        dispatch(new CalculateStatisticsJob($campaign));
+        $this->assertEquals(now()->format('Y-m-d H:i:s'), $campaign->fresh()->statistics_calculated_at);
     }
 
     /** @test */

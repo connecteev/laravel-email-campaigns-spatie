@@ -27,7 +27,7 @@ class Campaign extends Model
         'send_to_number_of_subscribers' => 'integer',
         'sent_at' => 'timestamp',
         'requires_double_opt_in' => 'boolean',
-        'statistics_calculated_at' => 'timestamp'
+        'statistics_calculated_at' => 'datetime'
     ];
 
     public static function boot()

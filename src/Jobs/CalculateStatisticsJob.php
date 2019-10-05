@@ -22,17 +22,18 @@ class CalculateStatisticsJob
 
     public function handle()
     {
-        if ($this->campaign->sends()->count() === 0) {
-            return;
+        if ($this->campaign->sends()->count() > 0) {
+            $this
+                ->calculateCampaignStatistics()
+                ->calculateLinkStatistics();
         }
 
-        $this
-            ->calculateCampaignStatistics()
-            ->calculateLinkStatistics();
+        $this->campaign->update(['statistics_calculated_at' => now()]);
     }
 
     protected function calculateCampaignStatistics()
     {
+
         $sendToNumberOfSubscribers = $this->campaign->sends()->count();
         $openCount = $this->campaign->opens()->count();
         $uniqueOpenCount = $this->campaign->opens()->groupBy('email_list_subscriber_id')->toBase()->getCountForPagination(['email_list_subscriber_id']);

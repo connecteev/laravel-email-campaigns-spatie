@@ -26,7 +26,6 @@ class CalculateStatisticsCommand extends Command
 
         collect([
             [CarbonInterval::minute(0), CarbonInterval::minute(5), CarbonInterval::minute(0)],
-            [CarbonInterval::minute(0), CarbonInterval::minute(5), CarbonInterval::minute(0)],
             [CarbonInterval::minute(5), CarbonInterval::hour(2), CarbonInterval::minute(10)],
             [CarbonInterval::hour(2), CarbonInterval::day(), CarbonInterval::hour()],
             [CarbonInterval::hour(2), CarbonInterval::weeks(2), CarbonInterval::hour(4)],
@@ -44,18 +43,26 @@ class CalculateStatisticsCommand extends Command
         $this->comment('All done!');
     }
 
-    public function calculateStatistics(
+    public function findCampaignsWithStatisticsToRecalculate(
         CarbonInterval $startInterval,
         CarbonInterval $endInterval,
         CarbonInterval $recalculateThreshold
     ): Collection
     {
-        $periodStart = $this->now->copy()->add($startInterval);
-        $periodEnd = $this->now->copy()->add($endInterval);
+        $periodEnd = $this->now->copy()->subtract($startInterval);
+        $periodStart = $this->now->copy()->subtract($endInterval);
+
+        dump($periodStart->format('Y-m-d H:i:s'), $periodEnd->format('Y-m-d H:i:s'), '--');
 
         return Campaign::sentBetween($periodStart, $periodEnd)
+            ->get()
             ->filter(function (Campaign $campaign) use ($recalculateThreshold) {
+                dd($campaign->id);
                 $threshold = $this->now->copy()->add($recalculateThreshold);
+
+                if (is_null($campaign->statistics_calculated_at)) {
+                    return true;
+                }
 
                 return $campaign->statistics_calculated_at->isBefore($threshold);
             });
