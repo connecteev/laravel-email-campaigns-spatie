@@ -3,7 +3,9 @@
 namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\EmailList;
@@ -124,5 +126,38 @@ class CampaignTest extends TestCase
             [$sentAt1430->id, $sentAt1530->id, $sentAt1630->id],
             $campaigns->pluck('id')->values()->toArray(),
         );
+    }
+
+    /** @test */
+    public function it_can_send_out_a_test_email()
+    {
+        Bus::fake();
+
+        $email = 'john@example.com';
+
+        $this->campaign->sendTestMail($email);
+
+        Bus::assertDispatched(SendTestMailJob::class, function(SendTestMailJob $job) use ($email) {
+            $this->assertEquals($this->campaign->id, $job->campaign->id);
+            $this->assertEquals($email, $job->email);
+
+            return true;
+        });
+    }
+
+    /** @test */
+    public function it_can_send_out_multiple_test_emails_at_once()
+    {
+        Bus::fake();
+
+        $this->campaign->sendTestMail(['john@example.com', 'paul@example.com']);
+
+        Bus::assertDispatched(SendTestMailJob::class, function(SendTestMailJob $job) {
+            return $job->email === 'john@example.com';
+        });
+
+        Bus::assertDispatched(SendTestMailJob::class, function(SendTestMailJob $job) {
+            return $job->email === 'paul@example.com';
+        });
     }
 }

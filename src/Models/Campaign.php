@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
+use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 
 class Campaign extends Model
 {
@@ -188,5 +189,15 @@ class Campaign extends Model
     public function wasAlreadySent(): bool
     {
         return $this->status === CampaignStatus::SENT;
+    }
+
+    /**
+     * @param $email string|array|\Illuminate\Support\Collection
+     */
+    public function sendTestMail($emails)
+    {
+        collect($emails)->each(function(string $email) {
+            dispatch(new SendTestMailJob($this, $email));
+        });
     }
 }
