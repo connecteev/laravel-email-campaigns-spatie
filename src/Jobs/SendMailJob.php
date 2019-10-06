@@ -48,7 +48,11 @@ class SendMailJob implements ShouldQueue
             $this->pendingSend,
             );
 
-        $campaignMail = new CampaignMail($this->pendingSend->campaign->subject, $personalisedHtml);
+        $campaignMail = new CampaignMail(
+            $this->pendingSend->campaign->subject,
+            $personalisedHtml,
+            $this->pendingSend,
+        );
 
         Mail::to($this->pendingSend->subscription->subscriber->email)->send($campaignMail);
 
