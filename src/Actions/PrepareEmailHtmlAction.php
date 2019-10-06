@@ -71,7 +71,7 @@ class PrepareEmailHtmlAction
 
     protected function replacePlaceholders(Campaign $campaign): void
     {
-        $webviewUrl = url(action(CampaignWebviewController::class, $campaign->uuid));
+        $webviewUrl = $campaign->webViewUrl();
 
         $campaign->email_html = str_replace('@@webviewUrl@@', $webviewUrl, $campaign->email_html);
     }
