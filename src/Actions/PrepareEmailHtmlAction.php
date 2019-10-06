@@ -6,6 +6,7 @@ use DOMElement;
 use DOMDocument;
 use ErrorException;
 use Illuminate\Support\Str;
+use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
@@ -15,6 +16,8 @@ class PrepareEmailHtmlAction
     public function execute(Campaign $campaign)
     {
         $campaign->email_html = $campaign->html;
+
+        $this->prepareHtml($campaign);
 
         if ($campaign->track_clicks) {
             $this->trackClicks($campaign);
@@ -64,5 +67,12 @@ class PrepareEmailHtmlAction
         $webBeaconHtml = "<img alt='beacon' src='{$webBeaconUrl}' />";
 
         $campaign->email_html = Str::replaceLast('</body>', $webBeaconHtml.'</body>', $campaign->email_html);
+    }
+
+    protected function prepareHtml(Campaign $campaign): void
+    {
+        $webviewUrl = url(action(CampaignWebviewController::class, $campaign->uuid));
+
+        $campaign->email_html = str_replace('@@webviewUrl@@', $webviewUrl, $campaign->email_html);
     }
 }

@@ -14,7 +14,7 @@ class PersonalizeHtmlAction
         $html = str_replace('@@campaignSendUuid@@', $pendingSend->uuid, $html);
         $html = str_replace('@@subscriptionUuid@@', $subscription->uuid, $html);
         $html = str_replace('@@subscriberUuid@@', $subscription->subscriber->uuid, $html);
-        $html = str_replace('@@unsubscribeLink@@', action(UnsubscribeController::class, $subscription->uuid), $html);
+        $html = str_replace('@@unsubscribeUrl@@', action(UnsubscribeController::class, $subscription->uuid), $html);
 
         return $html;
     }

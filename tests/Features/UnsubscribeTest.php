@@ -30,7 +30,7 @@ class UnsubscribeTest extends TestCase
         parent::setUp();
 
         $this->campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
-            'html' => '<a href="@@unsubscribeLink@@">Unsubscribe</a>',
+            'html' => '<a href="@@unsubscribeUrl@@">Unsubscribe</a>',
         ]);
 
         $this->emailList = $this->campaign->emailList;

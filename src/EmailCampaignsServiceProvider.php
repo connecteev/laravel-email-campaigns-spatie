@@ -9,6 +9,7 @@ use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
+use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 
 class EmailCampaignsServiceProvider extends ServiceProvider
 {
@@ -61,6 +62,8 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
             Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);
             Route::get('/track-opens/{campaignSendUuid}', TrackOpensController::class);
+
+            Route::get('webview/{campaignUuid}', CampaignWebviewController::class);
         });
 
         return $this;

@@ -6,7 +6,7 @@ namespace Spatie\EmailCampaigns\Http\Controllers;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Models\Campaign;
 
-class WebviewController
+class CampaignWebviewController
 {
     public function __invoke(string $campaignUuid)
     {
