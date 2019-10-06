@@ -41,8 +41,6 @@ class UnsubscribeTest extends TestCase
     /** @test */
     public function it_can_unsubscribe_from_a_list()
     {
-        $this->withoutExceptionHandling();
-
         $this->sendCampaign();
 
         $this->assertTrue($this->subscriber->isSubscribedTo($this->emailList));

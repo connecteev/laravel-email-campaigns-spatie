@@ -17,8 +17,6 @@ class PrepareEmailHtmlAction
     {
         $campaign->email_html = $campaign->html;
 
-        $this->prepareHtml($campaign);
-
         if ($campaign->track_clicks) {
             $this->trackClicks($campaign);
         }
@@ -26,6 +24,9 @@ class PrepareEmailHtmlAction
         if ($campaign->track_opens) {
             $this->trackOpens($campaign);
         }
+
+        $this->replacePlaceholders($campaign);
+
 
         $campaign->save();
     }
@@ -69,7 +70,7 @@ class PrepareEmailHtmlAction
         $campaign->email_html = Str::replaceLast('</body>', $webBeaconHtml.'</body>', $campaign->email_html);
     }
 
-    protected function prepareHtml(Campaign $campaign): void
+    protected function replacePlaceholders(Campaign $campaign): void
     {
         $webviewUrl = url(action(CampaignWebviewController::class, $campaign->uuid));
 
