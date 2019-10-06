@@ -12,6 +12,7 @@ class ConfirmSubscriptionMail extends Mailable implements ShouldQueue
     /** @var \Spatie\EmailCampaigns\Models\Subscription */
     public $subscription;
 
+    /** @var string */
     public $confirmationUrl;
 
     public function __construct(Subscription $subscription)
