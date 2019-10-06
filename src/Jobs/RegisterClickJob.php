@@ -20,7 +20,7 @@ class RegisterClickJob implements ShouldQueue
     /** @var string */
     public $subscriberUuid;
 
-    /** @var string  */
+    /** @var string */
     public $queue;
 
     public function __construct(string $campaignLinkUuid, string $subscriberUuid)

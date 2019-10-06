@@ -4,12 +4,10 @@ namespace Spatie\EmailCampaigns\Tests\Jobs;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Jobs\SendMailJob;
-use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
-use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 
 class SendTestMailJobTest extends TestCase
 {

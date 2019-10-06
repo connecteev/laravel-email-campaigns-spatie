@@ -3,10 +3,10 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;

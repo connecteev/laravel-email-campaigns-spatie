@@ -1,12 +1,11 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Http\Controllers;
 
+use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
-use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Tests\TestCase;
 
 class CampaignWebviewControllerTest extends TestCase
 {
@@ -46,6 +45,5 @@ class CampaignWebviewControllerTest extends TestCase
         $this
             ->get($this->webviewUrl)
             ->assertStatus(404);
-
     }
 }

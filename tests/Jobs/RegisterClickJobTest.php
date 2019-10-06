@@ -3,10 +3,8 @@
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Jobs\RegisterClickJob;
-use Spatie\EmailCampaigns\Jobs\SendMailJob;
-use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Jobs\RegisterClickJob;
 
 class RegisterClickJobTest extends TestCase
 {

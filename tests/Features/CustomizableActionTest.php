@@ -10,10 +10,10 @@ use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Tests\TestClasses\CustomPrepareWebviewHtmlAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomSubscribeAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomPersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomPrepareEmailHtmlAction;
+use Spatie\EmailCampaigns\Tests\TestClasses\CustomPrepareWebviewHtmlAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomConfirmSubscriptionAction;
 
 class CustomizableActionTest extends TestCase

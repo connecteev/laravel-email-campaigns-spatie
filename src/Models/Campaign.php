@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
+use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
-use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
-use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 
 class Campaign extends Model
 {
@@ -199,7 +199,7 @@ class Campaign extends Model
      */
     public function sendTestMail($emails)
     {
-        collect($emails)->each(function(string $email) {
+        collect($emails)->each(function (string $email) {
             dispatch(new SendTestMailJob($this, $email));
         });
     }

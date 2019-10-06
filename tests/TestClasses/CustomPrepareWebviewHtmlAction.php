@@ -2,9 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
-use Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
+use Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction;
 
 class CustomPrepareWebviewHtmlAction extends PrepareWebviewHtmlAction
 {

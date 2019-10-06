@@ -5,7 +5,6 @@ namespace Spatie\EmailCampaigns\Tests\Jobs;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Mails\CampaignMail;

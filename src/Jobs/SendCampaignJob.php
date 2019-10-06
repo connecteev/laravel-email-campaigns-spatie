@@ -6,7 +6,6 @@ use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -14,6 +13,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Models\Subscription;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
+use Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction;
 
 class SendCampaignJob implements ShouldQueue
 {
@@ -56,7 +56,6 @@ class SendCampaignJob implements ShouldQueue
     {
         $action = Config::getActionClass('prepare_webview_html', PrepareWebviewHtmlAction::class);
         $action->execute($this->campaign);
-
 
         return $this;
     }
