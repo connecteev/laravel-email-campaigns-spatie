@@ -1,16 +1,15 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
-use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
 
 class CampaignWebviewController
 {
     public function __invoke(string $campaignUuid)
     {
-        if (! $campaign =  Campaign::findByUuid($campaignUuid)) {
+        if (! $campaign = Campaign::findByUuid($campaignUuid)) {
             abort(404);
         }
 

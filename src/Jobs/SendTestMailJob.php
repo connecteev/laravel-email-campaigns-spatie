@@ -3,13 +3,13 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
-use Spatie\EmailCampaigns\Models\Campaign;
 
 class SendTestMailJob implements ShouldQueue
 {

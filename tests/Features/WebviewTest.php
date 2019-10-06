@@ -2,13 +2,13 @@
 
 namespace Spatie\EmailCampaigns\Tests\Features;
 
-use Illuminate\Mail\Events\MessageSent;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Mail\Events\MessageSent;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 
 class WebviewTest extends TestCase
 {
