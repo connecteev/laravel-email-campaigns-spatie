@@ -18,7 +18,7 @@ return [
 
     /*
      * Here you can specify which jobs should run on which queues.
-     * Use and empty string to use the default queue.
+     * Use an empty string to use the default queue.
      */
     'perform_on_queue' => [
         'calculate_statistics_job' => '',
