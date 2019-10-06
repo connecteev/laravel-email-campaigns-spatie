@@ -11,6 +11,7 @@ return [
     'actions' => [
         'personalize_html' => \Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction::class,
         'prepare_email_html' => \Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction::class,
+        'prepare_webview_html' => \Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction::class,
         'subscribe_action' => \Spatie\EmailCampaigns\Actions\SubscribeAction::class,
         'confirm_subscription' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
     ],

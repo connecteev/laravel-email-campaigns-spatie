@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -46,7 +47,6 @@ class SendCampaignJob implements ShouldQueue
     protected function prepareEmailHtml()
     {
         $action = Config::getActionClass('prepare_email_html', PrepareEmailHtmlAction::class);
-
         $action->execute($this->campaign);
 
         return $this;
@@ -54,8 +54,9 @@ class SendCampaignJob implements ShouldQueue
 
     private function prepareWebviewHtml()
     {
-        $this->campaign->webview_html = $this->campaign->html;
-        $this->campaign->save();
+        $action = Config::getActionClass('prepare_webview_html', PrepareWebviewHtmlAction::class);
+        $action->execute($this->campaign);
+
 
         return $this;
     }

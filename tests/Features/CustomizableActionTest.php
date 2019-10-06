@@ -10,6 +10,7 @@ use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Exceptions\InvalidConfig;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Spatie\EmailCampaigns\Tests\TestClasses\CustomPrepareWebviewHtmlAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomSubscribeAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomPersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Tests\TestClasses\CustomPrepareEmailHtmlAction;
@@ -35,6 +36,20 @@ class CustomizableActionTest extends TestCase
     public function the_prepare_email_html_action_can_be_customized()
     {
         config()->set('email-campaigns.actions.prepare_email_html', CustomPrepareEmailHtmlAction::class);
+
+        $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
+            'status' => CampaignStatus::CREATED,
+        ]);
+
+        dispatch(new SendCampaignJob($campaign));
+
+        $this->assertEquals('overridden@example.com', $campaign->emailList->subscribers->first()->email);
+    }
+
+    /** @test */
+    public function the_prepare_webview_html_action_can_be_customized()
+    {
+        config()->set('email-campaigns.actions.prepare_webview_html', CustomPrepareWebviewHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
             'status' => CampaignStatus::CREATED,
