@@ -3,6 +3,8 @@ title: Introduction
 weight: 1
 ---
 
+**THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET**
+
 This package allows people to subscribe to an email list. You can send a mail campaign to such a list. The package can track opens and clicks on links in the mails that are sent out.
 
 ```php
