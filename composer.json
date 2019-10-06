@@ -27,15 +27,15 @@
         "illuminate/redis": "^6.0",
         "illuminate/support": "^6.0",
         "spatie/laravel-rate-limited-job-middleware": "^1.0",
-        "spatie/test-time": "^1.1",
-        "symfony/dom-crawler": "^4.3"
+        "symfony/css-selector": "^4.3",
+        "symfony/dom-crawler": "^4.3.4"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.6",
-
+        "fzaninotto/faker": "^1.8",
         "orchestra/testbench": "^4.0",
         "phpunit/phpunit": "^8.2",
         "predis/predis": "^1.1",
+        "spatie/test-time": "^1.1",
         "symfony/var-dumper": "^4.3"
     },
     "autoload": {

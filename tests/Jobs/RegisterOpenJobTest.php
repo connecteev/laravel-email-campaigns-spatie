@@ -9,7 +9,7 @@ use Spatie\EmailCampaigns\Jobs\SendMailJob;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Tests\TestCase;
 
-class RegisterClickOpenTest extends TestCase
+class RegisterOpenJobTest extends TestCase
 {
     /** @test */
     public function the_queue_of_the_register_open_job_can_be_configured()
