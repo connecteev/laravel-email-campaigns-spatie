@@ -65,6 +65,19 @@ class SendCampaignJobTest extends TestCase
     }
 
     /** @test */
+    public function it_will_prepare_the_webview()
+    {
+        $this->campaign->update([
+            'html' => 'my html',
+            'webview_html' => null,
+        ]);
+
+        dispatch(new SendCampaignJob($this->campaign));
+
+        $this->assertEquals('my html', $this->campaign->refresh()->webview_html);
+    }
+
+    /** @test */
     public function it_will_not_send_invalid_html()
     {
         $this->campaign->update([
