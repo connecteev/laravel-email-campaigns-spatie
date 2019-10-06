@@ -3,9 +3,12 @@
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Jobs\SendMailJob;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Tests\TestCase;
 
 class SendTestMailJobTest extends TestCase
@@ -30,5 +33,16 @@ class SendTestMailJobTest extends TestCase
 
             return true;
         });
+    }
+
+    /** @test */
+    public function the_queue_of_the_send_test_mail_job_can_be_configured()
+    {
+        Queue::fake();
+        config()->set('email-campaigns.perform_on_queue.send_test_mail_job', 'custom-queue');
+
+        $campaign = factory(Campaign::class)->create();
+        dispatch(new SendTestMailJob($campaign, 'john@example.com'));
+        Queue::assertPushedOn('custom-queue', SendTestMailJob::class);
     }
 }

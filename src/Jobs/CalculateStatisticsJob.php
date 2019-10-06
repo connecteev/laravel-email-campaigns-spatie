@@ -3,22 +3,29 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Spatie\EmailCampaigns\Models\CampaignLink;
 use Spatie\EmailCampaigns\Events\CampaignStatisticsCalculated;
 
-class CalculateStatisticsJob
+class CalculateStatisticsJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /** @var \Spatie\EmailCampaigns\Models\Campaign */
     public $campaign;
 
+    /** @var string */
+    public $queue;
+
     public function __construct(Campaign $campaign)
     {
         $this->campaign = $campaign;
+
+        $this->queue = config('email-campaigns.perform_on_queue.calculate_statistics_job');
     }
 
     public function handle()

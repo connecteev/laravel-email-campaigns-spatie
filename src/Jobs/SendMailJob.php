@@ -24,9 +24,14 @@ class SendMailJob implements ShouldQueue
     /** @var \Spatie\EmailCampaigns\Models\CampaignSend */
     public $pendingSend;
 
+    /** @var string */
+    public $queue;
+
     public function __construct(CampaignSend $pendingSend)
     {
         $this->pendingSend = $pendingSend;
+
+        $this->queue = config('email-campaigns.perform_on_queue.send_mail_job');
     }
 
     public function handle()
@@ -64,5 +69,12 @@ class SendMailJob implements ShouldQueue
             ->releaseAfterSeconds($throttlingConfig['release_in_seconds']);
 
         return [$rateLimitedMiddleware];
+    }
+
+    public function onQueue($queue)
+    {
+        $this->queue = $queue;
+
+        return $this;
     }
 }

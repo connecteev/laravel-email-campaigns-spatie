@@ -20,11 +20,16 @@ class RegisterClickJob implements ShouldQueue
     /** @var string */
     public $subscriberUuid;
 
+    /** @var string  */
+    public $queue;
+
     public function __construct(string $campaignLinkUuid, string $subscriberUuid)
     {
         $this->campaignLinkUuid = $campaignLinkUuid;
 
         $this->subscriberUuid = $subscriberUuid;
+
+        $this->queue = config('email-campaigns.perform_on_queue.register_click_job');
     }
 
     public function handle()

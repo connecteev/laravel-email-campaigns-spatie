@@ -2,6 +2,9 @@
 
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
+use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Jobs\SendMailJob;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\TestTime\TestTime;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
@@ -80,7 +83,7 @@ class CalculateStatisticsJobTest extends TestCase
             });
         $this->simulateClick($campaignLinks->first(), $subscribers->take(1));
 
-        dispatch(new CalculateStatisticsJob($campaign));
+        dispatch_now(new CalculateStatisticsJob($campaign));
 
         $this->assertDatabaseHas('email_campaigns', [
             'id' => $campaign->id,
@@ -111,9 +114,20 @@ class CalculateStatisticsJobTest extends TestCase
             ->simulateClick($link, $subscriber2)
             ->simulateClick($link, $subscriber2);
 
-        dispatch(new CalculateStatisticsJob($campaign));
+        dispatch_now(new CalculateStatisticsJob($campaign));
 
         $this->assertEquals(3, $link->click_count);
         $this->assertEquals(2, $link->unique_click_count);
+    }
+
+    /** @test */
+    public function the_queue_of_the_calculate_statistics_job_can_be_configured()
+    {
+        Queue::fake();
+        config()->set('email-campaigns.perform_on_queue.calculate_statistics_job', 'custom-queue');
+
+        $campaign = factory(Campaign::class)->create();
+        dispatch(new CalculateStatisticsJob($campaign));
+        Queue::assertPushed(CalculateStatisticsJob::class);
     }
 }

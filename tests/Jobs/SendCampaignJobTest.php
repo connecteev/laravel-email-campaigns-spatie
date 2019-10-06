@@ -4,6 +4,8 @@ namespace Spatie\EmailCampaigns\Tests\Jobs;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Jobs\RegisterOpenJob;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
@@ -73,5 +75,18 @@ class SendCampaignJobTest extends TestCase
         $this->expectException(CampaignCouldNotBeSent::class);
 
         dispatch(new SendCampaignJob($this->campaign));
+    }
+
+    /** @test */
+    public function the_queue_of_the_send_campaign_job_can_be_configured()
+    {
+        Queue::fake();
+
+        config()->set('email-campaigns.perform_on_queue.send_campaign_job', 'custom-queue');
+
+        $campaign = factory(Campaign::class)->create();
+        dispatch(new SendCampaignJob($campaign));
+
+        Queue::assertPushedOn('custom-queue', SendCampaignJob::class);
     }
 }

@@ -17,9 +17,14 @@ class RegisterOpenJob implements ShouldQueue
     /** @var string */
     public $campaignSendUuid;
 
+    /** @var string */
+    public $queue;
+
     public function __construct(string $campaignSendUuid)
     {
         $this->campaignSendUuid = $campaignSendUuid;
+
+        $this->queue = config('email-campaigns.perform_on_queue.register_open_job');
     }
 
     public function handle()

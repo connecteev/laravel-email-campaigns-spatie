@@ -16,6 +16,19 @@ return [
     ],
 
     /*
+     * Here you can specify which jobs should run on which queues.
+     * Use and empty string to use the default queue.
+     */
+    'perform_on_queue' => [
+        'calculate_statistics_job' => '',
+        'register_click_job' => '',
+        'register_open_job' => '',
+        'send_campaign_job' => '',
+        'send_mail_job' => '',
+        'send_test_mail_job' => '',
+    ],
+
+    /*
      * By default only 5 mails per second will be sent to avoid overwhelming your
      * e-mail sending service. To use this feature you must have Redis installed.
      */

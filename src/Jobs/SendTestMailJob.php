@@ -3,17 +3,17 @@
 namespace Spatie\EmailCampaigns\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 use Spatie\EmailCampaigns\Mails\CampaignMail;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Support\Config;
 
-class SendTestMailJob
+class SendTestMailJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /** @var \Spatie\EmailCampaigns\Models\Campaign */
     public $campaign;
@@ -21,11 +21,16 @@ class SendTestMailJob
     /** @var string */
     public $email;
 
+    /** @var string */
+    public $queue;
+
     public function __construct(Campaign $campaign, string $email)
     {
         $this->campaign = $campaign;
 
         $this->email = $email;
+
+        $this->queue = config('email-campaigns.perform_on_queue.send_test_mail_job');
     }
 
     public function handle()

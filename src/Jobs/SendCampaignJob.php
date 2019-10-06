@@ -21,9 +21,14 @@ class SendCampaignJob implements ShouldQueue
     /** @var \Spatie\EmailCampaigns\Models\Campaign */
     public $campaign;
 
+    /** @var string */
+    public $queue;
+
     public function __construct(Campaign $campaign)
     {
         $this->campaign = $campaign;
+
+        $this->queue = config('email-campaigns.perform_on_queue.send_campaign_job');
     }
 
     public function handle()
