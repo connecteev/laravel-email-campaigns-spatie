@@ -11,5 +11,6 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'track_opens' => $faker->boolean,
         'track_clicks' => $faker->boolean,
         'status' => CampaignStatus::CREATED,
+        'uuid' => $faker->uuid,
     ];
 });

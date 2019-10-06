@@ -70,11 +70,4 @@ class SendMailJob implements ShouldQueue
 
         return [$rateLimitedMiddleware];
     }
-
-    public function onQueue($queue)
-    {
-        $this->queue = $queue;
-
-        return $this;
-    }
 }

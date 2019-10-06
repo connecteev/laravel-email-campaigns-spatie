@@ -13,9 +13,12 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
+use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 
 class Campaign extends Model
 {
+    use HasUuid;
+
     public $table = 'email_campaigns';
 
     protected $guarded = [];
