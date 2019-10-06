@@ -8,8 +8,8 @@ use Spatie\EmailCampaigns\Commands\CalculateStatisticsCommand;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
-use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
+use Spatie\EmailCampaigns\Http\Controllers\ConfirmSubscriptionController;
 
 class EmailCampaignsServiceProvider extends ServiceProvider
 {

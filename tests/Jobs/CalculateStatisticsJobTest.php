@@ -2,10 +2,8 @@
 
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
-use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Jobs\SendMailJob;
-use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\TestTime\TestTime;
+use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\CampaignLink;

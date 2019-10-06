@@ -5,11 +5,11 @@ namespace Spatie\EmailCampaigns\Tests\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
+use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 
 class CampaignTest extends TestCase
@@ -137,7 +137,7 @@ class CampaignTest extends TestCase
 
         $this->campaign->sendTestMail($email);
 
-        Bus::assertDispatched(SendTestMailJob::class, function(SendTestMailJob $job) use ($email) {
+        Bus::assertDispatched(SendTestMailJob::class, function (SendTestMailJob $job) use ($email) {
             $this->assertEquals($this->campaign->id, $job->campaign->id);
             $this->assertEquals($email, $job->email);
 
@@ -152,11 +152,11 @@ class CampaignTest extends TestCase
 
         $this->campaign->sendTestMail(['john@example.com', 'paul@example.com']);
 
-        Bus::assertDispatched(SendTestMailJob::class, function(SendTestMailJob $job) {
+        Bus::assertDispatched(SendTestMailJob::class, function (SendTestMailJob $job) {
             return $job->email === 'john@example.com';
         });
 
-        Bus::assertDispatched(SendTestMailJob::class, function(SendTestMailJob $job) {
+        Bus::assertDispatched(SendTestMailJob::class, function (SendTestMailJob $job) {
             return $job->email === 'paul@example.com';
         });
     }

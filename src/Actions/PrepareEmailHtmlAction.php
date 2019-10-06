@@ -6,10 +6,10 @@ use DOMElement;
 use DOMDocument;
 use ErrorException;
 use Illuminate\Support\Str;
-use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
+use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 
 class PrepareEmailHtmlAction
 {
@@ -26,7 +26,6 @@ class PrepareEmailHtmlAction
         }
 
         $this->replacePlaceholders($campaign);
-
 
         $campaign->save();
     }
