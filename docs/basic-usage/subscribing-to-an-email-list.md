@@ -25,7 +25,7 @@ Behind the scenes we'll create a `Subscriber` with email `john@example.com` and 
 
 If you subscribe an email twice to the same list, only one subscription will be created.
 
-You can also use a `Subscriper` to subscribe to an email list
+You can also use a `Subscriber` to subscribe to an email list.
 
 ```php
 $subscriber = Subscriber::findForEmail('john@example.com');

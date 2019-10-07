@@ -1,6 +1,6 @@
 ---
 title: Tracking clicks
-weight: 5
+weight: 6
 ---
 
 Coming soon...
