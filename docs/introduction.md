@@ -5,17 +5,34 @@ weight: 1
 
 **THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET**
 
-This package allows people to subscribe to an email list. You can send a mail campaign to such a list. The package can track opens and clicks on links in the mails that are sent out.
+This package allows to easily send out email campaigns to a list of subscribers.
+
+Let's take a quick look at how the package can be used. First, you must create an email list:
 
 ```php
+$emailList = EmailList::create('newsletter subscribers');
+```
+
+Next, you can subscribe some people to a list. There's also support for [double opt in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/basic-usage/using-double-opt-in/)
+
+```php
+$emailList->subscribe('john@example.com');
+$emailList->subscribe('paul@example.com');
+```
+
+You can send an email to all those subscribed on the list.
+
+```
 Campaign::create()
     ->subject('test')
     ->content('my content')
     ->trackOpens()
     ->trackClicks()
-    ->to($list)
+    ->to($emailList)
     ->send();
 ```
+
+After your campaign is sent, you can view some [interesting statistics](https://docs.spatie.be/laravel-email-campaigns/v1/basic-usage/viewing-statistics-of-a-sent-campaign/).
 
 ## We have badges!
 

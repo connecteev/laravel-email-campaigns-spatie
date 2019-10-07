@@ -8,43 +8,38 @@
 [![StyleCI](https://github.styleci.io/repos/210674796/shield?branch=master)](https://github.styleci.io/repos/210674796)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-email-campaigns.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-email-campaigns)
 
+This package allows to easily send out email campaigns to a list of subscribers.
+
+Let's take a quick look at how the package can be used. First, you must create an email list:
 
 ```php
-$campaign = EmailCampaign::create([
-    'subject' => 'My newsletter #1',
-    'text' => $content,
-    'track_opens' => true,
-    'track_clicks' => true,
-])->send();
+$emailList = EmailList::create('newsletter subscribers');
+```
 
-EmailCampaign::create()
-    ->subject('My newsletter #1')
-    ->content($html)
+Next, you can subscribe some people to a list. There's also support for [double opt in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/basic-usage/using-double-opt-in/)
+
+```php
+$emailList->subscribe('john@example.com');
+$emailList->subscribe('paul@example.com');
+```
+
+You can send an email to all those subscribed on the list.
+
+```
+Campaign::create()
+    ->subject('test')
+    ->content('my content')
     ->trackOpens()
     ->trackClicks()
-    ->sendTo($list)
+    ->to($emailList)
+    ->send();
 ```
 
-## Installation
+After your campaign is sent, you can view some [interesting statistics](https://docs.spatie.be/laravel-email-campaigns/v1/basic-usage/viewing-statistics-of-a-sent-campaign/).
 
-You can install the package via composer:
+## Documention
 
-```bash
-composer require spatie/laravel-email-campaigns
-```
-
-## Usage
-
-``` php
-$skeleton = new Spatie\EmailCampaigns();
-echo $skeleton->echoPhrase('Hello, Spatie!');
-```
-
-### Testing
-
-``` bash
-composer test
-```
+You can view all documentation on [our dedicated documentation site](https://docs.spatie.be/laravel-email-campaigns/v1/introduction/).
 
 ### Changelog
 
