@@ -40,4 +40,4 @@ First, you must publish the views.
 php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="views"
 ```
 
-After that, the content of the double opt in mail can be modify the `/resources/views/vendor/email-campaigns/mails/confirmSubscription.blade.php`.
+After that, the content of the double opt in mail can be modified in the `/resources/views/vendor/email-campaigns/mails/confirmSubscription.blade.php` view.
