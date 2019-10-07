@@ -28,9 +28,7 @@ class CalculateStatisticsCommand extends Command
             [CarbonInterval::minute(5), CarbonInterval::hour(2), CarbonInterval::minute(10)],
             [CarbonInterval::hour(2), CarbonInterval::day(), CarbonInterval::hour()],
             [CarbonInterval::day(), CarbonInterval::weeks(2), CarbonInterval::hour(4)],
-        ])->each(function (array $recalculatePeriodParameters) {
-            [$startInterval, $endInterval, $recalculateThreshold] = $recalculatePeriodParameters;
-
+        ])->eachSpread(function (CarbonInterval $startInterval, CarbonInterval $endInterval, CarbonInterval $recalculateThreshold) {
             $this
                 ->findCampaignsWithStatisticsToRecalculate($startInterval, $endInterval, $recalculateThreshold)
                 ->each(function (Campaign $campaign) {
