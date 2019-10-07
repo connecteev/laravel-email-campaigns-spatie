@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Tests\Commands;
 
 use Carbon\Carbon;
+use Exception;
 use Spatie\TestTime\TestTime;
 use Illuminate\Support\Facades\Bus;
 use Spatie\EmailCampaigns\Tests\TestCase;
@@ -15,8 +16,6 @@ class CalculateStatisticsCommandTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        Bus::fake();
 
         TestTime::freeze('Y-m-d H:i:s', '2019-01-01 00:00:00');
     }
@@ -31,12 +30,14 @@ class CalculateStatisticsCommandTest extends TestCase
         ?Carbon $statisticsCalculatedAt,
         bool $jobShouldHaveBeenDispatched
     ) {
+        Bus::fake();
+
         $campaign = factory(Campaign::class)->create([
             'sent_at' => $sentAt,
             'statistics_calculated_at' => $statisticsCalculatedAt,
         ]);
 
-        $this->artisan(CalculateStatisticsCommand::class);
+        $this->artisan(CalculateStatisticsCommand::class)->assertExitCode(0);
 
         $jobShouldHaveBeenDispatched
             ? Bus::assertDispatched(CalculateStatisticsJob::class)
@@ -66,5 +67,18 @@ class CalculateStatisticsCommandTest extends TestCase
             [now()->subWeeks(2), now()->subDay(), true],
             [now()->subWeeks(2)->subSecond(), now()->subDay(), false],
         ];
+    }
+
+    /** @test */
+    public function it_can_recalculate_the_statistics_of_a_single_campaign()
+    {
+        $campaign = factory(Campaign::class)->create([
+            'sent_at' => now()->subYear(),
+            'statistics_calculated_at' => null,
+        ]);
+
+        $this->artisan(CalculateStatisticsCommand::class, ['campaignId' => 1])->assertExitCode(0);
+
+        $this->assertNotNull($campaign->refresh()->statistics_calculated_at);
     }
 }

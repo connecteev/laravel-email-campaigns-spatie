@@ -21,6 +21,16 @@ You must use register the routes needed to handle subscription confirmations, op
 Route::emailCampaigns('email-campaigns');
 ```
 
+In the console kernel you should schedule the `email-campaigns:calculate-statistics` to run every minute.
+```
+// in app/Console/Kernel.php
+protected function schedule(Schedule $schedule)
+{
+    // ...
+    $schedule->command('email-campaigns:calculate-statistics')->everyMinute();
+}
+```
+
 Most e-mail providers have a limit on how many mails you can send within a given amount of time. To throttle mails, this package uses redis. Make sure that is available on your system.
 
 You must publish the config file with this command.

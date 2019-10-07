@@ -10,7 +10,7 @@ use Spatie\EmailCampaigns\Jobs\CalculateStatisticsJob;
 
 class CalculateStatisticsCommand extends Command
 {
-    public $name = 'email-campaigns:calculate-statistics';
+    public $signature = 'email-campaigns:calculate-statistics {campaignId?}';
 
     public $description = 'Calculate the statistics of the recently sent campaigns';
 
@@ -21,6 +21,17 @@ class CalculateStatisticsCommand extends Command
     {
         $this->comment('Start calculating statistics...');
 
+        $campaignId = $this->argument('campaignId');
+
+        $campaignId
+            ? dispatch_now(new CalculateStatisticsJob(Campaign::find($campaignId)))
+            : $this->calculateStatisticsOfRecentCampaigns();
+
+        $this->comment('All done!');
+    }
+
+    protected function calculateStatisticsOfRecentCampaigns(): void
+    {
         $this->now = now();
 
         collect([
@@ -36,8 +47,6 @@ class CalculateStatisticsCommand extends Command
                     dispatch(new CalculateStatisticsJob($campaign));
                 });
         });
-
-        $this->comment('All done!');
     }
 
     public function findCampaignsWithStatisticsToRecalculate(
