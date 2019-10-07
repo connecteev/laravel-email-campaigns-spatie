@@ -54,7 +54,7 @@ class UnsubscribeTest extends TestCase
 
         $this->assertFalse($this->subscriber->isSubscribedTo($this->emailList));
 
-        $subscription = $this->emailList->subscriptions->first();
+        $subscription = $this->emailList->allSubscriptions->first();
         $this->assertEquals(SubscriptionStatus::UNSUBSCRIBED, $subscription->status);
     }
 

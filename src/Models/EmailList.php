@@ -13,10 +13,20 @@ class EmailList extends Model
 
     public function subscribers(): BelongsToMany
     {
+        return $this->allSubscribers()->wherePivot('status', SubscriptionStatus::SUBSCRIBED);
+    }
+
+    public function allSubscribers(): BelongsToMany
+    {
         return $this->belongsToMany(Subscriber::class, 'email_list_subscriptions', 'email_list_id', 'email_list_subscriber_id');
     }
 
     public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class)->where('status', SubscriptionStatus::SUBSCRIBED);
+    }
+
+    public function allSubscriptions(): HasMany
     {
         return $this->hasMany(Subscription::class);
     }
@@ -55,5 +65,20 @@ class EmailList extends Model
             ->where('email_list_id', $this->id)
             ->where('email_list_subscriber_id', $subscriber->id)
             ->first();
+    }
+
+    public function unsubscribe(string $email): bool
+    {
+        if (! $subscriber = Subscriber::findForEmail($email)) {
+            return false;
+        }
+
+        if (! $subscription = $this->getSubscription($subscriber)) {
+            return false;
+        }
+
+        $subscription->markAsUnsubscribed();
+
+        return true;
     }
 }
