@@ -8,6 +8,9 @@ This package can be installed via composer:
 ```bash
 composer require "spatie/laravel-email-campaigns:^1.0.0"
 ```
+
+## Prepare the database
+
 You need to publish and run the migration:
 
 ```bash
@@ -15,11 +18,15 @@ php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServi
 php artisan migrate
 ```
 
+## Add the route macro
+
 You must use register the routes needed to handle subscription confirmations, open and click tracking. You can do that by adding this macro to your routes file.
 
 ```php
 Route::emailCampaigns('email-campaigns');
 ```
+
+## Schedule the calculate statistics command
 
 In the console kernel you should schedule the `email-campaigns:calculate-statistics` to run every minute.
 ```
@@ -31,7 +38,7 @@ protected function schedule(Schedule $schedule)
 }
 ```
 
-Most e-mail providers have a limit on how many mails you can send within a given amount of time. To throttle mails, this package uses redis. Make sure that is available on your system.
+## Publish the config file
 
 You must publish the config file with this command.
 
@@ -72,4 +79,12 @@ return [
 ];
 ```
 
-Make sure to specify a valid connection name in the `throttling.redis_connection_name` key.
+## Install and configure redis
+
+Most e-mail providers have a limit on how many mails you can send within a given amount of time. To throttle mails, this package uses Redis. Make sure that is available on your system. You must specify a valid redis connection name in the `throttling.redis_connection_name` key.
+
+## Prepare the queues
+
+Many tasks performed by this package are queued. Make sure you don't use `sync` but [a real queue driver](https://laravel.com/docs/master/queues#driver-prerequisites).
+
+In the `perform_on_queue` key of the `email-campaigns` config file you can specify which jobs should be performed on which queues. The `register_click_job`, `register_open_job` and `send_mail_job` jobs could receive a great many number of jobs. When using only one queue you potential could have a long wait time for the other jobs. That's why we recommend using a separate queue for the `register_click_job`, `register_open_job` and `send_mail_job` jobs.
