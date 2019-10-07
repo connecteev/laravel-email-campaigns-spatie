@@ -3,7 +3,6 @@
 namespace Spatie\EmailCampaigns\Tests\Commands;
 
 use Carbon\Carbon;
-use Exception;
 use Spatie\TestTime\TestTime;
 use Illuminate\Support\Facades\Bus;
 use Spatie\EmailCampaigns\Tests\TestCase;
