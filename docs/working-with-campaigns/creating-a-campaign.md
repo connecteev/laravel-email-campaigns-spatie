@@ -43,3 +43,5 @@ In that html you can use these placeholders which will be replaced when sending 
 
 - `@@unsubscribeUrl@@`: this string will be replaced with the url that, when hit, will immediately unsubscribe the person that clicked it
 - `@@webviewUrl`: this string will be replaced with a the url that will display the content of your campaign.
+
+If there is no way for subscriber to unsubscribe, it will result in a lot of frustration on the part of the subscriber. We recommend to always use the `@@unsubscribeUrl@@` in the html of each campaign you send.

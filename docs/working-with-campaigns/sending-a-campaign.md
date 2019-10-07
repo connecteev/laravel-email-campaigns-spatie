@@ -1,6 +1,6 @@
 ---
 title: Sending a campaign
-weight: 2
+weight: 3
 ---
 
 Before sending a campaign, ensure that the `subject`, `html` and `email_list_id` attributes are set.

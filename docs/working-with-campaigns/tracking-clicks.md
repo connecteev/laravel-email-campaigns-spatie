@@ -1,6 +1,6 @@
 ---
 title: Tracking clicks
-weight: 4
+weight: 5
 ---
 
 The package can track when and how many times a subscriber clicked on a link in a campaign. 
