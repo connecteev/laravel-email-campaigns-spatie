@@ -15,7 +15,7 @@ Campaign::create()
     ->content($html)
     ->trackOpens()
     ->trackClicks()
-    ->to($emailList)
+    ->to($emailList);
 ```
 
 The `trackOpens` and `trackClicks` calls are optional.
