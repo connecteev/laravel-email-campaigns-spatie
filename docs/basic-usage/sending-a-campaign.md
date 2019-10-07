@@ -32,6 +32,20 @@ Campaign::create([
 ]);
 ```
 
+## Setting the content and using placeholders
+
+You can send the content of a campaign by setting it's `html` attribute.
+
+```php
+$campaign->html = $yourHtml;
+$campaign->save();
+```
+
+In that html you can use these placeholders which will be replaced when sending out the campaign:
+
+- `@@unsubscribeUrl@@`: this string will be replaced with the url that, when hit, will immediately unsubscribe the person that clicked it
+- `@@webviewUrl`: this string will be replaced with a the url that will display the content of your campaign.
+
 ## Sending a campaign
 
 Before sending a campaign the `subject`, `html` and `email_list_id` attributes must be set.
