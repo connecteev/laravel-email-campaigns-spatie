@@ -1,5 +1,5 @@
 ---
-title: Customizing
+title: Customizing actions
 weight: 3
 ---
 
