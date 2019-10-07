@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
-use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
@@ -15,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
+use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 
 class Campaign extends Model
 {

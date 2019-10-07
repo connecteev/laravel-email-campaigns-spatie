@@ -2,11 +2,11 @@
 
 namespace Spatie\EmailCampaigns\Tests\Models;
 
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class EmailListTest extends TestCase
 {

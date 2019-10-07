@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
-use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 
 class PrepareEmailHtmlAction
 {
