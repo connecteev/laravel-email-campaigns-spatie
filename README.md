@@ -2,11 +2,11 @@
 
 # Send email campaigns using Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-mass-mailing.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-email-campaigns)
-[![Build Status](https://img.shields.io/travis/spatie/laravel-mass-mailing/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-email-campaigns)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-mass-mailing.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-email-campaigns)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/laravel-email-campaigns.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-email-campaigns)
+[![Build Status](https://img.shields.io/travis/spatie/laravel-email-campaigns/master.svg?style=flat-square)](https://travis-ci.org/spatie/laravel-email-campaigns)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/laravel-email-campaigns.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/laravel-email-campaigns)
 [![StyleCI](https://github.styleci.io/repos/210674796/shield?branch=master)](https://github.styleci.io/repos/210674796)
-[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-mass-mailing.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-email-campaigns)
+[![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-email-campaigns.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-email-campaigns)
 
 
 ```php
@@ -30,7 +30,7 @@ EmailCampaign::create()
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-mass-mailing
+composer require spatie/laravel-email-campaigns
 ```
 
 ## Usage
