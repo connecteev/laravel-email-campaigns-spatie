@@ -7,7 +7,7 @@ After a campaign is sent, some statistics will be made available.
 
 ## Available statistics 
  
- ### On a campaign
+### On a campaign
  
 The scheduled 'email-campaigns:calculate-statistics' will fill these attributes on the `Campaign` model:
 
@@ -43,7 +43,7 @@ $campaignClick = $campaignLink->links->first();
 $email = $campaingClick->subscriber->email;
 ```
 
-## When are statistics calculated
+## When are statistics calculated?
 
 The statistics are calculated by the scheduled `email-campaigns:calculate-statistics`. This job will recalculate statistics:
 - each minute for campaigns that were sent between 0 and 5 minutes ago
