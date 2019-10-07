@@ -1,5 +1,5 @@
 ---
-title: Sending a campaign
+title: Creating a campaign
 weight: 1
 ---
 
