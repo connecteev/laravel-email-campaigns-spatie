@@ -32,7 +32,7 @@ Campaign::create()
     ->send();
 ```
 
-After your campaign is sent, you can view some [interesting statistics](https://docs.spatie.be/laravel-email-campaigns/v1/basic-usage/viewing-statistics-of-a-sent-campaign/).
+After your campaign is sent, you can view some [interesting statistics](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/viewing-statistics-of-a-sent-campaign/).
 
 ## We have badges!
 

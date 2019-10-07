@@ -1,6 +1,6 @@
 ---
 title: Tracking opens
-weight: 2
+weight: 3
 ---
 
 The package can track when and how many times a subscriber opens a campaign. 
