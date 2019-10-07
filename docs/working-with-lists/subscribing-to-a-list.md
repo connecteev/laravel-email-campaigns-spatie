@@ -1,19 +1,7 @@
 ---
-title: Subscribing to an email list
+title: Subscribing to a list
 weight: 2
 ---
-
-An email list is used to group a collection of subscribers. 
-
-## Creating an email list
-
-You can create a new email list by newing up a `EmailList`. The only required field is `name`.
-
-```php
-$emailList = EmailList::create(['name' => 'my email list name');
-```
-
-## Subscribing to an email list
 
 You can use a string to subscribe to an email list.
 
@@ -46,35 +34,6 @@ You can use a subscriber to check to if it is subscriber to a list
 ```php
 $subscriber->isSubscribedTo($emailList) // returns a boolean;
 ```
-
-## Unsubscribing from a list
-
-You can unsubscribe someone like this
-
-```php
-$emailList->unsubscribe('john@example.com');
-```
-
-Alternatively you can call unsubscribe on a subscriber
-
-```php
-Subscriber::findForEmail('john@example.com')->unsubscribe();
-```
-
-Behind the scenes the subscriber and the subscription will not be deleted. Instead the status of the subscription will be updated to `unsubscribed`.
-If you want to outright delete a subscription you can call `delete` on it
-
-```php
-$emailList->getSubscription('john@example.com')->delete();
-```
-
-If you want to delete a subscriber entirely you can call `delete` on it.
-
-```php
-Subscriber::findForEmail('john@example.com')->delete();
-```
-
-The code above will also delete all related subscriptions.
 
 ## Getting all subscribers of an email list
 

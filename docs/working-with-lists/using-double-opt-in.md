@@ -1,6 +1,6 @@
 ---
 title: Using double opt in
-weight: 3
+weight: 4
 ---
 
 To ensure that all subscribers of your email list really wanted to subscribe you can enable the double opt in requirement. 
@@ -15,6 +15,20 @@ EmailList::create([
 When calling `subscribe` on a list where `requires_double_opt_in` is enabled, a subscription will be created with a `status` set to `pending`. An email will be sent to to the email address you're subscribing. The email contains a link that, when clicked, will confirm the subscription. When a subscription is confirmed, its status will be set to `subscribed`.
 
 When sending a campaign to an email list only subscribers that have a subscription with status `subscribed` will receive the campaign.
+
+## Customizing the subscription confirmation response
+
+When a person clicks the email confirmation link, a simple text explaining the result of confirmation is display. You can customize that response by publishing the views.
+
+```php
+php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="views"
+```
+
+The responses of a confirmation can now be modified in the view inside the `/resources/views/vendor/email-campaigns/confirmSubscription/` directory. It will contains these blade files:
+
+- `confirmed.blade.php`
+- `couldNotFindSubscription.blade.php`
+- `wasAlreadyConfirmed.blade.php`
 
 ## Customizing the double opt in mail
 

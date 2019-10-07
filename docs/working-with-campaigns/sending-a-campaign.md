@@ -1,6 +1,6 @@
 ---
 title: Sending a campaign
-weight: 4
+weight: 1
 ---
 
 To send a mail to all subscribers of your list you must create and send a campaign.
