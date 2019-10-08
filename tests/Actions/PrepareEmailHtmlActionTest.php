@@ -19,4 +19,28 @@ class PrepareEmailHtmlActionTest extends TestCase
 
         $this->assertTrue(true);
     }
+
+    /** @test */
+    public function it_correctly_parses_html()
+    {
+        $campaign = factory(Campaign::class)->create([
+            'html' => <<<HTML
+                <h1>Hello</h1>
+                
+                @@unsubscribeUrl@@
+            HTML,
+        ]);
+
+
+        app(PrepareEmailHtmlAction::class)->execute($campaign);
+
+        $campaign->refresh();
+
+        $this->assertEquals(
+            <<<HTML
+                <h1>Hello</h1>@@unsubscribeUrl@@
+            HTML,
+            $campaign->email_html
+        );
+    }
 }
