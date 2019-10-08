@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Spatie\EmailCampaigns\Commands\CalculateStatisticsCommand;
+use Spatie\EmailCampaigns\Commands\RetryPendingSendsCommand;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
@@ -72,9 +73,11 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     protected function registerCommands()
     {
         $this->app->bind('command.email-campaigns:calculate-statistics', CalculateStatisticsCommand::class);
+        $this->app->bind('command.email-campaigns:retry-pending-sends', RetryPendingSendsCommand::class);
 
         $this->commands([
             'command.email-campaigns:calculate-statistics',
+            'command.email-campaigns:retry-pending-sends',
         ]);
 
         return $this;
