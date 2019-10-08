@@ -25,7 +25,7 @@ You can send an email to all those subscribed on the list.
 ```
 Campaign::create()
     ->subject('test')
-    ->content('my content')
+    ->content($html)
     ->trackOpens()
     ->trackClicks()
     ->to($emailList)
