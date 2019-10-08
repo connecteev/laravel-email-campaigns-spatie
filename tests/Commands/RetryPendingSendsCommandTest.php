@@ -3,10 +3,10 @@
 namespace Spatie\EmailCampaigns\Tests\Commands;
 
 use Illuminate\Support\Facades\Queue;
-use Spatie\EmailCampaigns\Commands\RetryPendingSendsCommand;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Jobs\SendMailJob;
 use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Commands\RetryPendingSendsCommand;
 
 class RetryPendingSendsCommandTest extends TestCase
 {
@@ -26,7 +26,7 @@ class RetryPendingSendsCommandTest extends TestCase
         $this->artisan(RetryPendingSendsCommand::class)->assertExitCode(0);
 
         Queue::assertPushed(SendMailJob::class, 1);
-        Queue::assertPushed(SendMailJob::class, function(SendMailJob $job) use ($pendingCampaignSend) {
+        Queue::assertPushed(SendMailJob::class, function (SendMailJob $job) use ($pendingCampaignSend) {
             return $job->pendingSend->id === $pendingCampaignSend->id;
         });
     }
