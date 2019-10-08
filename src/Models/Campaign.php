@@ -68,7 +68,7 @@ class Campaign extends Model
 
     public function opens(): HasMany
     {
-        return $this->hasMany(CampaignOpen::class);
+        return $this->hasMany(CampaignOpen::class, 'email_campaign_id');
     }
 
     public function sends(): HasMany

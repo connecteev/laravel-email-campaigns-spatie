@@ -33,7 +33,7 @@ class TrackOpensTest extends TestCase
             ->assertSuccessful();
 
         $this->assertDatabaseHas('campaign_opens', [
-            'campaign_id' => $this->campaign->id,
+            'email_campaign_id' => $this->campaign->id,
             'email_list_subscriber_id' => $this->campaign->emailList->subscribers->first()->id,
         ]);
     }

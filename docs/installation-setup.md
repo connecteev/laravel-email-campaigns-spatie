@@ -58,10 +58,11 @@ return [
      * Read the documention for more info: @TODO: add link
      */
     'actions' => [
-        'personalize_html' => \Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction::class,
-        'prepare_email_html' => \Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction::class,
+        'personalize_html_action' => \Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction::class,
+        'prepare_email_html_action' => \Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction::class,
+        'prepare_webview_html_action' => \Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction::class,
         'subscribe_action' => \Spatie\EmailCampaigns\Actions\SubscribeAction::class,
-        'confirm_subscription' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
+        'confirm_subscription_action' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
     ],
 
     /*

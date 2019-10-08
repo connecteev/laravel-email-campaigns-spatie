@@ -46,7 +46,7 @@ class SendCampaignJob implements ShouldQueue
 
     protected function prepareEmailHtml()
     {
-        $action = Config::getActionClass('prepare_email_html', PrepareEmailHtmlAction::class);
+        $action = Config::getActionClass('prepare_email_html_action', PrepareEmailHtmlAction::class);
         $action->execute($this->campaign);
 
         return $this;
@@ -54,7 +54,7 @@ class SendCampaignJob implements ShouldQueue
 
     private function prepareWebviewHtml()
     {
-        $action = Config::getActionClass('prepare_webview_html', PrepareWebviewHtmlAction::class);
+        $action = Config::getActionClass('prepare_webview_html_action', PrepareWebviewHtmlAction::class);
         $action->execute($this->campaign);
 
         return $this;

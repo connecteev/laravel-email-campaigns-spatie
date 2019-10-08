@@ -6,14 +6,14 @@ return [
      * You can customize some of the behaviour of this package by using our own custom action.
      * Your custom action should always extend the one of the default ones.
      *
-     * Read the documention for more info: @TODO: add link
+     * Read the documentation for more info: https://docs.spatie.be/laravel-email-campaigns/v1/introduction/
      */
     'actions' => [
-        'personalize_html' => \Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction::class,
-        'prepare_email_html' => \Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction::class,
-        'prepare_webview_html' => \Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction::class,
+        'personalize_html_action' => \Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction::class,
+        'prepare_email_html_action' => \Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction::class,
+        'prepare_webview_html_action' => \Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction::class,
         'subscribe_action' => \Spatie\EmailCampaigns\Actions\SubscribeAction::class,
-        'confirm_subscription' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
+        'confirm_subscription_action' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
     ],
 
     /*

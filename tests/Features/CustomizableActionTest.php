@@ -21,7 +21,7 @@ class CustomizableActionTest extends TestCase
     /** @test */
     public function the_personalize_html_action_can_be_customized()
     {
-        config()->set('email-campaigns.actions.personalize_html', CustomPersonalizeHtmlAction::class);
+        config()->set('email-campaigns.actions.personalize_html_action', CustomPersonalizeHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
             'status' => CampaignStatus::CREATED,
@@ -35,7 +35,7 @@ class CustomizableActionTest extends TestCase
     /** @test */
     public function the_prepare_email_html_action_can_be_customized()
     {
-        config()->set('email-campaigns.actions.prepare_email_html', CustomPrepareEmailHtmlAction::class);
+        config()->set('email-campaigns.actions.prepare_email_html_action', CustomPrepareEmailHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
             'status' => CampaignStatus::CREATED,
@@ -49,7 +49,7 @@ class CustomizableActionTest extends TestCase
     /** @test */
     public function the_prepare_webview_html_action_can_be_customized()
     {
-        config()->set('email-campaigns.actions.prepare_webview_html', CustomPrepareWebviewHtmlAction::class);
+        config()->set('email-campaigns.actions.prepare_webview_html_action', CustomPrepareWebviewHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
             'status' => CampaignStatus::CREATED,
@@ -76,7 +76,7 @@ class CustomizableActionTest extends TestCase
     /** @test */
     public function the_confirm_subscription_class_can_be_customized()
     {
-        config()->set('email-campaigns.actions.confirm_subscription', CustomConfirmSubscriptionAction::class);
+        config()->set('email-campaigns.actions.confirm_subscription_action', CustomConfirmSubscriptionAction::class);
 
         /** @var \Spatie\EmailCampaigns\Models\Subscription $subscription */
         $subscription = factory(Subscription::class)->create([

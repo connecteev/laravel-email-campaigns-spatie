@@ -30,7 +30,7 @@ class Subscription extends Model
 
     public function confirm()
     {
-        $action = Config::getActionClass('confirm_subscription', ConfirmSubscriptionAction::class);
+        $action = Config::getActionClass('confirm_subscription_action', ConfirmSubscriptionAction::class);
 
         return $action->execute($this);
     }

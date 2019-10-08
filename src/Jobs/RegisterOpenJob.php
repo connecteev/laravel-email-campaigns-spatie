@@ -35,7 +35,7 @@ class RegisterOpenJob implements ShouldQueue
         }
 
         $campaignOpen = CampaignOpen::create([
-            'campaign_id' => $campaignSend->campaign->id,
+            'email_campaign_id' => $campaignSend->campaign->id,
             'email_list_subscriber_id' => $campaignSend->subscription->subscriber->id,
         ]);
 

@@ -11,7 +11,7 @@ class CampaignOpen extends Model
 
     public function campaign(): BelongsTo
     {
-        return $this->belongsTo(Campaign::class, 'campaign_id');
+        return $this->belongsTo(Campaign::class, 'email_campaign_id');
     }
 
     public function subscriber(): BelongsTo

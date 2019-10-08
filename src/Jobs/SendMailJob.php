@@ -40,7 +40,7 @@ class SendMailJob implements ShouldQueue
             return;
         }
 
-        $action = Config::getActionClass('personalize_html', PersonalizeHtmlAction::class);
+        $action = Config::getActionClass('personalize_html_action', PersonalizeHtmlAction::class);
 
         $personalisedHtml = $action->execute(
             $this->pendingSend->campaign->email_html,
