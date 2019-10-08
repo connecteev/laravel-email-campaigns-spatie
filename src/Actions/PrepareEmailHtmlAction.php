@@ -16,6 +16,8 @@ class PrepareEmailHtmlAction
     {
         $campaign->email_html = $campaign->html;
 
+        $this->ensureEmailHtmlHasSingleRootElement($campaign);
+
         if ($campaign->track_clicks) {
             $this->trackClicks($campaign);
         }
@@ -28,6 +30,18 @@ class PrepareEmailHtmlAction
 
         $campaign->save();
     }
+
+    protected function ensureEmailHtmlHasSingleRootElement($campaign)
+    {
+        if (! Str::startsWith(trim($campaign->email_html), '<html')) {
+            $campaign->email_html ='<html>' .  $campaign->email_html;
+        }
+
+        if (! Str::endsWith(trim($campaign->email_html), '</html>')) {
+            $campaign->email_html = $campaign->email_html. '</html>';
+        }
+    }
+
 
     protected function trackClicks(Campaign $campaign)
     {
@@ -56,7 +70,7 @@ class PrepareEmailHtmlAction
                 $linkElement->setAttribute('href', $campaignLink->url);
             });
 
-        $campaign->email_html = $dom->saveHtml();
+        $campaign->email_html = trim($dom->saveHtml());
     }
 
     protected function trackOpens(Campaign $campaign)
