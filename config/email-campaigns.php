@@ -35,7 +35,7 @@ return [
      */
     'throttling' => [
         'enabled' => false,
-        'redis_connection_name' => '',
+        'redis_connection_name' => 'default',
         'redis_key' => 'laravel-email-campaigns',
         'allowed_number_of_jobs_in_timespan' => 5,
         'timespan_in_seconds' => 1,

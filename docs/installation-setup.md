@@ -84,6 +84,8 @@ return [
 
 Most e-mail providers have a limit on how many mails you can send within a given amount of time. To throttle mails, this package uses Redis. Make sure that is available on your system. You must specify a valid redis connection name in the `throttling.redis_connection_name` key.
 
+By default we set this value to the default Laravel connection name which is named `default`.
+
 ## Prepare the queues
 
 Many tasks performed by this package are queued. Make sure you don't use `sync` but [a real queue driver](https://laravel.com/docs/master/queues#driver-prerequisites).
