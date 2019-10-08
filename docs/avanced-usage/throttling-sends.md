@@ -3,7 +3,7 @@ title: Throttling sends
 weight: 2
 ---
 
-Most email providers have a limit on how many mails you can send within a given amount of time. By default only 5 mails per second will get send. In the config file you can customize this behaviour in the `throttling` key:
+Most email providers have a limit on how many emails you can send within a given amount of time. By default, only five mails per second will get sent. In the config file you can customize this behavior in the `throttling` key:
 
 ```php
 'throttling' => [

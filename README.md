@@ -16,19 +16,19 @@ Let's take a quick look at how the package can be used. First, you must create a
 $emailList = EmailList::create('newsletter subscribers');
 ```
 
-Next, you can subscribe some people to a list. There's also support for [double opt in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/basic-usage/using-double-opt-in/)
+Next, you can subscribe some people to a list. There's also support for [double opt-in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/)
 
 ```php
 $emailList->subscribe('john@example.com');
 $emailList->subscribe('paul@example.com');
 ```
 
-You can send an email to all those subscribed on the list.
+You can send an email to all those subscribed to the list.
 
 ```
 Campaign::create()
     ->subject('test')
-    ->content('my content')
+    ->content($html)
     ->trackOpens()
     ->trackClicks()
     ->to($emailList)

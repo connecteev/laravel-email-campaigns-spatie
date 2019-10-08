@@ -29,7 +29,7 @@ return [
     ],
 
     /*
-       * You can customize some of the behaviour of this package by using our own custom action.
+       * You can customize some of the behavior of this package by using our own custom action.
        * Your custom action should always extend the one of the default ones.
        */
     'actions' => [

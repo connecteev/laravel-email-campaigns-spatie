@@ -7,7 +7,7 @@ This package fires out several events. You can listen for them to perform extra 
 
 ## `Spatie\EmailCampaigns\Events\Subscribed`
 
-This event will be fired as soon as someone subscribes. If [double opt in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) is enable on the email list someone is subscribing to, this event will be fired we the subscription is confirmed.
+This event will be fired as soon as someone subscribes. If [double opt in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) is enabled on the email list someone is subscribing to, this event will be fired we the subscription is confirmed.
 
 The event has one public property: `$subscription` which is an instance of `Spatie\EmailCampaigns\Models\Subscription`. 
 
@@ -43,9 +43,9 @@ $nameOfEmailList = $event->subscription->emailList->name;
 
 ## `Spatie\EmailCampaigns\Events\CampaignSent`
 
-This event will be fired after you've sent a campaign and all mails are queued to be sent. Keep in mind that not all your subscribers will have gotten your mail when this event is fired.
+This event will be fired after you've sent a campaign, and all mails are queued to be sent. Keep in mind that not all your subscribers will have gotten your mail when this event is fired.
 
-The event has one public property: `$campaign` which is an instance of the `\Spatie\EmailCampaigns\Models\Campaign` model.
+The event has one public property: `$campaign`, which is an instance of the `\Spatie\EmailCampaigns\Models\Campaign` model.
 
 ## Spatie `Spatie\EmailCampaigns\Events\CampaignMailSent`
 
@@ -67,9 +67,9 @@ $campaignName = $event->campaignSend->campaign->name;
 
 ## `Spatie\EmailCampaigns\Events\CampaignOpened`
 
-This event will be fired when somebody opens a mail. Be aware that this event could get fired many times right after sending a campaign to a email list with a large number of subscribers. This event will only be fired for campaigns that have [open tracking](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/tracking-opens/) enabled.
+This event will be fired when somebody opens an email. Be aware that this event could get fired many times right after sending a campaign to a email list with a large number of subscribers. This event will only be fired for campaigns that have [open tracking](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/tracking-opens/) enabled.
 
-It has one public property: `$campaignOpen` which is an instance of the `Spatie\EmailCampaigns\Models\CampaignOpen` model.
+It has one public property: `$campaignOpen`, which is an instance of the `Spatie\EmailCampaigns\Models\CampaignOpen` model.
 
 You can get to the email address that opened your email like this:
 
@@ -87,7 +87,7 @@ $name = $event->campaignOpen->campaign->name;
 
 This event will be fired when somebody clicks a link in a mail. This event will only be fired for campaigns that have [click tracking](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/tracking-clicks/) enabled. 
 
-It has one public property `$campaignClick` which is an instance of the `Spatie\EmailCampaigns\Models\CampaignClick` model.
+It has one public property `$campaignClick`, which is an instance of the `Spatie\EmailCampaigns\Models\CampaignClick` model.
 
 You can get to the url of the link clicked like this:
 
@@ -105,4 +105,4 @@ $email = $event->campaignClick->subscriber->email;
 
 After a campaign has been sent, statistics will frequently [be calculated](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/viewing-statistics-of-a-sent-campaign/).
 
-Each time the statistics are calculated this event will be fired. It has one public property `$campaign` which is an instance of the `Spatie\EmailCampaigns\Models\Campaign` model.
+Each time the statistics are calculated this event will be fired. It has one public property `$campaign`, which is an instance of the `Spatie\EmailCampaigns\Models\Campaign` model.
