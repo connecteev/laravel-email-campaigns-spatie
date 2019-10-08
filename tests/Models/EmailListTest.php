@@ -2,6 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Tests\Models;
 
+use Illuminate\Support\Facades\Mail;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
@@ -62,5 +63,19 @@ class EmailListTest extends TestCase
 
         $subscribers = $this->emailList->allSubscribers;
         $this->assertCount(2, $subscribers);
+    }
+
+    /** @test */
+    public function it_can_subscribe_someone_immediately_even_if_double_opt_in_is_enabled()
+    {
+        Mail::fake();
+
+        $this->emailList->update(['requires_double_opt_in' => true]);
+
+        $this->emailList->subscribeNow('john@example.com');
+
+        Mail::assertNothingQueued();
+
+        $this->assertEquals('john@example.com', $this->emailList->subscribers->first()->email);
     }
 }

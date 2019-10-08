@@ -12,12 +12,15 @@ use Spatie\EmailCampaigns\Mails\ConfirmSubscriptionMail;
 
 class SubscribeAction
 {
-    public function execute(Subscriber $subscriber, EmailList $emailList): Subscription
+    public function execute(Subscriber $subscriber, EmailList $emailList, bool $respectDoubleOptIn = false): Subscription
     {
         $status = SubscriptionStatus::SUBSCRIBED;
 
-        if ($emailList->requires_double_opt_in) {
-            $status = SubscriptionStatus::PENDING;
+
+        if ($respectDoubleOptIn) {
+            if ($emailList->requires_double_opt_in) {
+                $status = SubscriptionStatus::PENDING;
+            }
         }
 
         if ($subscriber->isSubscribedTo($emailList)) {

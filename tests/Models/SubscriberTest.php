@@ -81,6 +81,20 @@ class SubscriberTest extends TestCase
     }
 
     /** @test */
+    public function it_can_immediately_subscribe_someone_and_not_send_a_mail_even_with_double_opt_in_enabled()
+    {
+        $list = factory(EmailList::class)->create([
+            'requires_double_opt_in' => true,
+        ]);
+
+        $this->subscriber->subscribeNowTo($list);
+
+        $this->assertTrue($this->subscriber->isSubscribedTo($list));
+
+        Mail::assertNotQueued(ConfirmSubscriptionMail::class);
+    }
+
+    /** @test */
     public function no_email_will_be_sent_when_adding_someone_that_was_already_subscribed()
     {
         $subscription = factory(Subscription::class)->create();

@@ -38,12 +38,23 @@ class EmailList extends Model
 
     public function subscribe(string $email): Subscription
     {
-        /** @var \Spatie\EmailCampaigns\Models\Subscriber $subscriber */
-        $subscriber = Subscriber::firstOrCreate([
-            'email' => $email,
-        ]);
+        $subscriber = $this->createSubscriber($email);
 
         return $subscriber->subscribeTo($this);
+    }
+
+    public function subscribeNow(string $email): Subscription
+    {
+        $subscriber = $this->createSubscriber($email);
+
+        return $subscriber->subscribeNowTo($this);
+    }
+
+    protected function createSubscriber(string $email): Subscriber
+    {
+        return Subscriber::firstOrCreate([
+            'email' => $email,
+        ]);
     }
 
     public function isSubscribed(string $email): bool

@@ -21,6 +21,17 @@ $subscriber = Subscriber::findForEmail('john@example.com');
 $subscriber->subscribeTo($anotherEmailList);
 ```
 
+If [double opt-in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) on a list is enabled, then `subscribeTo` won't result in an immediate subscription. Instead, the user must first confirm, by clicking a link in a mail, before he or she is confirmed.
+
+To immediately confirm someone, and skipping sending the confirmation mail, use `subscribeNow`:
+
+```php
+$emailList->subscribeNow('john@example.com');
+
+// or using an existing subscriber
+$subscriber->subscribeNowTo($anotherEmailList);
+```
+
 ## Checking if someone is subscribed
 
 You can check if a given email is subscribed to an email list.
@@ -49,7 +60,7 @@ To get the email address of a subscriber call `email` on a subscriber.
 $email = $subscribers->first()->email;
 ```
 
-Calling `subscribers` on an email list will only return subscribers that have a subscription with a `subscribed` status. Subscribers that have unsubscribed or are still pending (in case you use [double opt in](TODO:add link to double opt-in)) will not be returned.
+Calling `subscribers` on an email list will only return subscribers that have a subscription with a `subscribed` status. Subscribers that have unsubscribed or are still pending (in case you use [double opt in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/)) will not be returned.
 
 To return all subscribers, including all pending and unsubscribed ones, use `allSubscribers`.
 

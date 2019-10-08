@@ -9,10 +9,10 @@ use Spatie\EmailCampaigns\Actions\SubscribeAction;
 
 class CustomSubscribeAction extends SubscribeAction
 {
-    public function execute(Subscriber $subscriber, EmailList $emailList): Subscription
+    public function execute(Subscriber $subscriber, EmailList $emailList, bool $respectDoubleOptIn = true): Subscription
     {
         $subscriber->update(['email' => 'overridden@example.com']);
 
-        return parent::execute($subscriber, $emailList);
+        return parent::execute($subscriber, $emailList, $respectDoubleOptIn);
     }
 }

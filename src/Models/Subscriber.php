@@ -27,11 +27,16 @@ class Subscriber extends Model
         return $this->hasManyThrough(EmailList::class, Subscription::class);
     }
 
-    public function subscribeTo(EmailList $emailList): Subscription
+    public function subscribeTo(EmailList $emailList, bool $respectDoubleOptIn = true): Subscription
     {
         $action = Config::getActionClass('subscribe_action', SubscribeAction::class);
 
-        return $action->execute($this, $emailList);
+        return $action->execute($this, $emailList, $respectDoubleOptIn);
+    }
+
+    public function subscribeNowTo(EmailList $emailList)
+    {
+        return $this->subscribeTo($emailList, false);
     }
 
     public function isSubscribedTo(EmailList $emailList): bool
