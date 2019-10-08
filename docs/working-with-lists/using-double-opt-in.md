@@ -8,7 +8,7 @@ To ensure that all subscribers of your email list really wanted to subscribe you
 ```php
 EmailList::create([
     'name' => 'My list'
-    'requires_double_opt_in' => true',
+    'requires_double_opt_in' => true,
 ]);
 ```
 
