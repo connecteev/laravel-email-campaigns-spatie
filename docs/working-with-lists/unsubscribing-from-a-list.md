@@ -3,7 +3,7 @@ title: Unsubscribing from a list
 weight: 3
 ---
 
-The most common way that a subscriber is unsubscribed is if the subscriber click the unsubscribe link in a sent campaign. You can add an unsubscribe link by [adding an `@@unsubscribeUrl@@` placeholder](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/creating-a-campaign/#setting-the-content-and-using-placeholders) to the html of your campaign.
+The most common way that a subscriber is unsubscribed is if the subscriber click the unsubscribe link in a sent campaign. You can add an unsubscribe link by [adding an `::unsubscribeUrl::` placeholder](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/creating-a-campaign/#setting-the-content-and-using-placeholders) to the html of your campaign.
 
 When a subscriber visit the actual unsubscribe url a simple text will be displayed to confirm that unsubscribing was successful.
 

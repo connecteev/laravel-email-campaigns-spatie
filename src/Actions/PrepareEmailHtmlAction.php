@@ -61,7 +61,7 @@ class PrepareEmailHtmlAction
 
     protected function trackOpens(Campaign $campaign)
     {
-        $webBeaconUrl = action(TrackOpensController::class, '@@campaignSendUuid@@');
+        $webBeaconUrl = action(TrackOpensController::class, '::campaignSendUuid::');
 
         $webBeaconHtml = "<img alt='beacon' src='{$webBeaconUrl}' />";
 
@@ -72,6 +72,6 @@ class PrepareEmailHtmlAction
     {
         $webviewUrl = $campaign->webViewUrl();
 
-        $campaign->email_html = str_replace('@@webviewUrl@@', $webviewUrl, $campaign->email_html);
+        $campaign->email_html = str_replace('::webviewUrl::', $webviewUrl, $campaign->email_html);
     }
 }
