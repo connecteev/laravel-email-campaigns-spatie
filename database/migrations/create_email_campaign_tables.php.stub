@@ -15,6 +15,13 @@ class CreateEmailCampaignTables extends Migration
             $table->timestamps();
         });
 
+        Schema::create('email_list_subscribers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('email')->unique();
+            $table->uuid('uuid');
+            $table->nullableTimestamps();
+        });
+
         Schema::create('email_list_subscriptions', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('uuid');
@@ -32,13 +39,6 @@ class CreateEmailCampaignTables extends Migration
                 ->foreign('email_list_subscriber_id')
                 ->references('id')->on('email_list_subscribers')
                 ->onDelete('cascade');
-        });
-
-        Schema::create('email_list_subscribers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('email')->unique();
-            $table->uuid('uuid');
-            $table->nullableTimestamps();
         });
 
         Schema::create('email_campaigns', function (Blueprint $table) {
@@ -92,7 +92,7 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('campaign_clicks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('campaign_link_id');
-            $table->unsignedBigInteger('email_list_subscriber_id');
+            $table->unsignedBigInteger('email_list_subscriber_id')->nullable();
             $table->nullableTimestamps();
 
             $table
@@ -102,24 +102,24 @@ class CreateEmailCampaignTables extends Migration
 
             $table
                 ->foreign('email_list_subscriber_id')
-                ->references('id')->on('email_subscribers')
+                ->references('id')->on('email_list_subscribers')
                 ->onDelete('set null');
         });
 
         Schema::create('campaign_opens', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('campaign_id');
-            $table->unsignedBigInteger('email_list_subscriber_id');
+            $table->unsignedBigInteger('email_campaign_id');
+            $table->unsignedBigInteger('email_list_subscriber_id')->nullable();
             $table->nullableTimestamps();
 
             $table
-                ->foreign('campaign_id')
-                ->references('id')->on('campaigns')
+                ->foreign('email_campaign_id')
+                ->references('id')->on('email_campaigns')
                 ->onDelete('cascade');
 
             $table
                 ->foreign('email_list_subscriber_id')
-                ->references('id')->on('email_subscribers')
+                ->references('id')->on('email_list_subscribers')
                 ->onDelete('set null');
         });
 
