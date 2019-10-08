@@ -40,4 +40,3 @@ return [
         'confirm_subscription_action' => \Spatie\EmailCampaigns\Actions\ConfirmSubscriptionAction::class,
     ],
 ];
-

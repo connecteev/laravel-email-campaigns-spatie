@@ -18,7 +18,7 @@ class RetryPendingSendsCommand extends Command
 
         $this->comment("Dispatching jobs for {$pendingCampaignSendCount} pending CampaignSends");
 
-        CampaignSend::whereNull('sent_at')->each(function(CampaignSend $campaignSend) {
+        CampaignSend::whereNull('sent_at')->each(function (CampaignSend $campaignSend) {
             dispatch(new SendMailJob($campaignSend));
         });
 

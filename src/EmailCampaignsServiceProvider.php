@@ -4,8 +4,8 @@ namespace Spatie\EmailCampaigns;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Spatie\EmailCampaigns\Commands\CalculateStatisticsCommand;
 use Spatie\EmailCampaigns\Commands\RetryPendingSendsCommand;
+use Spatie\EmailCampaigns\Commands\CalculateStatisticsCommand;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;

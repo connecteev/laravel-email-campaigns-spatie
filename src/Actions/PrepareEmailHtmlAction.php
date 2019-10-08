@@ -34,14 +34,13 @@ class PrepareEmailHtmlAction
     protected function ensureEmailHtmlHasSingleRootElement($campaign)
     {
         if (! Str::startsWith(trim($campaign->email_html), '<html')) {
-            $campaign->email_html ='<html>' .  $campaign->email_html;
+            $campaign->email_html = '<html>'.$campaign->email_html;
         }
 
         if (! Str::endsWith(trim($campaign->email_html), '</html>')) {
-            $campaign->email_html = $campaign->email_html. '</html>';
+            $campaign->email_html = $campaign->email_html.'</html>';
         }
     }
-
 
     protected function trackClicks(Campaign $campaign)
     {
