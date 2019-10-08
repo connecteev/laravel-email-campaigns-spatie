@@ -24,11 +24,8 @@ class PrepareEmailHtmlActionTest extends TestCase
     public function it_correctly_parses_html()
     {
         $campaign = factory(Campaign::class)->create([
-            'html' => <<<HTML
-                <h1>Hello</h1>
-                
-                @@unsubscribeUrl@@
-            HTML,
+            'track_clicks' => true,
+            'html' => '<h1>Hello</h1><p>Hello world</p>'
         ]);
 
 
@@ -37,10 +34,8 @@ class PrepareEmailHtmlActionTest extends TestCase
         $campaign->refresh();
 
         $this->assertEquals(
-            <<<HTML
-            <h1>Hello</h1>@@unsubscribeUrl@@
-            HTML,
-            $campaign->email_html
+            '<h1>Hello</h1><p>Hello world</p>',
+            $campaign->email_html,
         );
     }
 }
