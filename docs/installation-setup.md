@@ -9,6 +9,10 @@ This package can be installed via composer:
 composer require "spatie/laravel-email-campaigns:^1.0.0"
 ```
 
+## Choosing a mail driver
+
+You should configure your Laravel to use one of [the many available mail drivers](https://laravel.com/docs/master/mail#driver-prerequisites). All mails that are sent via this package will use that default driver.
+
 ## Prepare the database
 
 You need to publish and run the migration:
