@@ -47,7 +47,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
 
         if (! class_exists('CreateEmailCampaignTables')) {
             $this->publishes([
-                __DIR__.'/../database/migrations/create_email_campaign_tables.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_email_campaigns.php'),
+                __DIR__.'/../database/migrations/create_email_campaign_tables.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_email_campaign_tables.php'),
             ], 'migrations');
         }
 
