@@ -30,6 +30,17 @@ class EmailListTest extends TestCase
     }
 
     /** @test */
+    public function it_can_add_a_subscriber_with_extra_attributes_to_a_list()
+    {
+        $extraAttributes = ['first_name' => 'John', 'last_name' => 'Doe'];
+
+        $subscription = $this->emailList->subscribe('john@example.com', $extraAttributes);
+
+        $this->assertEquals('john@example.com', $subscription->subscriber->email);
+        $this->assertEquals($extraAttributes, $subscription->subscriber->extra_attributes->all());
+    }
+
+    /** @test */
     public function when_adding_someone_that_was_already_subscribed_no_new_subscription_will_be_created()
     {
         $this->emailList->subscribe('john@example.com');

@@ -1,6 +1,6 @@
 ---
 title: Handling events
-weight: 4
+weight: 5
 ---
 
 This package fires out several events. You can listen for them to perform extra logic.

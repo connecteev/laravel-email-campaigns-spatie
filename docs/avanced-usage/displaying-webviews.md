@@ -1,6 +1,6 @@
 ---
 title: Displaying webviews
-weight: 1
+weight: 2
 ---
 
 Whenever you send a campaign, we will create a webview for it. A webview is a hard to guess URL that people who didn't subscribe can visit to read the content of your campaign.
