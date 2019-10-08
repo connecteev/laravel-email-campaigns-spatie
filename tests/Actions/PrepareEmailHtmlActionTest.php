@@ -38,7 +38,7 @@ class PrepareEmailHtmlActionTest extends TestCase
 
         $this->assertEquals(
             <<<HTML
-                <h1>Hello</h1>@@unsubscribeUrl@@
+            <h1>Hello</h1>@@unsubscribeUrl@@
             HTML,
             $campaign->email_html
         );
