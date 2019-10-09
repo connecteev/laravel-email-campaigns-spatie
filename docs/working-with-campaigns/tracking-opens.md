@@ -11,9 +11,9 @@ To use this feature, you must set `track_opens` to `true` of a campaign you're g
 
 ## How it works under the hood
 
-When you send a campaign that has open tracking enabled, we'll add a web beacon to it.  A web beacon is an extra `img` tag in the HTML of your mail.  It's `src` attribute points to an endpoint that was added by the route macro, `Route::emailCampaigns` that you added when installing the package. 
+When you send a campaign that has open tracking enabled, we'll add a web beacon to it.  A web beacon is an extra `img` tag in the HTML of your mail.  Its `src` attribute points to an endpoint added by the route macro, `Route::emailCampaigns` that you added when installing the package. 
  
- Here's how such a web beacon could look like:
+ Here's an example of what the web beacon looks like:
  
 ```html
 <img src="https://yourapp.com/email-campaigns/track-opens/xxxx-xxxx-xxxx-xxxx" />
@@ -25,7 +25,7 @@ Each time an email client tries to display the web beacon it will send a get req
 
 ## Queuing open tracking
 
-When sending a campaign to a large list, that endpoint could get hit a lot in a short timespan. To ensure a very fast response time, we don't do any database updates in the controller itself. Instead, the controller will dispatch a `TrackOpenJob`. 
+When sending a campaign to a large list, that endpoint could be hit a lot over a short timespan. To ensure a very fast response time, we don't do any database updates in the controller itself. Instead, the controller will dispatch a `TrackOpenJob`. 
 
-Because there potentially a great many of these jobs could be scheduled, we recommend using a separate queue for handling them. You can configure the queue to be used in the `perform_on_queue.register_open_job` key of the `email-campaigns` config file.
+Because there's the potential for a great many of these jobs to be scheduled, we recommend using a separate queue for handling them. You can configure the queue to be used in the `perform_on_queue.register_open_job` key of the `email-campaigns` config file.
 
