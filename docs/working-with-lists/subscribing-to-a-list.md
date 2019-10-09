@@ -22,7 +22,7 @@ $emailList->subscribe('john@example.com', [
 $subscriber = Subscriber::findForEmail('john@example.com');
 
 $subscriber->extra_attributes->get('first_name'); // returns 'John';
-$subscriber->extra_attributes->get('first_name'); // returns 'Doe';
+$subscriber->extra_attributes->get('last_name'); // returns 'Doe';
 ```
 
 You can read more on extra attributes in [this section of the docs](TODO: add link).
