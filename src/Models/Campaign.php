@@ -25,7 +25,7 @@ class Campaign extends Model
     protected $guarded = [];
 
     public $casts = [
-        'track_opens' => 'bool',
+        'track_opens' => 'boolean',
         'track_clicks' => 'boolean',
         'open_rate' => 'integer',
         'click_rate' => 'integer',

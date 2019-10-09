@@ -36,25 +36,30 @@ class EmailList extends Model
         return $this->hasMany(Campaign::class);
     }
 
-    public function subscribe(string $email): Subscription
+    public function subscribe(string $email, array $attributes = []): Subscription
     {
-        $subscriber = $this->createSubscriber($email);
+        $subscriber = $this->createSubscriber($email, $attributes);
 
         return $subscriber->subscribeTo($this);
     }
 
-    public function subscribeNow(string $email): Subscription
+    public function subscribeNow(string $email, array $attributes = []): Subscription
     {
-        $subscriber = $this->createSubscriber($email);
+        $subscriber = $this->createSubscriber($email, $attributes);
 
         return $subscriber->subscribeNowTo($this);
     }
 
-    protected function createSubscriber(string $email): Subscriber
+    protected function createSubscriber(string $email, array $attributes = []): Subscriber
     {
-        return Subscriber::firstOrCreate([
+        $subscriber =  Subscriber::firstOrCreate([
             'email' => $email,
         ]);
+
+        $subscriber->extra_attributes = $attributes;
+        $subscriber->save();
+
+        return $subscriber;
     }
 
     public function isSubscribed(string $email): bool

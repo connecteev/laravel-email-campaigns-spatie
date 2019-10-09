@@ -11,6 +11,22 @@ $emailList->subscribe('john@example.com');
 
 Behind the scenes, we'll create a `Subscriber` with email `john@example.com` and a `Subscription`, which is the relation between a subscriber and a list. 
 
+You can add save extra attributes to a subscriber.
+
+```php
+$emailList->subscribe('john@example.com', [
+    'first_name' => 'John',
+    'last_name' => 'Doe'
+]);
+
+$subscriber = Subscriber::findForEmail('john@example.com');
+
+$subscriber->extra_attributes->get('first_name'); // returns 'John';
+$subscriber->extra_attributes->get('first_name'); // returns 'Doe';
+```
+
+You can read more on extra attributes in [this section of the docs](TODO: add link).
+
 If you subscribe an email twice to the same list, only one subscription will be created.
 
 You can also use a `Subscriber` to subscribe to an email list.

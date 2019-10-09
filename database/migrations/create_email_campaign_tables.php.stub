@@ -18,6 +18,7 @@ class CreateEmailCampaignTables extends Migration
         Schema::create('email_list_subscribers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('email')->unique();
+            $table->json('extra_attributes')->nullable();
             $table->uuid('uuid');
             $table->nullableTimestamps();
         });

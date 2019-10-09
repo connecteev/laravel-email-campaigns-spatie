@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EmailCampaigns\Models\Concerns\HasExtraAttributes;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Actions\SubscribeAction;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
@@ -11,9 +12,14 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Subscriber extends Model
 {
-    use HasUuid;
+    use HasUuid,
+        HasExtraAttributes;
 
     public $table = 'email_list_subscribers';
+
+    public $casts = [
+        'extra_attributes' => 'array',
+    ];
 
     protected $guarded = [];
 
