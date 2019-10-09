@@ -25,5 +25,5 @@ For each created `SendMail` model, a `SendMailJob` will be started. That job wil
  
  You can customize on which queue the `SendCampaignJob` and `SendMailJob` jobs are dispatched in the `perform_on_queue` in the `email-campaigns` config file. We recommend the `SendMailJob` having its own queue because it could contain many pending jobs if you are sending a campaign to a large list of subscribers.
  
- To not overwhelm your email service with a large number of calls, the `SendMailJob` is also throttled by default. Only 5 of those jobs will be handled in the timespan of a second. To learn more about this, read [the docs on throttling sends](https://docs.spatie.be/laravel-email-campaigns/v1/advanced-usage/throttling-sends/).
+The `SendMailJob` is throttled by default so that it doesn't overwhelm your email service with a large number of calls. Only 5 of those jobs will be handled per second. To learn more about this, read [the docs on throttling sends](https://docs.spatie.be/laravel-email-campaigns/v1/advanced-usage/throttling-sends/).
 
