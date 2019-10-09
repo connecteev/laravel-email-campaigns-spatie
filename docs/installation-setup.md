@@ -24,7 +24,7 @@ php artisan migrate
 
 ## Add the route macro
 
-You must use register the routes needed to handle subscription confirmations, open, and click tracking. You can do that by adding this macro to your routes file.
+You must register the routes needed to handle subscription confirmations, open, and click tracking. You can do that by adding this macro to your routes file.
 
 ```php
 Route::emailCampaigns('email-campaigns');
@@ -97,12 +97,12 @@ return [
 
 ## Install and configure redis
 
-Most e-mail providers have a limit on how many mails you can send within a given amount of time. To throttle mails, this package uses Redis. Make sure that is available on your system. You must specify a valid redis connection name in the `throttling.redis_connection_name` key.
+Most e-mail providers limit how many mails you can send within a given amount of time. To throttle mails, this package uses Redis. Make sure Redis is available on your system. You must specify a valid Redis connection name in the `throttling.redis_connection_name` key.
 
-By default, we set this value to the default Laravel connection name, which is named `default`.
+By default, we set this value to the default Laravel connection name, `default`.
 
 ## Prepare the queues
 
 Many tasks performed by this package are queued. Make sure you don't use `sync` but [a real queue driver](https://laravel.com/docs/master/queues#driver-prerequisites).
 
-In the `perform_on_queue` key of the `email-campaigns` config file, you can specify which jobs should be performed on which queues. The `register_click_job`, `register_open_job`, and `send_mail_job` jobs could receive a great many number of jobs. When using only one queue, you potential could have a long wait time for the other jobs. That's why we recommend using a separate queue for the `register_click_job`, `register_open_job`, and `send_mail_job` jobs.
+In the `perform_on_queue` key of the `email-campaigns` config file, you can specify which jobs should be performed on which queues. The `register_click_job`, `register_open_job`, and `send_mail_job` jobs could receive a large number of jobs. Using only one queue potentially results in a long wait for other jobs. So we recommend using a separate queue for the `register_click_job`, `register_open_job`, and `send_mail_job` jobs.
