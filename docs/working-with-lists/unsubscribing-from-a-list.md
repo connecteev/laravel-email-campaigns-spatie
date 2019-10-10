@@ -32,6 +32,10 @@ Alternatively, you can call unsubscribe on a subscriber
 Subscriber::findForEmail('john@example.com')->unsubscribe();
 ```
 
+## Unsubscribing using an email client
+
+Emails sent have the ```List-Unsubscribe``` header included. This allows for users to unsubscribe from their email client as per [RFC2369](https://www.ietf.org/rfc/rfc2369.txt).
+
 ## Permanently deleting a subscriber
 
 Behind the scenes, the subscriber and the subscription will not be deleted. Instead, the status of the subscription will be updated to `unsubscribed`.

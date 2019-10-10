@@ -36,7 +36,13 @@ class CampaignMailable extends Mailable
     public function build()
     {
         return $this
-            ->subject($this->campaignSend->campaign->subject)
-            ->view('email-campaigns::mails.campaign');
+            ->subject($this->subject)
+            ->view('email-campaigns::mails.campaign')
+            ->withSwiftMessage(function ($message) {
+                $message->getHeaders()
+                        ->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
+                $message->getHeaders()
+                        ->addTextHeader('List-Unsubscribe', '<' . secure_url('unsubscribe/' . $this->campaignSend->subscription->uuid) . '>');
+            });
     }
 }
