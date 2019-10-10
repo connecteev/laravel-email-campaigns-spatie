@@ -43,7 +43,7 @@ class SendCampaignJob implements ShouldQueue
         $this
             ->prepareEmailHtml()
             ->prepareWebviewHtml()
-            ->send();
+            ->sendMailsForCampaign();
     }
 
     protected function prepareEmailHtml()
@@ -54,7 +54,7 @@ class SendCampaignJob implements ShouldQueue
         return $this;
     }
 
-    private function prepareWebviewHtml()
+    protected function prepareWebviewHtml()
     {
         $action = Config::getActionClass('prepare_webview_html_action', PrepareWebviewHtmlAction::class);
         $action->execute($this->campaign);
@@ -62,7 +62,7 @@ class SendCampaignJob implements ShouldQueue
         return $this;
     }
 
-    protected function send()
+    protected function sendMailsForCampaign()
     {
         $subscriptionsQuery = $this->campaign
             ->getSegment()
@@ -72,20 +72,7 @@ class SendCampaignJob implements ShouldQueue
 
         $sentMailCount = 0;
         $subscriptionsQuery->each(function (Subscription $subscription) use (&$sentMailCount) {
-            if (! $this->campaign->getSegment()->shouldSend($subscription, $this->campaign)) {
-                return;
-            }
-
-            if (! $this->isValidSubscriptionForEmailList($subscription, $this->campaign->emailList)) {
-                return;
-            }
-
-            $pendingSend = $this->campaign->sends()->create([
-                'email_list_subscription_id' => $subscription->id,
-                'uuid' => (string) Str::uuid(),
-            ]);
-
-            dispatch(new SendMailJob($pendingSend));
+            $this->sendMail($subscription);
 
             $sentMailCount++;
         });
@@ -93,6 +80,24 @@ class SendCampaignJob implements ShouldQueue
         $this->campaign->markAsSent($sentMailCount);
 
         event(new CampaignSent($this->campaign));
+    }
+
+    protected function sendMail(Subscription $subscription): void
+    {
+        if (! $this->campaign->getSegment()->shouldSend($subscription, $this->campaign)) {
+            return;
+        }
+
+        if (! $this->isValidSubscriptionForEmailList($subscription, $this->campaign->emailList)) {
+            return;
+        }
+
+        $pendingSend = $this->campaign->sends()->create([
+            'email_list_subscription_id' => $subscription->id,
+            'uuid' => (string) Str::uuid(),
+        ]);
+
+        dispatch(new SendMailJob($pendingSend));
     }
 
     protected function isValidSubscriptionForEmailList(Subscription $subscription, EmailList $emailList): bool
