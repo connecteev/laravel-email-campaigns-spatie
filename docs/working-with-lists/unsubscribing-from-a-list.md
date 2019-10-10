@@ -3,24 +3,24 @@ title: Unsubscribing from a list
 weight: 3
 ---
 
-The most common way that a subscriber is unsubscribed is if the subscriber clicks the unsubscribe link in a sent campaign. You can add an unsubscribe link by [adding an `::unsubscribeUrl::` placeholder](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/creating-a-campaign/#setting-the-content-and-using-placeholders) to the HTML of your campaign.
+You can add an unsubscribe link by [adding an `::unsubscribeUrl::` placeholder](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/creating-a-campaign/#setting-the-content-and-using-placeholders) to the HTML of your campaign.
 
-When a subscriber visits the actual unsubscribe URL, a simple text will be displayed to confirm that unsubscribing was successful.
+When a subscriber visits the actual unsubscribe URL, a simple message will be displayed to confirming that they have  successfully unsubscribed.
 
-You can customize the response. First, publish the views.
+To customize this confirmation message, publish the views.
 
 ```php
 php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="views"
 ```
 
-The response displayed after an unsubscribe can now be modified by editing these views in the `/resources/views/vendor/email-campaigns/unsubscribe/` direction:
+Now be modify the following views in the `/resources/views/vendor/email-campaigns/unsubscribe/` directory:
 
 - `unsubscribed.blade.php`
 - `notFound.blade.php`
 
 ## Unsubscribing manually
 
-You can unsubscribe someone manually like this.
+You can also unsubscribe someone manually like this.
 
 ```php
 $emailList->unsubscribe('john@example.com');

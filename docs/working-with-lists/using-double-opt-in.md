@@ -16,11 +16,11 @@ When calling `subscribe` on a list where `requires_double_opt_in` is enabled, a 
 
 When sending a campaign to an email list, only subscribers that have a subscription with status `subscribed` will receive the campaign.
 
-To immediately subscribe someone, and skipping sending a confirmation mail, you can call `subscribeNow` on a list.
+To immediately subscribe someone, and skip sending a confirmation email, you can call `subscribeNow` on a list.
 
 ## Customizing the subscription confirmation response
 
-When a person clicks the email confirmation link, a simple text explaining the result of confirmation is display. You can customize that response by publishing the views.
+When a person clicks the email confirmation link, a simple message explaining the result of confirmation is displayed. You can customize that response by publishing the views.
 
 ```php
 php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="views"

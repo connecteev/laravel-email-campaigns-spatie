@@ -8,7 +8,7 @@
 [![StyleCI](https://github.styleci.io/repos/210674796/shield?branch=master)](https://github.styleci.io/repos/210674796)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/laravel-email-campaigns.svg?style=flat-square)](https://packagist.org/packages/spatie/laravel-email-campaigns)
 
-This package allows to easily send out email campaigns to a list of subscribers.
+This package allows you to easily send out email campaigns to a list of subscribers.
 
 Let's take a quick look at how the package can be used. First, you must create an email list:
 
