@@ -60,32 +60,4 @@ class SendMailJobTest extends TestCase
         dispatch(new SendMailJob($pendingSend));
         Queue::assertPushedOn('custom-queue', SendMailJob::class);
     }
-
-        /** @test */
-        public function the_unsubscribe_header_is_added_to_the_email()
-        {
-            $pendingSend = factory(CampaignSend::class)->create();
-    
-            dispatch(new SendMailJob($pendingSend));
-    
-            Mail::assertSent(CampaignMail::class, function (CampaignMail $mail) use ($pendingSend) {
-
-                //get headers from the $mail (SwiftMailer)
-
-                $headers = [
-                    'List-Unsubscribe-Post' => 'List-Unsubscribe=One-Click',
-                    'List-Unsubscribe' => '<'.url('/unsubscribe/'.$pendingSend->uuid).'>',
-                ];
-
-                $this->assertArrayHasKey('List-Unsubscribe', $headers);
-
-                $this->assertArrayHasKey('List-Unsubscribe-Post', $headers);
-
-                $this->assertEquals('List-Unsubscribe=One-Click' ,$headers['List-Unsubscribe-Post']);
-
-                $this->assertEquals('<'. url('/unsubscribe/'.$pendingSend->uuid) .'>', $headers['List-Unsubscribe']);
-
-                return true;
-            });
-        }
 }

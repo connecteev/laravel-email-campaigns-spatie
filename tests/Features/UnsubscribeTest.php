@@ -71,4 +71,23 @@ class UnsubscribeTest extends TestCase
 
         dispatch(new SendCampaignJob($this->campaign));
     }
+
+    /** @test */
+    public function the_unsubscribe_header_is_added_to_the_email()
+    {
+        Event::listen(MessageSent::class, function (MessageSent $event) {
+
+            $subscription = $this->emailList->allSubscriptions->first();
+
+            $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe'));
+
+            $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe'));
+
+            $this->assertEquals('List-Unsubscribe=One-Click' ,$event->message->getHeaders()->get('List-Unsubscribe'));
+
+            $this->assertEquals('<'. url('/unsubscribe/'. $subscription->uuid) .'>', $event->message->getHeaders()->get('List-Unsubscribe'));
+        });
+
+        dispatch(new SendCampaignJob($this->campaign));
+    }
 }
