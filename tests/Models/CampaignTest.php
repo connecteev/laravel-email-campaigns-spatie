@@ -13,6 +13,7 @@ use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Tests\TestClasses\TestCampaignMailable;
+use Spatie\EmailCampaigns\Tests\TestClasses\TestSegmentOnlyShouldSendToJohn;
 
 class CampaignTest extends TestCase
 {
@@ -114,6 +115,7 @@ class CampaignTest extends TestCase
     /** @test */
     public function a_mailable_can_be_set()
     {
+        /** @var \Spatie\EmailCampaigns\Models\Campaign $campaign */
         $campaign = Campaign::create()->useMailable(TestCampaignMailable::class);
 
         $this->assertEquals(TestCampaignMailable::class, $campaign->mailable_class);
@@ -125,6 +127,22 @@ class CampaignTest extends TestCase
         $this->expectException(CouldNotSendCampaign::class);
 
         Campaign::create()->useMailable(static::class);
+    }
+
+    /** @test */
+    public function a_segment_can_be_set()
+    {
+        $campaign = Campaign::create()->useSegment(TestSegmentOnlyShouldSendToJohn::class);
+
+        $this->assertEquals(TestSegmentOnlyShouldSendToJohn::class, $campaign->segment_class);
+    }
+
+    /** @test */
+    public function it_will_throw_an_exception_when_use_an_invalid_segment_class()
+    {
+        $this->expectException(CouldNotSendCampaign::class);
+
+        Campaign::create()->useSegment(static::class);
     }
 
     /** @test */

@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns\Exceptions;
 use Exception;
 use ErrorException;
 use Illuminate\Mail\Mailable;
+use Spatie\EmailCampaigns\Support\Segments\Segment;
 use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Mails\UsedInCampaign;
 use Spatie\EmailCampaigns\Models\Campaign;
@@ -18,9 +19,16 @@ class CouldNotSendCampaign extends Exception
 
     public static function invalidMailableClass(Campaign $campaign, string $invalidMailableClass)
     {
-        $shouldExtend = CampaignMailable::class;
+        $mustExtend = CampaignMailable::class;
 
-        return new static("The campaign with id `{$campaign->id}` can't be sent, because an invalid mailable class `{$invalidMailableClass}` is set. A valid mailable class must extend `{$shouldExtend}`.");
+        return new static("The campaign with id `{$campaign->id}` can't be sent, because an invalid mailable class `{$invalidMailableClass}` is set. A valid mailable class must extend `{$mustExtend}`.");
+    }
+
+    public static function invalidSegmentClass(Campaign $campaign, string $invalidSegmentClass)
+    {
+        $mustExtend = Segment::class;
+
+        return new static("The campaign with id `{$campaign->id}` can't be sent, because an invalid segment class `{$invalidSegmentClass}` is set. A valid segment class must implement `{$mustExtend}`.");
     }
 
     public static function alreadySent(Campaign $campaign): self

@@ -54,7 +54,9 @@ class CreateEmailCampaignTables extends Migration
             $table->longText('html')->nullable();
             $table->longText('email_html')->nullable();
             $table->longText('webview_html')->nullable();
+
             $table->string('mailable_class')->nullable();
+            $table->string('segment_class')->nullable();
 
             $table->boolean('track_opens')->default(false);
             $table->boolean('track_clicks')->default(false);

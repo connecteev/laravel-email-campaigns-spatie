@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Mail\Mailable;
+use Spatie\EmailCampaigns\Support\Segments\EverySubscriber;
+use Spatie\EmailCampaigns\Support\Segments\Segment;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
@@ -108,11 +110,26 @@ class Campaign extends Model
 
     public function useMailable(string $mailableClass)
     {
+        $this->ensureUpdatable();
+
         if (! is_a($mailableClass, CampaignMailable::class, true)) {
             throw CouldNotSendCampaign::invalidMailableClass($this, $mailableClass);
         }
 
         $this->update(['mailable_class' => $mailableClass]);
+
+        return $this;
+    }
+
+    public function useSegment(string $segmentClass)
+    {
+        $this->ensureUpdatable();
+
+        if (! is_a($segmentClass, Segment::class, true)) {
+            throw CouldNotSendCampaign::invalidSegmentClass($this, $segmentClass);
+        }
+
+        $this->update(['segment_class' => $segmentClass]);
 
         return $this;
     }
@@ -232,11 +249,13 @@ class Campaign extends Model
     {
         $mailableClass = $this->mailable_class ?? CampaignMailable::class;
 
-        $mailable = app($mailableClass);
-        if (! $mailable instanceof CampaignMailable) {
-            throw CouldNotSendCampaign::invalidMailableClass($this, $mailableClass);
-        }
+        return app($mailableClass);
+    }
 
-        return $mailable;
+    public function getSegment(): Segment
+    {
+        $segmentClass = $this->segment_class ?? EverySubscriber::class;
+
+        return app($segmentClass);
     }
 }

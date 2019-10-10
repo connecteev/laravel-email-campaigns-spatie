@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Mails\UsedInCampaign;
 use Spatie\EmailCampaigns\Support\Config;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -73,4 +74,6 @@ class SendMailJob implements ShouldQueue
 
         return [$rateLimitedMiddleware];
     }
+
+
 }

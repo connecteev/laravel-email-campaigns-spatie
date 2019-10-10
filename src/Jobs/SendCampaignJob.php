@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -62,9 +64,25 @@ class SendCampaignJob implements ShouldQueue
 
     protected function send()
     {
-        $this->campaign->emailList->subscriptions()->each(function (Subscription $emailListSubscription) {
+        $segment = $this->campaign->getSegment();
+
+        $subscriptionsQuery = $segment
+            ->getSubscriptionsQuery($this->campaign)
+        //   ->where('status', SubscriptionStatus::SUBSCRIBED)
+        //    ->where('email_list_id', $this->campaign->emailList->id)
+        ;
+
+        $subscriptionsQuery->each(function (Subscription $subscription) {
+            if (! $this->campaign->getSegment()->shouldSend($subscription, $this->campaign)) {
+                return;
+            }
+
+            if (! $this->isValidSubscriptionForEmailList($subscription, $this->campaign->emailList)) {
+                return;
+            }
+
             $pendingSend = $this->campaign->sends()->create([
-                'email_list_subscription_id' => $emailListSubscription->id,
+                'email_list_subscription_id' => $subscription->id,
                 'uuid' => (string) Str::uuid(),
             ]);
 
@@ -74,5 +92,18 @@ class SendCampaignJob implements ShouldQueue
         $this->campaign->markAsSent($this->campaign->emailList->subscriptions->count());
 
         event(new CampaignSent($this->campaign));
+    }
+
+    protected function isValidSubscriptionForEmailList(Subscription $subscription, EmailList $emailList): bool
+    {
+        if (! $subscription->status === SubscriptionStatus::SUBSCRIBED) {
+            return false;
+        }
+
+        if ((int)$subscription->email_list_id !== (int)$emailList->id) {
+            return false;
+        }
+
+        return true;
     }
 }
