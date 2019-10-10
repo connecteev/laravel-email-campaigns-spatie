@@ -68,11 +68,11 @@ class SendCampaignJob implements ShouldQueue
 
         $subscriptionsQuery = $segment
             ->getSubscriptionsQuery($this->campaign)
-        //   ->where('status', SubscriptionStatus::SUBSCRIBED)
-        //    ->where('email_list_id', $this->campaign->emailList->id)
-;
+            ->where('status', SubscriptionStatus::SUBSCRIBED)
+            ->where('email_list_id', $this->campaign->emailList->id);
 
-        $subscriptionsQuery->each(function (Subscription $subscription) {
+        $sentMailCount = 0;
+        $subscriptionsQuery->each(function (Subscription $subscription) use (&$sentMailCount) {
             if (! $this->campaign->getSegment()->shouldSend($subscription, $this->campaign)) {
                 return;
             }
@@ -87,9 +87,11 @@ class SendCampaignJob implements ShouldQueue
             ]);
 
             dispatch(new SendMailJob($pendingSend));
+
+            $sentMailCount++;
         });
 
-        $this->campaign->markAsSent($this->campaign->emailList->subscriptions->count());
+        $this->campaign->markAsSent($sentMailCount);
 
         event(new CampaignSent($this->campaign));
     }
