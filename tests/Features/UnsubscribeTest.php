@@ -81,11 +81,11 @@ class UnsubscribeTest extends TestCase
 
             $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe'));
 
-            $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe'));
+            $this->assertEquals('<'. secure_url('/unsubscribe/'. $subscription->uuid) .'>', $event->message->getHeaders()->get('List-Unsubscribe')->getValue());
+            
+            $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe-Post'));
 
-            $this->assertEquals('List-Unsubscribe=One-Click' ,$event->message->getHeaders()->get('List-Unsubscribe'));
-
-            $this->assertEquals('<'. url('/unsubscribe/'. $subscription->uuid) .'>', $event->message->getHeaders()->get('List-Unsubscribe'));
+            $this->assertEquals('List-Unsubscribe=One-Click' ,$event->message->getHeaders()->get('List-Unsubscribe-Post')->getValue());
         });
 
         dispatch(new SendCampaignJob($this->campaign));
