@@ -5,7 +5,7 @@ namespace Spatie\EmailCampaigns\Exceptions;
 use Exception;
 use Spatie\EmailCampaigns\Models\Campaign;
 
-class CampaignCouldNotBeUpdated extends Exception
+class CampaignCouldNotUpdate extends Exception
 {
     public static function beingSent(Campaign $campaign): self
     {

@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Illuminate\Support\Facades\Mail;
+use Spatie\EmailCampaigns\Exceptions\CouldNotSubscribe;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
@@ -88,5 +89,13 @@ class EmailListTest extends TestCase
         Mail::assertNothingQueued();
 
         $this->assertEquals('john@example.com', $this->emailList->subscribers->first()->email);
+    }
+
+    /** @test */
+    public function it_cannot_subscribe_an_invalid_email()
+    {
+        $this->expectException(CouldNotSubscribe::class);
+
+        $this->emailList->subscribe('invalid-email');
     }
 }

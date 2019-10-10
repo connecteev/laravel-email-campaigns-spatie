@@ -12,7 +12,7 @@ use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotSent;
 
 class SendCampaignJobTest extends TestCase
 {
@@ -84,7 +84,7 @@ class SendCampaignJobTest extends TestCase
             'html' => '<qsdfqlsmdkjm><<>><<',
         ]);
 
-        $this->expectException(CampaignCouldNotBeSent::class);
+        $this->expectException(CampaignCouldNotSent::class);
 
         dispatch(new SendCampaignJob($this->campaign));
     }

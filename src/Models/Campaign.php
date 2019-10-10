@@ -12,8 +12,8 @@ use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeUpdated;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotSent;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotUpdate;
 use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 
 class Campaign extends Model
@@ -140,34 +140,34 @@ class Campaign extends Model
     protected function ensureSendable()
     {
         if ($this->status === CampaignStatus::SENDING) {
-            throw CampaignCouldNotBeSent::beingSent($this);
+            throw CampaignCouldNotSent::beingSent($this);
         }
 
         if ($this->status === CampaignStatus::SENT) {
-            throw CampaignCouldNotBeSent::alreadySent($this);
+            throw CampaignCouldNotSent::alreadySent($this);
         }
 
         if (empty($this->subject)) {
-            throw CampaignCouldNotBeSent::noSubjectSet($this);
+            throw CampaignCouldNotSent::noSubjectSet($this);
         }
 
         if (is_null($this->emailList)) {
-            throw CampaignCouldNotBeSent::noListSet($this);
+            throw CampaignCouldNotSent::noListSet($this);
         }
 
         if (empty($this->html)) {
-            throw CampaignCouldNotBeSent::noContent($this);
+            throw CampaignCouldNotSent::noContent($this);
         }
     }
 
     protected function ensureUpdatable(): void
     {
         if ($this->status === CampaignStatus::SENDING) {
-            throw CampaignCouldNotBeUpdated::beingSent($this);
+            throw CampaignCouldNotUpdate::beingSent($this);
         }
 
         if ($this->status === CampaignStatus::SENT) {
-            throw CampaignCouldNotBeSent::alreadySent($this);
+            throw CampaignCouldNotSent::alreadySent($this);
         }
     }
 

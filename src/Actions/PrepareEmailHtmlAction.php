@@ -7,7 +7,7 @@ use DOMDocument;
 use ErrorException;
 use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotBeSent;
+use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotSent;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 
 class PrepareEmailHtmlAction
@@ -49,7 +49,7 @@ class PrepareEmailHtmlAction
         try {
             $dom->loadHTML($campaign->email_html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING);
         } catch (ErrorException $errorException) {
-            throw CampaignCouldNotBeSent::invalidContent($campaign, $errorException);
+            throw CampaignCouldNotSent::invalidContent($campaign, $errorException);
         }
 
         collect($dom->getElementsByTagName('a'))

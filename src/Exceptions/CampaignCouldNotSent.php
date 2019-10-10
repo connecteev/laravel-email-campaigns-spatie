@@ -6,7 +6,7 @@ use Exception;
 use ErrorException;
 use Spatie\EmailCampaigns\Models\Campaign;
 
-class CampaignCouldNotBeSent extends Exception
+class CampaignCouldNotSent extends Exception
 {
     public static function beingSent(Campaign $campaign): self
     {

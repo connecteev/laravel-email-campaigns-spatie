@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Validator;
+use Spatie\EmailCampaigns\Exceptions\CouldNotSubscribe;
 
 class EmailList extends Model
 {
@@ -52,6 +54,10 @@ class EmailList extends Model
 
     protected function createSubscriber(string $email, array $attributes = []): Subscriber
     {
+        if (Validator::make(compact('email'), ['email' => 'email'])->fails()) {
+            throw CouldNotSubscribe::invalidEmail($email);
+        };
+
         $subscriber =  Subscriber::firstOrCreate([
             'email' => $email,
         ]);
