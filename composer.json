@@ -24,7 +24,7 @@
         "illuminate/database": "^6.0",
         "illuminate/events": "^6.0",
         "illuminate/mail": "^6.0",
-        "illuminate/queue": "^6.2",
+        "illuminate/queue": "^6.0",
         "illuminate/redis": "^6.0",
         "illuminate/support": "^6.0",
         "spatie/laravel-rate-limited-job-middleware": "^1.0",
