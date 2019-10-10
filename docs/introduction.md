@@ -28,8 +28,7 @@ Campaign::create()
     ->content($html)
     ->trackOpens()
     ->trackClicks()
-    ->to($emailList)
-    ->send();
+    ->sendTo($emailList);
 ```
 
 After a campaign is sent, [interesting statistics](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-campaigns/viewing-statistics-of-a-sent-campaign/) are made available.

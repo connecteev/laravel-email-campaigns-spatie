@@ -5,12 +5,12 @@ namespace Spatie\EmailCampaigns\Tests\Features;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Mail\Events\MessageSent;
-use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 
 class UnsubscribeTest extends TestCase
 {
@@ -77,16 +77,15 @@ class UnsubscribeTest extends TestCase
     public function the_unsubscribe_header_is_added_to_the_email()
     {
         Event::listen(MessageSent::class, function (MessageSent $event) {
-
             $subscription = $this->emailList->allSubscriptions->first();
 
             $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe'));
 
-            $this->assertEquals('<'. url(action(UnsubscribeController::class, $subscription->uuid)) .'>', $event->message->getHeaders()->get('List-Unsubscribe')->getValue());
+            $this->assertEquals('<'.url(action(UnsubscribeController::class, $subscription->uuid)).'>', $event->message->getHeaders()->get('List-Unsubscribe')->getValue());
 
             $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe-Post'));
 
-            $this->assertEquals('List-Unsubscribe=One-Click' ,$event->message->getHeaders()->get('List-Unsubscribe-Post')->getValue());
+            $this->assertEquals('List-Unsubscribe=One-Click', $event->message->getHeaders()->get('List-Unsubscribe-Post')->getValue());
         });
 
         dispatch(new SendCampaignJob($this->campaign));
