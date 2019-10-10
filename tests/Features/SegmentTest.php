@@ -3,15 +3,14 @@
 namespace Spatie\EmailCampaigns\Tests\Features;
 
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Mails\CampaignMailable;
+use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscription;
-use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
+use Spatie\EmailCampaigns\Tests\TestClasses\TestSegmentQueryOnlyJohn;
 use Spatie\EmailCampaigns\Tests\TestClasses\TestSegmentAllsubscriptions;
 use Spatie\EmailCampaigns\Tests\TestClasses\TestSegmentOnlyShouldSendToJohn;
-use Spatie\EmailCampaigns\Tests\TestClasses\TestSegmentQuerOnlyFirst;
-use Spatie\EmailCampaigns\Tests\TestClasses\TestSegmentQueryOnlyJohn;
 
 class SegmentTest extends TestCase
 {
@@ -46,11 +45,11 @@ class SegmentTest extends TestCase
 
         Mail::assertSent(CampaignMailable::class, 1);
 
-        Mail::assertSent(CampaignMailable::class, function(CampaignMailable $mail) {
+        Mail::assertSent(CampaignMailable::class, function (CampaignMailable $mail) {
             return $mail->hasTo('john@example.com');
         });
 
-        Mail::assertNotSent(CampaignMailable::class, function(CampaignMailable $mail) {
+        Mail::assertNotSent(CampaignMailable::class, function (CampaignMailable $mail) {
             return $mail->hasTo('jane@example.com');
         });
     }
@@ -67,11 +66,11 @@ class SegmentTest extends TestCase
 
         Mail::assertSent(CampaignMailable::class, 1);
 
-        Mail::assertSent(CampaignMailable::class, function(CampaignMailable $mail) {
+        Mail::assertSent(CampaignMailable::class, function (CampaignMailable $mail) {
             return $mail->hasTo('john@example.com');
         });
 
-        Mail::assertNotSent(CampaignMailable::class, function(CampaignMailable $mail) {
+        Mail::assertNotSent(CampaignMailable::class, function (CampaignMailable $mail) {
             return $mail->hasTo('jane@example.com');
         });
     }

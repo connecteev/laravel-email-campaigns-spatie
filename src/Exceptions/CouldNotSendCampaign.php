@@ -4,11 +4,9 @@ namespace Spatie\EmailCampaigns\Exceptions;
 
 use Exception;
 use ErrorException;
-use Illuminate\Mail\Mailable;
-use Spatie\EmailCampaigns\Support\Segments\Segment;
-use Spatie\EmailCampaigns\Mails\CampaignMailable;
-use Spatie\EmailCampaigns\Mails\UsedInCampaign;
 use Spatie\EmailCampaigns\Models\Campaign;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
+use Spatie\EmailCampaigns\Support\Segments\Segment;
 
 class CouldNotSendCampaign extends Exception
 {

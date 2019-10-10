@@ -3,12 +3,12 @@
 namespace Spatie\EmailCampaigns\Tests\Models;
 
 use Illuminate\Support\Facades\Mail;
-use Spatie\EmailCampaigns\Exceptions\CouldNotSubscribe;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\Subscription;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Exceptions\CouldNotSubscribe;
 
 class EmailListTest extends TestCase
 {

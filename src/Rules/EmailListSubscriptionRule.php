@@ -3,8 +3,8 @@
 namespace Spatie\EmailCampaigns\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\EmailList;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class EmailListSubscriptionRule implements Rule
 {
@@ -31,4 +31,5 @@ class EmailListSubscriptionRule implements Rule
         return __('email-campaigns::messages.email_list_email', [
             'attribute' => $this->attribute,
         ]);
-}}
+    }
+}

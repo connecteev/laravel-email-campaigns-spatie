@@ -2,10 +2,10 @@
 
 namespace Spatie\EmailCampaigns\Tests\Rules;
 
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Spatie\EmailCampaigns\Models\EmailList;
-use Spatie\EmailCampaigns\Rules\EmailListSubscriptionRule;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\EmailList;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Rules\EmailListSubscriptionRule;
 
 class EmailRuleSubscriptionTest extends TestCase
 {
