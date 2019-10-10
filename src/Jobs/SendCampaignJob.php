@@ -64,9 +64,8 @@ class SendCampaignJob implements ShouldQueue
 
     protected function send()
     {
-        $segment = $this->campaign->getSegment();
-
-        $subscriptionsQuery = $segment
+        $subscriptionsQuery = $this->campaign
+            ->getSegment()
             ->getSubscriptionsQuery($this->campaign)
             ->where('status', SubscriptionStatus::SUBSCRIBED)
             ->where('email_list_id', $this->campaign->emailList->id);
