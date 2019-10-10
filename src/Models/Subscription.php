@@ -3,6 +3,7 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Events\Unsubscribed;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
@@ -42,5 +43,10 @@ class Subscription extends Model
         event(new Unsubscribed($this));
 
         return $this;
+    }
+
+    public function unsubscribeUrl(): string
+    {
+        return url(action(UnsubscribeController::class, $this->uuid));
     }
 }

@@ -47,7 +47,7 @@ class CampaignMailable extends Mailable
             $message->getHeaders()
                 ->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
             $message->getHeaders()
-                ->addTextHeader('List-Unsubscribe', '<' . $this->campaignSend->unsubscribeUrl() . '>');
+                ->addTextHeader('List-Unsubscribe', '<' . $this->campaignSend->subscription->unsubscribeUrl() . '>');
         });
 
         return $this;

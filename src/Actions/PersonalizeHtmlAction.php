@@ -11,12 +11,13 @@ class PersonalizeHtmlAction
 {
     public function execute($html, CampaignSend $pendingSend)
     {
+        /** @var \Spatie\EmailCampaigns\Models\Subscription $subscription */
         $subscription = $pendingSend->subscription;
 
         $html = str_replace('::campaignSendUuid::', $pendingSend->uuid, $html);
         $html = str_replace('::subscriptionUuid::', $subscription->uuid, $html);
         $html = str_replace('::subscriber.uuid::', $subscription->subscriber->uuid, $html);
-        $html = str_replace('::unsubscribeUrl::', action(UnsubscribeController::class, $subscription->uuid), $html);
+        $html = str_replace('::unsubscribeUrl::', $subscription->unsubscribeUrl(), $html);
 
         $html = $this->replaceSubscriberAttributes($html, $subscription->subscriber);
 

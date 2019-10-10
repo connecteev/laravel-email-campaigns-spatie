@@ -40,9 +40,4 @@ class CampaignSend extends Model
     {
         return ! is_null($this->sent_at);
     }
-
-    public function unsubscribeUrl(): string
-    {
-        return url(action(UnsubscribeController::class, $this->subscription->uuid));
-    }
 }
