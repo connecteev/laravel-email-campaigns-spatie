@@ -2,13 +2,13 @@
 
 namespace Spatie\EmailCampaigns\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Support\Facades\Validator;
 use Spatie\EmailCampaigns\Exceptions\CouldNotSubscribe;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class EmailList extends Model
 {
@@ -57,7 +57,7 @@ class EmailList extends Model
     {
         if (Validator::make(compact('email'), ['email' => 'email'])->fails()) {
             throw CouldNotSubscribe::invalidEmail($email);
-        };
+        }
 
         $subscriber = Subscriber::firstOrCreate([
             'email' => $email,
@@ -71,11 +71,11 @@ class EmailList extends Model
 
     public function isSubscribed(string $email): bool
     {
-        if (!$subscriber = Subscriber::findForEmail($email)) {
+        if (! $subscriber = Subscriber::findForEmail($email)) {
             return false;
         }
 
-        if (!$subscription = $this->getSubscription($subscriber)) {
+        if (! $subscription = $this->getSubscription($subscriber)) {
             return false;
         }
 
@@ -92,11 +92,11 @@ class EmailList extends Model
 
     public function unsubscribe(string $email): bool
     {
-        if (!$subscriber = Subscriber::findForEmail($email)) {
+        if (! $subscriber = Subscriber::findForEmail($email)) {
             return false;
         }
 
-        if (!$subscription = $this->getSubscription($subscriber)) {
+        if (! $subscription = $this->getSubscription($subscriber)) {
             return false;
         }
 

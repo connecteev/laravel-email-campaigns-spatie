@@ -6,14 +6,14 @@ use Illuminate\Support\Str;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
-use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Actions\PrepareEmailHtmlAction;
 use Spatie\EmailCampaigns\Actions\PrepareWebviewHtmlAction;
 
@@ -70,7 +70,7 @@ class SendCampaignJob implements ShouldQueue
             ->getSubscriptionsQuery($this->campaign)
         //   ->where('status', SubscriptionStatus::SUBSCRIBED)
         //    ->where('email_list_id', $this->campaign->emailList->id)
-        ;
+;
 
         $subscriptionsQuery->each(function (Subscription $subscription) {
             if (! $this->campaign->getSegment()->shouldSend($subscription, $this->campaign)) {
@@ -100,7 +100,7 @@ class SendCampaignJob implements ShouldQueue
             return false;
         }
 
-        if ((int)$subscription->email_list_id !== (int)$emailList->id) {
+        if ((int) $subscription->email_list_id !== (int) $emailList->id) {
             return false;
         }
 

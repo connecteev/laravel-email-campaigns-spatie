@@ -16,7 +16,6 @@ class SubscribeAction
     {
         $status = SubscriptionStatus::SUBSCRIBED;
 
-
         if ($respectDoubleOptIn) {
             if ($emailList->requires_double_opt_in) {
                 $status = SubscriptionStatus::PENDING;

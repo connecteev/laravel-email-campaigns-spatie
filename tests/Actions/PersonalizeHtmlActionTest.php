@@ -1,11 +1,10 @@
 <?php
 
-
 namespace Spatie\EmailCampaigns\Tests\Actions;
 
-use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
-use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Tests\TestCase;
+use Spatie\EmailCampaigns\Models\CampaignSend;
+use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
 
 class PersonalizeHtmlActionTest extends TestCase
 {
@@ -22,7 +21,7 @@ class PersonalizeHtmlActionTest extends TestCase
         $this->campaignSend = factory(CampaignSend::class)->create();
 
         $subscriber = $this->campaignSend->subscription->subscriber;
-        $subscriber->uuid  = 'my-uuid';
+        $subscriber->uuid = 'my-uuid';
         $subscriber->extra_attributes = ['first_name' => 'John', 'last_name' => 'Doe'];
         $subscriber->save();
 
@@ -64,6 +63,5 @@ class PersonalizeHtmlActionTest extends TestCase
         $actualOutputHtmlWithHtmlTags = (new PersonalizeHtmlAction())->execute("<html>{$inputHtml}</html>", $this->campaignSend);
 
         $this->assertEquals($expectedOutputHtmlWithHtmlTags, $actualOutputHtmlWithHtmlTags, "The personalize action did not produce the expected result when wrapped in html tags. Expected: `{$expectedOutputHtmlWithHtmlTags}`, actual: `{$actualOutputHtmlWithHtmlTags}`");
-
     }
 }

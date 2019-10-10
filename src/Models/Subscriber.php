@@ -3,12 +3,12 @@
 namespace Spatie\EmailCampaigns\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Spatie\EmailCampaigns\Models\Concerns\HasExtraAttributes;
 use Spatie\EmailCampaigns\Support\Config;
 use Spatie\EmailCampaigns\Actions\SubscribeAction;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Spatie\EmailCampaigns\Models\Concerns\HasExtraAttributes;
 
 class Subscriber extends Model
 {

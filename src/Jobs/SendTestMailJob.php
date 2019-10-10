@@ -9,7 +9,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Spatie\EmailCampaigns\Mails\CampaignMailable;
 
 class SendTestMailJob implements ShouldQueue
 {
@@ -38,7 +37,6 @@ class SendTestMailJob implements ShouldQueue
         $campaignMailable = $this->campaign->getMailable()
             ->setContent($this->campaign->html)
             ->subject($this->campaign->subject);
-
 
         Mail::to($this->email)->send($campaignMailable);
     }

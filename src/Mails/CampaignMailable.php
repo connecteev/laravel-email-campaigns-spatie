@@ -4,10 +4,7 @@ namespace Spatie\EmailCampaigns\Mails;
 
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Spatie\EmailCampaigns\Actions\PersonalizeHtmlAction;
-use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Support\Config;
 
 class CampaignMailable extends Mailable
 {

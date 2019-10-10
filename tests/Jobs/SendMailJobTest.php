@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Jobs\SendMailJob;
-use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Models\CampaignSend;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Tests\TestClasses\TestCampaignMailable;
 
 class SendMailJobTest extends TestCase

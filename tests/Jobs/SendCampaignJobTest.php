@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
-use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Exceptions\CouldNotSendCampaign;
+use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 
 class SendCampaignJobTest extends TestCase
 {

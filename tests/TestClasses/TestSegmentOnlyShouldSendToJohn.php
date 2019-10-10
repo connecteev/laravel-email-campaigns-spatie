@@ -2,7 +2,6 @@
 
 namespace Spatie\EmailCampaigns\Tests\TestClasses;
 
-use Illuminate\Support\Str;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\Subscription;
 use Spatie\EmailCampaigns\Support\Segments\Segment;
