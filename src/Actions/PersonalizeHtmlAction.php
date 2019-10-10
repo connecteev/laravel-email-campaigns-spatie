@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns\Actions;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Models\Subscriber;
+use Spatie\SchemalessAttributes\SchemalessAttributes;
 
 class PersonalizeHtmlAction
 {
@@ -24,10 +25,21 @@ class PersonalizeHtmlAction
 
     protected function replaceSubscriberAttributes(string $html, Subscriber $subscriber): string
     {
-        /*
-        $html = str_replace('::subscriber.uuid::', $subscriber->uuid, $html);
-        $html = str_replace('::subscriber.extra_attributes.first_name::', $subscriber->extra_attributes->get('first_name'), $html);
-        */
+        $html = preg_replace_callback('/::subscriber.([\w.]+)::/', function (array $match) use ($subscriber) {
+            $parts = collect(explode('.', $match[1] ?? ''));
+
+            $replace = $parts->reduce(function ($value, $part) {
+                if ($value instanceof SchemalessAttributes) {
+                    return $value->get($part);
+                }
+
+                return $value->$part
+                    ?? $value[$part]
+                    ?? null;
+            }, $subscriber);
+
+            return $replace ?? $match;
+        }, $html);
 
         return $html;
     }

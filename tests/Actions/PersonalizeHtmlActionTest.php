@@ -52,7 +52,7 @@ class PersonalizeHtmlActionTest extends TestCase
     /** @test */
     public function it_will_not_replace_an_placeholder_for_a_non_existing_subscriber_extra_attribute()
     {
-        $this->assertActionResult('::subscriber.extra_attributes.non-existing::', 'John');
+        $this->assertActionResult('::subscriber.extra_attributes.non-existing::', '::subscriber.extra_attributes.non-existing::');
     }
 
     protected function assertActionResult(string $inputHtml, $expectedOutputHtml)
