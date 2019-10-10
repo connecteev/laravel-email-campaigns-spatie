@@ -1,5 +1,5 @@
 ---
-title: Using a custom mailable
+title: Using custom mailables
 weight: 7
 ---
 
