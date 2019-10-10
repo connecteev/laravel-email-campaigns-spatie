@@ -5,7 +5,6 @@ namespace Spatie\EmailCampaigns\Actions;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\SchemalessAttributes\SchemalessAttributes;
-use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 
 class PersonalizeHtmlAction
 {
