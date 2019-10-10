@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns\Tests\Features;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Mail\Events\MessageSent;
+use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
@@ -81,8 +82,8 @@ class UnsubscribeTest extends TestCase
 
             $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe'));
 
-            $this->assertEquals('<'. secure_url('/unsubscribe/'. $subscription->uuid) .'>', $event->message->getHeaders()->get('List-Unsubscribe')->getValue());
-            
+            $this->assertEquals('<'. url(action(UnsubscribeController::class, $subscription->uuid)) .'>', $event->message->getHeaders()->get('List-Unsubscribe')->getValue());
+
             $this->assertNotNull($event->message->getHeaders()->get('List-Unsubscribe-Post'));
 
             $this->assertEquals('List-Unsubscribe=One-Click' ,$event->message->getHeaders()->get('List-Unsubscribe-Post')->getValue());
