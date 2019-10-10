@@ -17,6 +17,8 @@ Alternatively you can set the email list and send the campaign in one go:
 $campaign->sendTo($emailList);
 ```
 
+If you don't want to send email to your entire list, but only to a subset of subscribers, you can [use a segment](https://docs.spatie.be/laravel-email-campaigns/v1/advanced-usage/segmenting-lists/).
+
 ## What happens when a campaign is being sent
 
 When you send a campaign, a job called `SendCampaign` job will be dispatched. This job will create a `MailSend` model for each of the subscribers of the list you're sending the campaign to. A `MailSend` represents a mail that should be sent to one subscriber. 
