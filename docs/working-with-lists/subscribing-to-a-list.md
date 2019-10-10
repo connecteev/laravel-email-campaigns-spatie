@@ -11,6 +11,18 @@ $emailList->subscribe('john@example.com');
 
 Behind the scenes, we'll create a `Subscriber` with email `john@example.com` and a `Subscription`, which is the relation between a subscriber and a list. 
 
+If you try to subscribe an email that already exists on a list it will be ignored.
+
+You can also use a `Subscriber` to subscribe to an email list.
+
+```php
+$subscriber = Subscriber::findForEmail('john@example.com');
+
+$subscriber->subscribeTo($anotherEmailList);
+```
+
+## Adding extra attributes
+
 You can add extra attributes to a subscriber, by passing an array as the second argument of the subscribe method.
 
 ```php
@@ -25,28 +37,7 @@ $subscriber->extra_attributes->get('first_name'); // returns 'John';
 $subscriber->extra_attributes->get('last_name'); // returns 'Doe';
 ```
 
-You can read more on extra attributes in [this section of the docs](TODO: add link).
-
-If you try to subscribe an email that already exists on a list it will be ignored.
-
-You can also use a `Subscriber` to subscribe to an email list.
-
-```php
-$subscriber = Subscriber::findForEmail('john@example.com');
-
-$subscriber->subscribeTo($anotherEmailList);
-```
-
-If [double opt-in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) is enabled on a list, then `subscribeTo` won't result in an immediate subscription. Instead, the user must first confirm, by clicking a link in a mail, before their subscription to the new list is completed.
-
-To immediately confirm someone, and skipping sending the confirmation mail, use `subscribeNow`:
-
-```php
-$emailList->subscribeNow('john@example.com');
-
-// or using an existing subscriber
-$subscriber->subscribeNowTo($anotherEmailList);
-```
+You can read more on extra attributes in [this section of the docs](https://docs.spatie.be/laravel-email-campaigns/v1/advanced-usage/working-with-extra-attributes-on-subscribers/).
 
 ## Checking if someone is subscribed
 
@@ -82,4 +73,17 @@ To return all subscribers, including all pending and unsubscribed ones, use `all
 
 ```php
 $allSubscribers = $emailList->allSubscribers;
+```
+
+## Skipping opt in when subscribing
+
+If [double opt-in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) is enabled on a list, then `subscribeTo` won't result in an immediate subscription. Instead, the user must first confirm, by clicking a link in a mail, before their subscription to the new list is completed.
+
+To immediately confirm someone, and skipping sending the confirmation mail, use `subscribeNow`:
+
+```php
+$emailList->subscribeNow('john@example.com');
+
+// or using an existing subscriber
+$subscriber->subscribeNowTo($anotherEmailList);
 ```
