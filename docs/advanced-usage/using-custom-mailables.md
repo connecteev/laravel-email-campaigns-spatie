@@ -22,7 +22,7 @@ class MyCustomMailable extends CampaignMailable
 You can use it in a campaign like this:
 
 ```php
-Campaing::create()
+Campaign::create()
     ->useMailable(MyCustomMailable::class)
     ->sendTo($emailList);
 ```
