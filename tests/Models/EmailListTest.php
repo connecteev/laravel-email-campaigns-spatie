@@ -98,4 +98,14 @@ class EmailListTest extends TestCase
 
         $this->emailList->subscribe('invalid-email');
     }
+
+    /** @test */
+    public function it_can_get_the_status_of_a_subscription()
+    {
+        $this->assertNull($this->emailList->getSubscriptionStatus('john@example.com'));
+
+        $this->emailList->subscribe('john@example.com');
+
+        $this->assertEquals(SubscriptionStatus::SUBSCRIBED, $this->emailList->getSubscriptionStatus('john@example.com'));
+    }
 }

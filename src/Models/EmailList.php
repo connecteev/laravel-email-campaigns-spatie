@@ -2,6 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
@@ -58,7 +59,7 @@ class EmailList extends Model
             throw CouldNotSubscribe::invalidEmail($email);
         };
 
-        $subscriber =  Subscriber::firstOrCreate([
+        $subscriber = Subscriber::firstOrCreate([
             'email' => $email,
         ]);
 
@@ -70,11 +71,11 @@ class EmailList extends Model
 
     public function isSubscribed(string $email): bool
     {
-        if (! $subscriber = Subscriber::findForEmail($email)) {
+        if (!$subscriber = Subscriber::findForEmail($email)) {
             return false;
         }
 
-        if (! $subscription = $this->getSubscription($subscriber)) {
+        if (!$subscription = $this->getSubscription($subscriber)) {
             return false;
         }
 
@@ -91,16 +92,28 @@ class EmailList extends Model
 
     public function unsubscribe(string $email): bool
     {
-        if (! $subscriber = Subscriber::findForEmail($email)) {
+        if (!$subscriber = Subscriber::findForEmail($email)) {
             return false;
         }
 
-        if (! $subscription = $this->getSubscription($subscriber)) {
+        if (!$subscription = $this->getSubscription($subscriber)) {
             return false;
         }
 
         $subscription->markAsUnsubscribed();
 
         return true;
+    }
+
+    public function getSubscriptionStatus(string $email): ?string
+    {
+        $subscription = Subscription::query()
+            ->where('email_list_id', $this->id)
+            ->whereHas('subscriber', function (Builder $query) use ($email) {
+                $query->where('email', $email);
+            })
+            ->first();
+
+        return optional($subscription)->status;
     }
 }
