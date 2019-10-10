@@ -27,7 +27,7 @@ class PersonalizeHtmlAction
     {
         /*
         $html = str_replace('::subscriber.uuid::', $subscriber->uuid, $html);
-        $html = str_replace('::subscriber.extra_attributes.first_name::', 'John', $html);
+        $html = str_replace('::subscriber.extra_attributes.first_name::', $subscriber->extra_attributes->get('first_name'), $html);
         */
 
         return $html;
