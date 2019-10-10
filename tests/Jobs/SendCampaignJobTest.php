@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Events\CampaignSent;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotSent;
+use Spatie\EmailCampaigns\Exceptions\CouldNotSendCampaign;
 
 class SendCampaignJobTest extends TestCase
 {
-    /** @var \Spatie\EmailCampaigns\Mails\CampaignMail $campaign */
+    /** @var \Spatie\EmailCampaigns\Mails\CampaignMailable $campaign */
     private $campaign;
 
     public function setUp(): void
@@ -37,7 +37,7 @@ class SendCampaignJobTest extends TestCase
     {
         dispatch(new SendCampaignJob($this->campaign));
 
-        Mail::assertSent(CampaignMail::class, 3);
+        Mail::assertSent(CampaignMailable::class, 3);
 
         Event::assertDispatched(CampaignSent::class, function (CampaignSent $event) {
             $this->assertEquals($this->campaign->id, $event->campaign->id);
@@ -56,10 +56,10 @@ class SendCampaignJobTest extends TestCase
         $this->assertFalse($this->campaign->wasAlreadySent());
         dispatch(new SendCampaignJob($this->campaign));
         $this->assertTrue($this->campaign->refresh()->wasAlreadySent());
-        Mail::assertSent(CampaignMail::class, 3);
+        Mail::assertSent(CampaignMailable::class, 3);
 
         dispatch(new SendCampaignJob($this->campaign));
-        Mail::assertSent(CampaignMail::class, 3);
+        Mail::assertSent(CampaignMailable::class, 3);
         Event::assertDispatched(CampaignSent::class, 1);
     }
 
@@ -84,7 +84,7 @@ class SendCampaignJobTest extends TestCase
             'html' => '<qsdfqlsmdkjm><<>><<',
         ]);
 
-        $this->expectException(CampaignCouldNotSent::class);
+        $this->expectException(CouldNotSendCampaign::class);
 
         dispatch(new SendCampaignJob($this->campaign));
     }

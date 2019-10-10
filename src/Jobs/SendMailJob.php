@@ -6,10 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use Spatie\EmailCampaigns\Mails\UsedInCampaign;
 use Spatie\EmailCampaigns\Support\Config;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\RateLimitedMiddleware\RateLimited;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Events\CampaignMailSent;
@@ -47,11 +48,10 @@ class SendMailJob implements ShouldQueue
             $this->pendingSend,
             );
 
-        $campaignMail = new CampaignMail(
-            $this->pendingSend->campaign->subject,
-            $personalisedHtml,
-            $this->pendingSend,
-        );
+        $campaignMail = $this->pendingSend->campaign->getMailable()
+            ->setCampaignSend($this->pendingSend)
+            ->setContent($personalisedHtml)
+            ->subject($this->pendingSend->campaign->subject);
 
         Mail::to($this->pendingSend->subscription->subscriber->email)->send($campaignMail);
 

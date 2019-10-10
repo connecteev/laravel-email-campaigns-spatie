@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
-use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 
 class SendTestMailJobTest extends TestCase
@@ -24,7 +24,7 @@ class SendTestMailJobTest extends TestCase
 
         dispatch(new SendTestMailJob($campaign, $email));
 
-        Mail::assertSent(CampaignMail::class, function (CampaignMail $mail) use ($email, $campaign) {
+        Mail::assertSent(CampaignMailable::class, function (CampaignMailable $mail) use ($email, $campaign) {
             $this->assertEquals($campaign->subject, $mail->subject);
 
             $this->assertTrue($mail->hasTo($email));

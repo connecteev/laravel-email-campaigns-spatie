@@ -5,14 +5,17 @@ namespace Spatie\EmailCampaigns\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Mail\Mailable;
 use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
+use Spatie\EmailCampaigns\Mails\UsedInCampaign;
 use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotSent;
+use Spatie\EmailCampaigns\Exceptions\CouldNotSendCampaign;
 use Spatie\EmailCampaigns\Exceptions\CampaignCouldNotUpdate;
 use Spatie\EmailCampaigns\Http\Controllers\CampaignWebviewController;
 
@@ -103,6 +106,17 @@ class Campaign extends Model
         return $this;
     }
 
+    public function useMailable(string $mailableClass)
+    {
+        if (! is_a($mailableClass, CampaignMailable::class, true)) {
+            throw CouldNotSendCampaign::invalidMailableClass($this, $mailableClass);
+        }
+
+        $this->update(['mailable_class' => $mailableClass]);
+
+        return $this;
+    }
+
     public function to(EmailList $emailList)
     {
         $this->ensureUpdatable();
@@ -140,23 +154,27 @@ class Campaign extends Model
     protected function ensureSendable()
     {
         if ($this->status === CampaignStatus::SENDING) {
-            throw CampaignCouldNotSent::beingSent($this);
+            throw CouldNotSendCampaign::beingSent($this);
         }
 
         if ($this->status === CampaignStatus::SENT) {
-            throw CampaignCouldNotSent::alreadySent($this);
-        }
-
-        if (empty($this->subject)) {
-            throw CampaignCouldNotSent::noSubjectSet($this);
+            throw CouldNotSendCampaign::alreadySent($this);
         }
 
         if (is_null($this->emailList)) {
-            throw CampaignCouldNotSent::noListSet($this);
+            throw CouldNotSendCampaign::noListSet($this);
+        }
+
+        if (! is_null($this->mailable)) {
+            return;
+        }
+
+        if (empty($this->subject)) {
+            throw CouldNotSendCampaign::noSubjectSet($this);
         }
 
         if (empty($this->html)) {
-            throw CampaignCouldNotSent::noContent($this);
+            throw CouldNotSendCampaign::noContent($this);
         }
     }
 
@@ -167,7 +185,7 @@ class Campaign extends Model
         }
 
         if ($this->status === CampaignStatus::SENT) {
-            throw CampaignCouldNotSent::alreadySent($this);
+            throw CouldNotSendCampaign::alreadySent($this);
         }
     }
 
@@ -208,5 +226,17 @@ class Campaign extends Model
     public function webViewUrl(): string
     {
         return url(action(CampaignWebviewController::class, $this->uuid));
+    }
+
+    public function getMailable(): CampaignMailable
+    {
+        $mailableClass = $this->mailable_class ?? CampaignMailable::class;
+
+        $mailable = app($mailableClass);
+        if (! $mailable instanceof CampaignMailable) {
+            throw CouldNotSendCampaign::invalidMailableClass($this, $mailableClass);
+        }
+
+        return $mailable;
     }
 }

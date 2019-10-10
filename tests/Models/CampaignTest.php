@@ -5,12 +5,14 @@ namespace Spatie\EmailCampaigns\Tests\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Exceptions\CouldNotSendCampaign;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\EmailList;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Jobs\SendTestMailJob;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
+use Spatie\EmailCampaigns\Tests\TestClasses\TestCampaignMailable;
 
 class CampaignTest extends TestCase
 {
@@ -107,6 +109,37 @@ class CampaignTest extends TestCase
 
             return true;
         });
+    }
+
+    /** @test */
+    public function a_mailable_can_be_set()
+    {
+        $campaign = Campaign::create()->useMailable(TestCampaignMailable::class);
+
+        $this->assertEquals(TestCampaignMailable::class, $campaign->mailable_class);
+    }
+
+    /** @test */
+    public function it_will_throw_an_exception_when_use_an_invalid_mailable_class()
+    {
+        $this->expectException(CouldNotSendCampaign::class);
+
+        Campaign::create()->useMailable(static::class);
+    }
+
+    /** @test */
+    public function html_and_content_are_not_required_when_sending_a_mailable()
+    {
+        Bus::fake();
+
+        $list = factory(EmailList::class)->create();
+
+        Campaign::create()
+            ->content('my content')
+            ->subject('test')
+            ->sendTo($list);
+
+        Bus::assertDispatched(SendCampaignJob::class);
     }
 
     /** @test */

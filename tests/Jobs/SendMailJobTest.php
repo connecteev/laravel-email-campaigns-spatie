@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Jobs\SendMailJob;
-use Spatie\EmailCampaigns\Mails\CampaignMail;
+use Spatie\EmailCampaigns\Mails\CampaignMailable;
 use Spatie\EmailCampaigns\Models\CampaignSend;
+use Spatie\EmailCampaigns\Tests\TestClasses\TestCampaignMailable;
 
 class SendMailJobTest extends TestCase
 {
@@ -25,7 +26,7 @@ class SendMailJobTest extends TestCase
 
         dispatch(new SendMailJob($pendingSend));
 
-        Mail::assertSent(CampaignMail::class, function (CampaignMail $mail) use ($pendingSend) {
+        Mail::assertSent(CampaignMailable::class, function (CampaignMailable $mail) use ($pendingSend) {
             $this->assertEquals($pendingSend->campaign->subject, $mail->subject);
 
             $this->assertTrue($mail->hasTo($pendingSend->subscription->subscriber->email));
@@ -44,10 +45,10 @@ class SendMailJobTest extends TestCase
         dispatch(new SendMailJob($pendingSend));
 
         $this->assertTrue($pendingSend->refresh()->wasAlreadySent());
-        Mail::assertSent(CampaignMail::class, 1);
+        Mail::assertSent(CampaignMailable::class, 1);
 
         dispatch(new SendMailJob($pendingSend));
-        Mail::assertSent(CampaignMail::class, 1);
+        Mail::assertSent(CampaignMailable::class, 1);
     }
 
     /** @test */
@@ -59,5 +60,17 @@ class SendMailJobTest extends TestCase
         $pendingSend = factory(CampaignSend::class)->create();
         dispatch(new SendMailJob($pendingSend));
         Queue::assertPushedOn('custom-queue', SendMailJob::class);
+    }
+
+    /** @test */
+    public function it_can_use_a_custom_mailable()
+    {
+        $pendingSend = factory(CampaignSend::class)->create();
+
+        $pendingSend->campaign->useMailable(TestCampaignMailable::class);
+
+        dispatch(new SendMailJob($pendingSend));
+
+        Mail::assertSent(TestCampaignMailable::class, 1);
     }
 }
