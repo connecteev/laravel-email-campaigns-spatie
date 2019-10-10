@@ -38,11 +38,18 @@ class CampaignMailable extends Mailable
         return $this
             ->subject($this->subject)
             ->view('email-campaigns::mails.campaign')
-            ->withSwiftMessage(function ($message) {
-                $message->getHeaders()
-                        ->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
-                $message->getHeaders()
-                        ->addTextHeader('List-Unsubscribe', '<' . $this->campaignSend->unsubscribeUrl() . '>');
-            });
+            ->addUnsubscribeHeaders();
+    }
+
+    protected function addUnsubscribeHeaders()
+    {
+        $this->withSwiftMessage(function ($message) {
+            $message->getHeaders()
+                ->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
+            $message->getHeaders()
+                ->addTextHeader('List-Unsubscribe', '<' . $this->campaignSend->unsubscribeUrl() . '>');
+        });
+
+        return $this;
     }
 }
