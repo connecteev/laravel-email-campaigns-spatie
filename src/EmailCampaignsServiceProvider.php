@@ -18,6 +18,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     {
         $this
             ->registerViews()
+            ->registerTranslations()
             ->registerPublishables()
             ->registerRoutes();
     }
@@ -36,11 +37,22 @@ class EmailCampaignsServiceProvider extends ServiceProvider
         return $this;
     }
 
+    public function registerTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang/', 'email-campaigns');
+
+        return $this;
+    }
+
     public function registerPublishables()
     {
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/email-campaigns'),
         ], 'views');
+
+        $this->publishes([
+            __DIR__.'/../resources/lang' => resource_path('lang/vendor/email-campaigns'),
+        ]);
 
         $this->publishes([
             __DIR__.'/../config/email-campaigns.php' => config_path('email-campaigns.php'),
