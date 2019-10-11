@@ -13,7 +13,7 @@ To customize this confirmation message, publish the views.
 php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="views"
 ```
 
-Now be modify the following views in the `/resources/views/vendor/email-campaigns/unsubscribe/` directory:
+Now we modify the following views in the `/resources/views/vendor/email-campaigns/unsubscribe/` directory:
 
 - `unsubscribed.blade.php`
 - `notFound.blade.php`
