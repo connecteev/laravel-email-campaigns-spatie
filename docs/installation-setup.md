@@ -3,7 +3,7 @@ title: Installation & setup
 weight: 4
 ---
 
-This package can be installed via composer:
+Use composer for installing the package:
 
 ```bash
 composer require "spatie/laravel-email-campaigns:^1.0.0"
@@ -11,7 +11,7 @@ composer require "spatie/laravel-email-campaigns:^1.0.0"
 
 ## Choosing a mail driver
 
-You should configure your Laravel to use one of [the many available mail drivers](https://laravel.com/docs/master/mail#driver-prerequisites). All emails that are sent via this package will use that default driver.
+Configure Laravel to use one of [the many available mail drivers](https://laravel.com/docs/master/mail#driver-prerequisites). All emails sent via the package will use that default driver.
 
 ## Prepare the database
 
@@ -32,7 +32,7 @@ Route::emailCampaigns('email-campaigns');
 
 ## Schedule the calculate statistics command
 
-In the console kernel you should schedule the `email-campaigns:calculate-statistics` to run every minute.
+In the console kernel, you should schedule the `email-campaigns:calculate-statistics` to run every minute.
 ```
 // in app/Console/Kernel.php
 protected function schedule(Schedule $schedule)
@@ -50,7 +50,7 @@ You must publish the config file with this command.
 php artisan vendor:publish --provider="Spatie\EmailCampaigns\EmailCampaignsServiceProvider" --tag="config"
 ```
 
-This is the default content of the config file:
+Below is the default content of the config file:
 
 ```php
 return [
@@ -97,12 +97,12 @@ return [
 
 ## Install and configure redis
 
-Most e-mail providers limit how many mails you can send within a given amount of time. To throttle mails, this package uses Redis. Make sure Redis is available on your system. You must specify a valid Redis connection name in the `throttling.redis_connection_name` key.
+It's common for e-mail providers to limit the number of e-mails you can send within a given amount of time. The package uses Redis to throttle e-mails, so make sure it's available on your system. You must specify a valid Redis connection name in the `throttling.redis_connection_name` key.
 
 By default, we set this value to the default Laravel connection name, `default`.
 
 ## Prepare the queues
 
-Many tasks performed by this package are queued. Make sure you don't use `sync` but [a real queue driver](https://laravel.com/docs/master/queues#driver-prerequisites).
+The package queues many tasks it performs. Because of this, use [a different queue driver](https://laravel.com/docs/master/queues#driver-prerequisites) than `sync`.
 
-In the `perform_on_queue` key of the `email-campaigns` config file, you can specify which jobs should be performed on which queues. The `register_click_job`, `register_open_job`, and `send_mail_job` jobs could receive a large number of jobs. Using only one queue potentially results in a long wait for other jobs. So we recommend using a separate queue for the `register_click_job`, `register_open_job`, and `send_mail_job` jobs.
+You're able to run different jobs in different queues.  Specify this using the `perform_on_queue` key in the `email-campaigns` config file. The `register_click_job`, `register_open_job`, and `send_mail_job` jobs could receive a large number of jobs. Using only one queue potentially results in a long wait for other jobs. So we recommend using a separate queue for the `register_click_job`, `register_open_job`, and `send_mail_job` jobs.
