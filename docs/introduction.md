@@ -13,7 +13,7 @@ Let’s take a quick look at how to use the package. First, create an email list
 $emailList = EmailList::create('newsletter subscribers');
 ```
 
-Next, we subscribe people to a list. There's also support for [double opt-in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) are made available.
+Next, we subscribe people to a list. There's also support for [double opt-in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/).
 
 ```php
 $emailList->subscribe('john@example.com');
