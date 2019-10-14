@@ -3,7 +3,7 @@ title: Introduction
 weight: 1
 ---
 
-**THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET**
+##### THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET
 
 This package allows you to send out email campaigns to a list of subscribers effortlessly.
 
@@ -22,7 +22,7 @@ $emailList->subscribe('paul@example.com');
 
 You can send an email to all those subscribed to the list.
 
-```
+```php
 Campaign::create()
     ->subject('test')
     ->content($html)

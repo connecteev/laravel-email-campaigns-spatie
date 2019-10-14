@@ -28,12 +28,14 @@ You must register the routes needed to handle subscription confirmations, open, 
 
 ```php
 Route::emailCampaigns('email-campaigns');
+
 ```
 
 ## Schedule the calculate statistics command
 
 In the console kernel, you should schedule the `email-campaigns:calculate-statistics` to run every minute.
-```
+
+```php
 // in app/Console/Kernel.php
 protected function schedule(Schedule $schedule)
 {

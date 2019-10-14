@@ -9,7 +9,7 @@ You can use a string to subscribe to an email list.
 $emailList->subscribe('john@example.com');
 ```
 
-Behind the scenes, we'll create a `Subscriber` with email `john@example.com` and a `Subscription`, which is the relation between a subscriber and a list. 
+Behind the scenes, we'll create a `Subscriber` with email `john@example.com` and a `Subscription`, which is the relation between a subscriber and a list.
 
 If you try to subscribe an email that already exists on a list it will be ignored.
 
