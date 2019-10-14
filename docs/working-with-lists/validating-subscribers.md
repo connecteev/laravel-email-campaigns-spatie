@@ -9,7 +9,7 @@ When integrating this package into your app you will likely build a UI where peo
 // in a form request
 
 public function rules() {
-   $emailList = EmailList::first(); 
+   $emailList = EmailList::first();
 
    return [
       'email' => ['email', new Spatie\EmailCampaigns\Rules\EmailListSubscriptionRule($emailList)]
