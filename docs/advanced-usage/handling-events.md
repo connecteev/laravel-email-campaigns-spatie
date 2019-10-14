@@ -47,7 +47,7 @@ This event will be fired after you've sent a campaign, and all mails are queued 
 
 The event has one public property: `$campaign`, which is an instance of the `\Spatie\EmailCampaigns\Models\Campaign` model.
 
-## Spatie `Spatie\EmailCampaigns\Events\CampaignMailSent`
+## `Spatie\EmailCampaigns\Events\CampaignMailSent`
 
 This event will be fired when a mail has actually been sent to a single subscriber.
 
