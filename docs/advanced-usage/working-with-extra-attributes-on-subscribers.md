@@ -10,6 +10,7 @@ $subscription = $emailList->subscribe('john@example.com', [
     'first_name' => 'John',
     'last_name' => 'Doe'
 ]);
+```
 
 Here are examples of methods to work with those extra attributes.
 
