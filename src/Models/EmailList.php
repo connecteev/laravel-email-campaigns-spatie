@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Exceptions\CouldNotSubscribe;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\EmailCampaigns\Models\Concerns\HasUuid;
 
 class EmailList extends Model
 {
+    use HasUuid;
+
     public $guarded = [];
 
     public function subscribers(): BelongsToMany

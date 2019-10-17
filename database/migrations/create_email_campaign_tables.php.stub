@@ -10,6 +10,7 @@ class CreateEmailCampaignTables extends Migration
     {
         Schema::create('email_lists', function(Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid');
             $table->string('name');
             $table->boolean('requires_double_opt_in')->default(false);
             $table->timestamps();
