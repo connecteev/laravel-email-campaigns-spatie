@@ -9,7 +9,7 @@ A campaign can be created like this:
 
 ```php
 Campaign::create()
-    ->subject('My newsletter #1') 
+    ->subject('My newsletter #1')
     ->content($html)
     ->trackOpens()
     ->trackClicks()

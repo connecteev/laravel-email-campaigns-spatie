@@ -5,10 +5,10 @@ weight: 6
 
 After a campaign is sent, some statistics will be made available.
 
-## Available statistics 
- 
+## Available statistics
+
 ### On a campaign
- 
+
 The [scheduled](https://docs.spatie.be/laravel-email-campaigns/v1/installation-setup/#schedule-the-calculate-statistics-command) 'email-campaigns:calculate-statistics' will fill these attributes on the `Campaign` model:
 
 - `sent_to_number_of_subscribers`
@@ -37,21 +37,22 @@ It contains these two attributes that hold statistical data:
 
 To know who clicked which link, you can use the relations on `CampaignLink` model. Here's an example where we get the email of the subscriber who first clicked the first link of a campaign.
 
-```
+```php
 $campaignLink = $campaign->links->first();
 $campaignClick = $campaignLink->links->first();
 $email = $campaingClick->subscriber->email;
 ```
 
-## When are statistics calculated?
+## When are statistics calculated
 
 The statistics are calculated by the scheduled `email-campaigns:calculate-statistics`. This job will recalculate statistics:
+
 - each minute for campaigns that were sent between 0 and 5 minutes ago
 - every 10 minutes for campaigns that were send between 5 minutes and two hours ago
 - every hour for campaigns that were sent between two hours and a day
 - every four hours for campaigns that were sent between a day and two weeks ago
 
-After two weeks, no further statistics are calculated. 
+After two weeks, no further statistics are calculated.
 
 ## Manually recalculate statistics
 
@@ -60,4 +61,3 @@ To manually trigger a recalculation, execute the command using the campaign id a
 ```bash
 php artisan email-campaigns:calculate-statistics <campaign-id>
 ```
-

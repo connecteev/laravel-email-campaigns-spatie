@@ -3,7 +3,7 @@ title: Introduction
 weight: 1
 ---
 
-**THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET**
+##### THIS PACKAGE IS STILL IN DEVELOPMENT, DO NOT USE YET
 
 This package allows you to send out email campaigns to a list of subscribers effortlessly.
 
@@ -13,7 +13,7 @@ Let’s take a quick look at how to use the package. First, create an email list
 $emailList = EmailList::create('newsletter subscribers');
 ```
 
-Next, we subscribe people to a list. There's also support for [double opt-in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) are made available.
+Next, we subscribe people to a list. There's also support for [double opt-in subscriptions](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/).
 
 ```php
 $emailList->subscribe('john@example.com');
@@ -22,7 +22,7 @@ $emailList->subscribe('paul@example.com');
 
 You can send an email to all those subscribed to the list.
 
-```
+```php
 Campaign::create()
     ->subject('test')
     ->content($html)
