@@ -30,7 +30,7 @@ class Subscriber extends Model
 
     public function emailLists(): HasManyThrough
     {
-        return $this->hasManyThrough(EmailList::class, Subscription::class);
+        return $this->hasManyThrough(EmailList::class, Subscription::class, 'email_list_subscriber_id', 'id');
     }
 
     public function subscribeTo(EmailList $emailList, bool $respectDoubleOptIn = true): Subscription
