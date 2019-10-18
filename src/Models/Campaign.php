@@ -43,7 +43,9 @@ class Campaign extends Model
         parent::boot();
 
         static::creating(function (Campaign $campaign) {
-            $campaign->status = CampaignStatus::CREATED;
+            if (! $campaign->status) {
+                $campaign->status = CampaignStatus::CREATED;
+            }
         });
     }
 
