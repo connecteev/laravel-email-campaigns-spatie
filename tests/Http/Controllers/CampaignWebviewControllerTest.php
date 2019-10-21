@@ -40,6 +40,8 @@ class CampaignWebviewControllerTest extends TestCase
     /** @test */
     public function it_will_not_display_a_webview_for_a_campaign_that_has_not_been_sent()
     {
+        $this->withExceptionHandling();
+
         $this->campaign->update(['status' => CampaignStatus::CREATED]);
 
         $this

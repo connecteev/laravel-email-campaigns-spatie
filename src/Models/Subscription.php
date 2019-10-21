@@ -36,17 +36,24 @@ class Subscription extends Model
         return $action->execute($this);
     }
 
-    public function markAsUnsubscribed()
+    public function markAsUnsubscribed(CampaignSend $campaignSend = null)
     {
         $this->update(['status' => SubscriptionStatus::UNSUBSCRIBED]);
 
-        event(new Unsubscribed($this));
+        if ($campaignSend) {
+            CampaignUnsubscribe::firstOrCreate([
+                'email_campaign_id' => $campaignSend->campaign->id,
+                'email_list_subscriber_id' => $campaignSend->subscription->subscriber->id,
+            ]);
+        }
+
+        event(new Unsubscribed($this, $campaignSend));
 
         return $this;
     }
 
-    public function unsubscribeUrl(): string
+    public function unsubscribeUrl(CampaignSend $campaignSend = null): string
     {
-        return url(action(UnsubscribeController::class, $this->uuid));
+        return url(action(UnsubscribeController::class, [$this->uuid, optional($campaignSend)->uuid]));
     }
 }

@@ -71,7 +71,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
     {
         Route::macro('emailCampaigns', function () {
             Route::get('/confirm-subscription/{subscriptionUuid}', ConfirmSubscriptionController::class);
-            Route::match(['get', 'post'], '/unsubscribe/{subscriptionUuid}', UnsubscribeController::class);
+            Route::match(['get', 'post'], '/unsubscribe/{subscriptionUuid}/{campaignSendUuid?}', UnsubscribeController::class);
 
             Route::get('/track-opens/{campaignSendUuid}', TrackOpensController::class);
             Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);

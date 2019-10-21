@@ -6,6 +6,7 @@ use CreateEmailCampaignTables;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\EmailCampaigns\Models\CampaignLink;
@@ -23,6 +24,8 @@ abstract class TestCase extends Orchestra
         $this->withFactories(__DIR__.'/database/factories');
 
         Route::emailCampaigns('email-campaigns');
+
+       $this->withoutExceptionHandling();
     }
 
     protected function getPackageProviders($app)
@@ -44,6 +47,14 @@ abstract class TestCase extends Orchestra
         include_once __DIR__.'/../database/migrations/create_email_campaign_tables.php.stub';
 
         (new CreateEmailCampaignTables())->up();
+    }
+
+    protected function simulateUnsubscribes(Collection $campaignSends)
+    {
+        $campaignSends->each(function(CampaignSend $campaignSend) {
+            $this
+                ->get(action(UnsubscribeController::class, [$campaignSend->subscription->uuid, $campaignSend->uuid]));
+        });
     }
 
     protected function simulateOpen(Collection $campaignSends)

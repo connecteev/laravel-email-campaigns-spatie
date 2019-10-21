@@ -69,6 +69,8 @@ class CreateEmailCampaignTables extends Migration
             $table->integer('click_count')->default(0);
             $table->integer('unique_click_count')->default(0);
             $table->integer('click_rate')->default(0);
+            $table->integer('unsubscribe_count')->default(0);
+            $table->integer('unsubscribe_rate')->default(0);
 
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('statistics_calculated_at')->nullable();
@@ -147,5 +149,25 @@ class CreateEmailCampaignTables extends Migration
                 ->references('id')->on('email_list_subscriptions')
                 ->onDelete('cascade');
         });
+
+
+        Schema::create('campaign_unsubscribes', function(Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('email_campaign_id');
+            $table->unsignedBigInteger('email_list_subscriber_id');
+            $table->timestamps();
+
+            $table
+                ->foreign('email_campaign_id')
+                ->references('id')->on('email_campaigns')
+                ->onDelete('cascade');
+
+            $table
+                ->foreign('email_list_subscriber_id')
+                ->references('id')->on('email_list_subscribers')
+                ->onDelete('cascade');
+        });
     }
+
+
 }

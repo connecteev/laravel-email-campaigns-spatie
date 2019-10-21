@@ -17,7 +17,9 @@ The [scheduled](https://docs.spatie.be/laravel-email-campaigns/v1/installation-s
 - `open_rate`: the `unique_open_count` divided by the `sent_to_number_of_subscribers`. The result is multiplied by 100. The maximum value for this attribute is 100, and the minimum is 0.
 - `click_count`: the total number of times the links in your campaign were clicked. Multiple clicks on the same link by a subscriber will be counted.
 - `unique_click_count`: the number of subscribers who clicked any of the links in your campaign.
-- `click_rate`: the `unique_click_count`divided by the `sent_to_number_of_subscribers`. The result is multiplied by 100. The maximum value for this attribute is 100, the minimum is 0.
+- `click_rate`: the `unique_click_count` divided by the `sent_to_number_of_subscribers`. The result is multiplied by 100. The maximum value for this attribute is 100, the minimum is 0.
+- `unsubscribe_count`: the number of people that unsubscribed from the email list using the unsubscribe link from this campaign
+- `unsubscribe_rate`: the `unsubscribe_count` divided by the `sent_to_number_of_subscribers`. The result is multiplied by 100. The maximum value for this attribute is 100, the minimum is 0.
 
 You can also get the opens and clicks stats for a campaign. Here's an example using the `opens` relation to retrieve who first opened the mail.
 

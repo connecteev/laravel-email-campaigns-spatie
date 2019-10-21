@@ -2,11 +2,13 @@
 
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Models\Subscription;
 
 class UnsubscribeController
 {
-    public function __invoke(string $emailListSubscriptionUuid)
+    public function __invoke(string $emailListSubscriptionUuid, string $campaignSendUuid = null)
     {
         /** @var \Spatie\EmailCampaigns\Models\Subscription $subscription */
         if (! $subscription = Subscription::findByUuid($emailListSubscriptionUuid)) {
@@ -15,7 +17,14 @@ class UnsubscribeController
 
         $emailList = $subscription->emailList;
 
-        $subscription->markAsUnsubscribed();
+        if ($subscription->status === SubscriptionStatus::UNSUBSCRIBED) {
+            return view('email-campaigns::unsubscribe.alreadyUnsubscribed', compact('emailList'));
+        }
+
+        $campaignSend = CampaignSend::findByUuid($campaignSendUuid ?? '');
+        $subscription->markAsUnsubscribed($campaignSend);
+
+        $emailList = $subscription->emailList;
 
         return view('email-campaigns::unsubscribe.unsubscribed', compact('emailList'));
     }

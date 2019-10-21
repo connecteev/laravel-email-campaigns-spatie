@@ -53,14 +53,19 @@ class CalculateStatisticsJob implements ShouldQueue
         $uniqueClickCount = $this->campaign->clicks()->groupBy('email_list_subscriber_id')->toBase()->getCountForPagination(['email_list_subscriber_id']);
         $clickRate = round($uniqueClickCount / $sendToNumberOfSubscribers, 2) * 100;
 
+        $unsubscribeCount = $this->campaign->unsubscribes()->count();
+        $unsubscribeRate = round($unsubscribeCount / $sendToNumberOfSubscribers, 2) * 100;
+
         $this->campaign->update([
-            'sent_to_number_of_subscribers' => 0,
+            'sent_to_number_of_subscribers' => $sendToNumberOfSubscribers,
             'open_count' => $openCount,
             'unique_open_count' => $uniqueOpenCount,
             'open_rate' => $openRate,
             'click_count' => $clickCount,
             'unique_click_count' => $uniqueClickCount,
             'click_rate' => $clickRate,
+            'unsubscribe_count' => $unsubscribeCount,
+            'unsubscribe_rate' => $unsubscribeRate,
         ]);
 
         return $this;

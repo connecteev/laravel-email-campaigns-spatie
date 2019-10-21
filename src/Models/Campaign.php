@@ -79,6 +79,11 @@ class Campaign extends Model
         return $this->hasMany(CampaignSend::class, 'email_campaign_id');
     }
 
+    public function unsubscribes(): HasMany
+    {
+        return $this->hasMany(CampaignUnsubscribe::class, 'email_campaign_id');
+    }
+
     public function subject(string $subject)
     {
         $this->ensureUpdatable();

@@ -2,6 +2,7 @@
 
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
+use Spatie\EmailCampaigns\Models\CampaignUnsubscribe;
 use Spatie\TestTime\TestTime;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
@@ -42,6 +43,31 @@ class CalculateStatisticsJobTest extends TestCase
 
         dispatch(new CalculateStatisticsJob($campaign));
         $this->assertEquals(now()->format('Y-m-d H:i:s'), $campaign->fresh()->statistics_calculated_at);
+    }
+
+    /** @test */
+    public function it_can_calculate_statistics_regarding_unsubscribes()
+    {
+        $campaign = (new CampaignFactory())->withSubscriberCount(5)->create();
+        dispatch(new SendCampaignJob($campaign));
+
+        dispatch(new CalculateStatisticsJob($campaign));
+
+        $this->assertDatabaseHas('email_campaigns', [
+            'id' => $campaign->id,
+            'unsubscribe_count' => 0,
+            'unsubscribe_rate' => 0,
+        ]);
+
+        $campaignSends = $campaign->sends()->take(3)->get();
+        $this->simulateUnsubscribes($campaignSends);
+        dispatch(new CalculateStatisticsJob($campaign));
+
+        $this->assertDatabaseHas('email_campaigns', [
+            'id' => $campaign->id,
+            'unsubscribe_count' => 3,
+            'unsubscribe_rate' => 60,
+        ]);
     }
 
     /** @test */

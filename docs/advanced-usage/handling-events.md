@@ -27,7 +27,9 @@ $nameOfEmailList = $event->subscription->emailList->name;
 
 This event will be fired as soon as someone unsubscribes. When somebody unsubscribes, the subscription won't be deleted, but its `status` attribute will be set to `unsubscribed`.
 
-The event has one public property: `$subscription` which is an instance of `Spatie\EmailCampaigns\Models\Subscription`.
+The event has two public properties:
+- `$subscription` which is an instance of `Spatie\EmailCampaigns\Models\Subscription`.
+- `$campaignSend` an instance of `Spatie\EmailCampaigns\Models\CampaignSend`. You can use this to determine in which campaign the unsubscribe occurred: `$campaignSend->campaign`. This properties can also be `null`.
 
 You can get the email address of the subscriber like this:
 
