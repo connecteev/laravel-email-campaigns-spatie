@@ -6,7 +6,6 @@ use CreateEmailCampaignTables;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 use Spatie\EmailCampaigns\Models\Subscriber;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\EmailCampaigns\Models\CampaignLink;
@@ -14,6 +13,7 @@ use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\EmailCampaignsServiceProvider;
 use Spatie\EmailCampaigns\Http\Controllers\TrackOpensController;
 use Spatie\EmailCampaigns\Http\Controllers\TrackClicksController;
+use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 
 abstract class TestCase extends Orchestra
 {
@@ -25,7 +25,7 @@ abstract class TestCase extends Orchestra
 
         Route::emailCampaigns('email-campaigns');
 
-       $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
     }
 
     protected function getPackageProviders($app)
@@ -51,7 +51,7 @@ abstract class TestCase extends Orchestra
 
     protected function simulateUnsubscribes(Collection $campaignSends)
     {
-        $campaignSends->each(function(CampaignSend $campaignSend) {
+        $campaignSends->each(function (CampaignSend $campaignSend) {
             $this
                 ->get(action(UnsubscribeController::class, [$campaignSend->subscription->uuid, $campaignSend->uuid]));
         });

@@ -2,7 +2,6 @@
 
 namespace Spatie\EmailCampaigns\Tests\Jobs;
 
-use Spatie\EmailCampaigns\Models\CampaignUnsubscribe;
 use Spatie\TestTime\TestTime;
 use Illuminate\Support\Facades\Queue;
 use Spatie\EmailCampaigns\Tests\TestCase;
