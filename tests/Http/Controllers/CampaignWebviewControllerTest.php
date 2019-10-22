@@ -42,7 +42,7 @@ class CampaignWebviewControllerTest extends TestCase
     {
         $this->withExceptionHandling();
 
-        $this->campaign->update(['status' => CampaignStatus::CREATED]);
+        $this->campaign->update(['status' => CampaignStatus::DRAFT]);
 
         $this
             ->get($this->webviewUrl)

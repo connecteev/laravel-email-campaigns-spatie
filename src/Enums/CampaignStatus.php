@@ -4,7 +4,7 @@ namespace Spatie\EmailCampaigns\Enums;
 
 class CampaignStatus
 {
-    const CREATED = 'created';
+    const DRAFT = 'draft';
     const SENDING = 'sending';
     const SENT = 'sent';
 }

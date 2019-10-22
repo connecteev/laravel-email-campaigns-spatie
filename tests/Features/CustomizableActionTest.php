@@ -24,7 +24,7 @@ class CustomizableActionTest extends TestCase
         config()->set('email-campaigns.actions.personalize_html_action', CustomPersonalizeHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
-            'status' => CampaignStatus::CREATED,
+            'status' => CampaignStatus::DRAFT,
         ]);
 
         dispatch(new SendCampaignJob($campaign));
@@ -38,7 +38,7 @@ class CustomizableActionTest extends TestCase
         config()->set('email-campaigns.actions.prepare_email_html_action', CustomPrepareEmailHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
-            'status' => CampaignStatus::CREATED,
+            'status' => CampaignStatus::DRAFT,
         ]);
 
         dispatch(new SendCampaignJob($campaign));
@@ -52,7 +52,7 @@ class CustomizableActionTest extends TestCase
         config()->set('email-campaigns.actions.prepare_webview_html_action', CustomPrepareWebviewHtmlAction::class);
 
         $campaign = (new CampaignFactory())->withSubscriberCount(1)->create([
-            'status' => CampaignStatus::CREATED,
+            'status' => CampaignStatus::DRAFT,
         ]);
 
         dispatch(new SendCampaignJob($campaign));

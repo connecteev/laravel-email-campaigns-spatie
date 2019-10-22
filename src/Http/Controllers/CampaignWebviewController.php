@@ -13,7 +13,7 @@ class CampaignWebviewController
             abort(404);
         }
 
-        if ($campaign->status === CampaignStatus::CREATED) {
+        if ($campaign->status === CampaignStatus::DRAFT) {
             abort(404);
         }
 

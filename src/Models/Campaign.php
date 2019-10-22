@@ -44,7 +44,7 @@ class Campaign extends Model
 
         static::creating(function (Campaign $campaign) {
             if (! $campaign->status) {
-                $campaign->status = CampaignStatus::CREATED;
+                $campaign->status = CampaignStatus::DRAFT;
             }
         });
     }

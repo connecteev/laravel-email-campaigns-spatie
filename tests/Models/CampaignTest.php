@@ -5,6 +5,7 @@ namespace Spatie\EmailCampaigns\Tests\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Queue;
+use Spatie\EmailCampaigns\Enums\CampaignStatus;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Spatie\EmailCampaigns\Models\Campaign;
 use Spatie\EmailCampaigns\Models\EmailList;
@@ -30,9 +31,9 @@ class CampaignTest extends TestCase
     }
 
     /** @test */
-    public function the_default_status_is_created()
+    public function the_default_status_is_draft()
     {
-        $this->assertEquals('created', $this->campaign->status);
+        $this->assertEquals(CampaignStatus::DRAFT, $this->campaign->status);
     }
 
     /** @test */

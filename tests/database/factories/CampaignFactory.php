@@ -10,7 +10,7 @@ $factory->define(Campaign::class, function (Generator $faker) {
         'html' => $faker->randomHtml(),
         'track_opens' => $faker->boolean,
         'track_clicks' => $faker->boolean,
-        'status' => CampaignStatus::CREATED,
+        'status' => CampaignStatus::DRAFT,
         'uuid' => $faker->uuid,
     ];
 });
