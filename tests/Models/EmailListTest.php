@@ -33,7 +33,6 @@ class EmailListTest extends TestCase
     /** @test */
     public function it_can_add_a_subscriber_with_extra_attributes_to_a_list()
     {
-
         $attributes = ['first_name' => 'John', 'last_name' => 'Doe'];
         $extraAttributes = ['key 1' => 'Value 1', 'key 2' => 'Value 2'];
 
