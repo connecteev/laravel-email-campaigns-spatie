@@ -5,12 +5,12 @@ namespace Spatie\EmailCampaigns\Tests\Features;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Mail\Events\MessageSent;
-use Spatie\EmailCampaigns\Models\CampaignSend;
-use Spatie\EmailCampaigns\Models\CampaignUnsubscribe;
 use Spatie\EmailCampaigns\Tests\TestCase;
 use Symfony\Component\DomCrawler\Crawler;
+use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Jobs\SendCampaignJob;
 use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
+use Spatie\EmailCampaigns\Models\CampaignUnsubscribe;
 use Spatie\EmailCampaigns\Tests\Factories\CampaignFactory;
 use Spatie\EmailCampaigns\Http\Controllers\UnsubscribeController;
 
@@ -62,7 +62,6 @@ class UnsubscribeTest extends TestCase
 
         $this->assertEquals($this->subscriber->uuid, $campaignUnsubscribe->subscriber->uuid);
         $this->assertEquals($this->campaign->uuid, $campaignUnsubscribe->campaign->uuid);
-
 
         $subscription = $this->emailList->allSubscriptions->first();
         $this->assertEquals(SubscriptionStatus::UNSUBSCRIBED, $subscription->status);

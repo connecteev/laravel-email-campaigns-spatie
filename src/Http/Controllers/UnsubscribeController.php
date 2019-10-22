@@ -2,9 +2,9 @@
 
 namespace Spatie\EmailCampaigns\Http\Controllers;
 
-use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 use Spatie\EmailCampaigns\Models\CampaignSend;
 use Spatie\EmailCampaigns\Models\Subscription;
+use Spatie\EmailCampaigns\Enums\SubscriptionStatus;
 
 class UnsubscribeController
 {
