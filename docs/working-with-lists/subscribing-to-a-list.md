@@ -21,20 +21,51 @@ $subscriber = Subscriber::findForEmail('john@example.com');
 $subscriber->subscribeTo($anotherEmailList);
 ```
 
-## Adding extra attributes
+## Specifying first name and last name
 
-You can add extra attributes to a subscriber, by passing an array as the second argument of the subscribe method.
+There are attributes named `first_name` and `last_name` on the `Subscriber` model itself. When subscribing you can fill them by passing a second argument to `subscribe`.
 
 ```php
-$emailList->subscribe('john@example.com', [
-    'first_name' => 'John',
-    'last_name' => 'Doe'
+$subscription = $emailList->subscribe('john@example.com', ['first_name' => 'John', 'last_name' => 'Doe']);
+
+$subscription->subscriber->first_name; // returns 'John'
+$subscription->subscriber->first_name; // returns 'Doe'
+```
+
+## Adding regular attributes
+
+If you need more attributes on a subscriber you can create [a migration](https://laravel.com/docs/master/migrations) that adds a field.
+
+```php
+Schema::table('email_list_subscribers', function (Blueprint $table) {
+    $table->string('job_title')->nullable();
+});
+```
+
+To fill the field just add a key to the second array passed to `subscribe`.
+
+```php
+$subscription = $emailList->subscribe('john@example.com', ['job_title' => 'Developer']);
+
+$subscription->subscriber->job_title; // returns 'Developer'
+```
+
+## Adding extra attributes
+
+The `email_list_subscribers` table has an json field called `extra_attributes`. You can use this field to add unstructured data to a subscriber.
+
+When subscribing pass all the data to the third argument of `subscribe`. This data will be saved in `extra_attributes`.
+
+```php
+$emailList->subscribe('john@example.com', [],  [
+    'key 1' => 'value 1',
+    'key 2' => 'value 2'
 ]);
 
 $subscriber = Subscriber::findForEmail('john@example.com');
 
-$subscriber->extra_attributes->get('first_name'); // returns 'John';
-$subscriber->extra_attributes->get('last_name'); // returns 'Doe';
+$subscriber->extra_attributes->get('key 1'); // returns 'value 1';
+$subscriber->extra_attributes->get('key 2'); // returns 'value 2';
 ```
 
 You can read more on extra attributes in [this section of the docs](https://docs.spatie.be/laravel-email-campaigns/v1/advanced-usage/working-with-extra-attributes-on-subscribers/).

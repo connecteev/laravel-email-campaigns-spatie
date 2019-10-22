@@ -42,9 +42,9 @@ class EmailList extends Model
         return $this->hasMany(Campaign::class);
     }
 
-    public function subscribe(string $email, array $attributes = []): Subscription
+    public function subscribe(string $email, array $attributes = [], array $extraAttributes = []): Subscription
     {
-        $subscriber = $this->createSubscriber($email, $attributes);
+        $subscriber = $this->createSubscriber($email, $attributes, $extraAttributes);
 
         return $subscriber->subscribeTo($this);
     }
@@ -56,17 +56,20 @@ class EmailList extends Model
         return $subscriber->subscribeNowTo($this);
     }
 
-    protected function createSubscriber(string $email, array $attributes = []): Subscriber
+    protected function createSubscriber(string $email, array $attributes = [], $extraAttributes = []): Subscriber
     {
         if (Validator::make(compact('email'), ['email' => 'email'])->fails()) {
             throw CouldNotSubscribe::invalidEmail($email);
         }
 
+        /** @var \Spatie\EmailCampaigns\Models\Subscriber $subscriber */
         $subscriber = Subscriber::firstOrCreate([
             'email' => $email,
         ]);
 
-        $subscriber->extra_attributes = $attributes;
+        $subscriber->fill($attributes);
+
+        $subscriber->extra_attributes = $extraAttributes;
         $subscriber->save();
 
         return $subscriber;
