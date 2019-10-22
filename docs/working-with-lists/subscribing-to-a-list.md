@@ -29,7 +29,7 @@ There are attributes named `first_name` and `last_name` on the `Subscriber` mode
 $subscription = $emailList->subscribe('john@example.com', ['first_name' => 'John', 'last_name' => 'Doe']);
 
 $subscription->subscriber->first_name; // returns 'John'
-$subscription->subscriber->first_name; // returns 'Doe'
+$subscription->subscriber->last_name; // returns 'Doe'
 ```
 
 ## Adding regular attributes
