@@ -32,7 +32,7 @@ Campaign::create([
 
 ## Setting the content and using placeholders
 
-You can send the content of a campaign by setting it's `HTML` attribute.
+You can set the content of a campaign by setting it's `HTML` attribute.
 
 ```php
 $campaign->html = $yourHtml;
