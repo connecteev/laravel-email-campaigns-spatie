@@ -3,7 +3,7 @@ title: Validating subscribers
 weight: 45
 ---
 
-When integrating this package into your app you will likely build a UI where people can subscriber to your list. This package provides a validation rule that verifies that given email address isn't already on the given email list. You can use it like this:
+When integrating this package into your app you will likely build a UI where people can subscribe to your list. This package provides a validation rule that verifies that given email address isn't already on the given email list. You can use it like this:
 
 ```php
 // in a form request
