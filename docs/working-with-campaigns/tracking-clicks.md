@@ -19,4 +19,4 @@ Here's an example: a link with `href` `https://spatie.be` will be replaced with 
 
 When sending a campaign to a large list, that endpoint could be hit a lot over a short timespan. To ensure a fast response time, when the `TrackClicksController` is hit, it will not update the database, but dispatch a job named `RegisterClickJob`. The controller will respond with a redirect to the url that is the `redirect` URL parameter. The dispatch `RegisterClickJob` job update the database.
 
-Because there's the potential for a great many of these jobs to be scheduled, we recommend using a separate queue for handling them. You can configure the queue to be used in the You can configure the queue to be used in the `perform_on_queue.register_click_job` key of the `email-campaigns` config file.
+Because there's the potential for a great many of these jobs to be scheduled, we recommend using a separate queue for handling them. You can configure the queue to be used in the `perform_on_queue.register_click_job` key of the `email-campaigns` config file.
