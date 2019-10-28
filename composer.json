@@ -1,0 +1,71 @@
+{
+    "name": "spatie/laravel-email-campaigns",
+    "description": "Send email campaigns using Laravel",
+    "keywords": [
+        "spatie",
+        "laravel-email-campaigns",
+        "mail",
+        "mass mailing"
+    ],
+    "homepage": "https://github.com/spatie/laravel-email-campaigns",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Freek Van der Herten",
+            "email": "freek@spatie.be",
+            "homepage": "https://spatie.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "ext-dom": "*",
+        "ext-libxml": "*",
+        "illuminate/database": "^6.0",
+        "illuminate/events": "^6.0",
+        "illuminate/mail": "^6.0",
+        "illuminate/queue": "^6.0",
+        "illuminate/redis": "^6.0",
+        "illuminate/support": "^6.0",
+        "spatie/laravel-rate-limited-job-middleware": "^1.0",
+        "spatie/laravel-schemaless-attributes": "^1.6",
+        "symfony/css-selector": "^4.3",
+        "symfony/dom-crawler": "^4.3.4"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "^1.8",
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.2",
+        "predis/predis": "^1.1",
+        "spatie/test-time": "^1.1",
+        "symfony/var-dumper": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spatie\\EmailCampaigns\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spatie\\EmailCampaigns\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Spatie\\EmailCampaigns\\EmailCampaignsServiceProvider"
+            ],
+            "aliases": {
+                "EmailCampaigns": "Spatie\\EmailCampaigns\\EmailCampaignsFacade"
+            }
+        }
+    }
+}
