@@ -7,7 +7,7 @@ This package fires several events. You can listen for them firing to perform ext
 
 ## `Spatie\EmailCampaigns\Events\Subscribed`
 
-This event will be fired as soon as someone subscribes. If [double opt-in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) is enabled on the email list someone is in the process of subscribing to, this event will be fired we the subscription is confirmed.
+This event will be fired as soon as someone subscribes. If [double opt-in](https://docs.spatie.be/laravel-email-campaigns/v1/working-with-lists/using-double-opt-in/) is enabled on the email list someone is in the process of subscribing to, this event will be fired when the subscription is confirmed.
 
 The event has one public property: `$subscription` which is an instance of `Spatie\EmailCampaigns\Models\Subscription`.
 
