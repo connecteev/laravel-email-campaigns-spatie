@@ -74,7 +74,7 @@ class EmailCampaignsServiceProvider extends ServiceProvider
             Route::match(['get', 'post'], '/unsubscribe/{subscriptionUuid}/{campaignSendUuid?}', UnsubscribeController::class);
 
             Route::get('/track-opens/{campaignSendUuid}', TrackOpensController::class);
-            Route::get('/track-clicks/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);
+            Route::get('/link/{campaignLinkUuid}/{subscriberUuid}', TrackClicksController::class);
 
             Route::get('webview/{campaignUuid}', CampaignWebviewController::class);
         });

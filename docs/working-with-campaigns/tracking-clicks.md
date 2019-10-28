@@ -13,7 +13,7 @@ To use this feature, you must set `track_clicks` to `true` on a campaign you're 
 
 When you send a campaign that has click tracking enabled, we'll replace each link in the mail with a link that points to the `Spatie\EmailCampaigns\Http\Controllers\TrackOpensController`. A route to this controller has been set up by the `Route::emailCampaigns` you used when [configuring the package](https://docs.spatie.be/laravel-email-campaigns/v1/installation-setup/#add-the-route-macro).
 
-Here's an example: a link with `href` `https://spatie.be` will be replaced with `https://yourapp.com/email-campaigns/track-clicks/<campaign-link-uuid>/<subscriber-uuid>?redirect=https://spatie.be`.
+Here's an example: a link with `href` `https://spatie.be` will be replaced with `https://yourapp.com/email-campaigns/link/<campaign-link-uuid>/<subscriber-uuid>?redirect=https://spatie.be`.
 
 ## Queuing click tracking
 
