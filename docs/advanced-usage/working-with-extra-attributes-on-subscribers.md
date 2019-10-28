@@ -25,7 +25,7 @@ $subscriber->extra_attributes->first_name = 'Other name';
 $subscriber->save();
 
 // replacing all extra attributes in one go
-$subscriber->extra_attributes = ['first_name' = 'Jane', 'last_name' => 'Dane'];
+$subscriber->extra_attributes = ['first_name' => 'Jane', 'last_name' => 'Dane'];
 $subscriber->save();
 
 // returns all models with a first_name set to John
